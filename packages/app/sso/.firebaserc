@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "production": "desafio-caju"
+  },
+  "targets": {
+    "desafio-caju": {
+      "hosting": {
+        "sso": [
+          "sso-desafio-caju"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
