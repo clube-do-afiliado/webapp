@@ -1,0 +1,59 @@
+$colors: (
+    'primary',
+    'secondary',
+    'error',
+    'success',
+    'info',
+    'warning'
+);
+
+$colors-text: (
+    'primary',
+    'secondary',
+    'disabled'
+);
+
+$colors-background: (
+    'paper',
+    'default'
+);
+
+$colors-divider: (
+    'divider'
+);
+
+/* TRANSITION */
+$animation: .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+
+/* ICON SIZE */
+$icon-small: 16px;
+$icon-medium: 24px;
+$icon-large: 32px;
+
+/* FONT SIZE */
+$font-small: 12px;
+$font-medium: 18px;
+$font-large: 24px;
+
+$sizes: (
+    'small',
+    'large',
+    'medium'
+);
+
+/* FONT FAMILY */
+$font-regular: "poppins-regular" !important;
+$font-light: "poppins-light" !important;
+$font-bold: "poppins-bold" !important;
+$font-semibold: "poppins-semibold" !important;
+
+/* FONT FAMILY */
+$spacing-regular: 16px;
+$spacing-small: 8px;
+$spacing-xlarge: 32px;
+
+/* PROPORTION */
+$proportion: 12px 16px;
+
+/* BOX SHADOW */
+$boxShadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);

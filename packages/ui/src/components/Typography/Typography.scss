@@ -1,0 +1,77 @@
+// @use "../../styles/main.scss" as *
+
+.ui-typography {
+    &--no-margin {
+        margin: 0;
+        margin-block-end: 0;
+        margin-block-start: 0;
+    }
+
+    &--gutter-bottom {
+        margin-block-end: 0.35rem;
+    }
+
+    &--weight-bold {
+        font-weight: 600 !important;
+    }
+
+    &--weight-normal {
+        font-weight: 500 !important;
+    }
+
+    &--h1 {
+        font-size: 6rem;
+    }
+
+    &--h2 {
+        font-size: 3.75rem;
+    }
+
+    &--h3 {
+        font-size: 3rem;
+
+        @include for-compacted {
+            font-size: 2.5rem;
+        }
+    }
+
+    &--h4 {
+        font-size: 2.215rem;
+
+        @include for-compacted {
+            font-size: 2rem;
+        }
+    }
+
+    &--h5 {
+        font-size: 1.5rem;
+
+        @include for-compacted {
+            font-size: 1.2rem;
+        }
+    }
+
+    &--h6 {
+        font-size: 1.25rem;
+    }
+
+    &--subtitle1 {
+        font-size: 1rem;
+
+        @include for-compacted {
+            font-size: 0.775rem;
+        }
+    }
+
+    &--subtitle2 {
+        font-size: 0.875rem;
+    }
+
+    &--body1 {
+        font-size: 1rem;
+    }
+
+    &--body2 {
+        font-size: 0.875rem;
+    }
+}

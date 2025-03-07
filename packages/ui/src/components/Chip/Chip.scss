@@ -1,0 +1,77 @@
+// @use "../../styles/main.scss" as *
+
+.ui-chip {
+    font-size: 0.8125rem;
+    height: 32px;
+    border-radius: calc(var(--radius) * 4);
+    white-space: nowrap;
+    padding: 0px 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    transition: all $animation;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    @each $color in $colors {
+        &--#{$color} {
+            border: 1px solid var(--#{$color});
+
+            &--outlined {
+                color: var(--#{$color});
+            }
+
+            &--contained {
+                background-color: var(--#{$color});
+                color: var(--#{$color}-contrast);
+            }
+        }
+    }
+
+    &--clickable {
+        cursor: pointer;
+    }
+
+    &--deletable {
+        padding: 0px 0px 0px 12px;
+    }
+
+    &--default {
+        border: 1px solid var(--divider);
+        color: var(--text-primary);
+
+        &--outlined {
+            color: var(--text-primary);
+        }
+
+        &--contained {
+            background-color: var(--divider);
+            color: var(--text-primary);
+        }
+    }
+
+    &__icon {
+        margin-right: 5px;
+        color: currentColor !important;
+    }
+
+    &__delete-icon {
+        cursor: pointer;
+        position: relative;
+        background: transparent;
+
+        border: none;
+        border-radius: 50%;
+
+        font-size: 16px;
+        color: currentColor !important;
+    }
+}

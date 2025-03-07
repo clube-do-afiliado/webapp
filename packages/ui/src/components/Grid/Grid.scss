@@ -1,0 +1,13 @@
+// @use "../../styles/main.scss" as *
+
+.grid {
+    @include grid(15px, 12);
+
+    &__item {
+        @for $i from 1 through 12 {
+            &-#{$i} {
+                @include grid-column-span($i);
+            }
+        }
+    }
+}

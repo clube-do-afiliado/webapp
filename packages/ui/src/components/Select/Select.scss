@@ -1,0 +1,36 @@
+// @use "../../styles/main.scss" as *
+
+.ui-select {
+    width: 100%;
+    font-size: 14px;
+
+    cursor: pointer;
+
+    input {
+        cursor: pointer;
+
+        &:read-only {
+            background-color: var(--background-default);
+            color: var(--text-primary);
+        }
+    }
+
+    &__option {
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border: none;
+        width: 100%;
+        border-radius: var(--radius);
+        background-color: var(--background-default);
+        transition: all $animation;
+        color: var(--text-primary);
+
+        &:hover {
+            background-color: var(--background-paper);
+        }
+
+        &.selected {
+            background-color: var(--text-disabled);
+        }
+    }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "@cda/ui",
+  "private": true,
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "author": "leonardo.goncalves <leogoncalves.contato@gmail.com>",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    },
+    "./*": {
+      "import": "./src/*/index.ts",
+      "require": "./src/*/index.ts"
+    },
+    "./styles/*": "./src/styles/*",
+    "./assets/*": "./assets/*"
+  },
+  "scripts": {
+    "rollup": "rollup -c --bundleConfigAsCjs ",
+    "build": "rimraf dist && npm run assets && npm run rollup && npm run alias",
+    "alias": "tsc-alias -p tsconfig.aliases.json",
+    "watch": "rollup -c --bundleConfigAsCjs --watch",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "assets": "mkdirp dist/assets && cp -r assets/* dist/assets"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "1.9.0",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-image": "^3.0.3",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@storybook/addon-essentials": "8.6.4",
+    "@storybook/addon-interactions": "8.6.4",
+    "@storybook/addon-links": "8.6.4",
+    "@storybook/addon-onboarding": "8.6.4",
+    "@storybook/blocks": "8.6.4",
+    "@storybook/react": "8.6.4",
+    "@storybook/react-vite": "8.6.4",
+    "@storybook/test": "8.6.4",
+    "prop-types": "15.8.1",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.34.9",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-sass": "^1.15.2",
+    "rollup-plugin-scss": "^4.0.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "storybook": "8.6.4",
+    "tsc-alias": "^1.8.11",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "peerDependencies": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "packageManager": "yarn@3.2.1",
+  "dependencies": {
+    "glob": "^11.0.1"
+  }
+}

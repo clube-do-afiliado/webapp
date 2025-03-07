@@ -1,0 +1,44 @@
+// @use "../../styles/main.scss" as *
+
+.ui-alert-container {
+    top: 15px;
+    z-index: 50;
+    right: 15px;
+    position: fixed;
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+
+    @include for-compacted {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.ui-alert {
+    height: 48px;
+    min-width: 150px;
+    width: max-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: var(--radius);
+
+    @each $color in $colors {
+        &--#{$color} {
+            color: var(--#{$color});
+            background-color: var(--#{$color}-light);
+            box-shadow: $boxShadow;
+
+            .ui-alert__icon {
+                margin-right: 8px;
+            }
+
+            .ui-alert__button {
+                margin-left: 8px;
+            }
+        }
+    }
+}

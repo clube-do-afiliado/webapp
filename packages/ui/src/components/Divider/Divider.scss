@@ -1,0 +1,9 @@
+// @use "../../styles/main.scss" as *
+
+.ui-divider {
+    height: 1px;
+    background-color: var(--divider);
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    border-radius: var(--radius);
+}

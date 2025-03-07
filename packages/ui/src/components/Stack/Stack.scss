@@ -1,0 +1,31 @@
+// @use "../../styles/main.scss" as *
+
+.ui-stack {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+
+    &__column {
+        flex-direction: column;
+    }
+
+    &__row {
+        flex-direction: row;
+    }
+
+    &__small {
+        gap: $spacing-small;
+    }
+
+    &__medium {
+        gap: $spacing-regular;
+    }
+
+    &__large {
+        gap: $spacing-xlarge;
+    }
+
+    &__nogap {
+        gap: 0;
+    }
+}

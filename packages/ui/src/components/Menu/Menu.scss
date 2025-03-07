@@ -1,0 +1,44 @@
+// @use "../../styles/main.scss" as *
+
+.ui-menu {
+    position: absolute;
+    word-break: break-all;
+    white-space: pre-wrap;
+    display: flex;
+    flex-direction: column;
+
+    &__content {
+        overflow: auto;
+        box-shadow: $boxShadow;
+    }
+
+    &.open {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    &.close {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    .ui-menu__item {
+        border: none;
+        padding: 8px 16px;
+        position: relative;
+        background-color: transparent;
+        color: var(--text-primary);
+        transition: all $animation;
+        border-radius: var(--radius);
+
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            background-color: var(--divider);
+        }
+    }
+}
