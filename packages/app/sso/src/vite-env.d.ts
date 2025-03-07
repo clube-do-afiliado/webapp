@@ -13,6 +13,12 @@ interface ImportMetaEnv {
     readonly VITE_STORAGE_BUCKET: string;
     readonly VITE_MEASUREMENT_ID: string;
     readonly VITE_MESSAGING_SENDER_ID: string;
+
+    // URLS
+    readonly VITE_SSO_URL: string;
+    readonly VITE_ADMIN_URL: string;
+    readonly VITE_STORE_URL: string;
+    readonly VITE_BACKOFFICE_URL: string;
 }
 
 interface ImportMeta {

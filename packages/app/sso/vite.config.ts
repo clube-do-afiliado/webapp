@@ -18,6 +18,17 @@ export default defineConfig({
     server: {
         host: true,
     },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                additionalData: `
+                    @use "@cda/ui/styles/mixin.scss" as *;
+                    @use "@cda/ui/styles/reset.scss" as *;
+                    @use "@cda/ui/styles/variables.scss" as *;
+                `
+            },
+        },
+    },
     optimizeDeps: {
         esbuildOptions: {
             // Node.js global to browser globalThis

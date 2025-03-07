@@ -13,11 +13,7 @@
     "preview": "vite preview --port 3000"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
     "@firebase/auth": "^1.9.1",
-    "@mui/icons-material": "^6.4.7",
-    "@mui/material": "^6.4.7",
     "firebase": "^11.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -26,7 +22,6 @@
     "react-shadow": "^20.6.0"
   },
   "devDependencies": {
-    "@mui/types": "^7.2.21",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
