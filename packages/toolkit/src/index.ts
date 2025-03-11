@@ -8,3 +8,4 @@ export * from './object';
 export * from './logger';
 export * from './string';
 export * from './interface';
+export * from './validators';

@@ -10,7 +10,7 @@ class Local<T extends string> {
 
         if (!data) { return null as K; }
 
-        return parse ? JSON.parse(data) : data;
+        return parse ? JSON.parse(data) : data as K;
     }
 
     public set(key: T, value: string | Record<string, any>): void {

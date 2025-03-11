@@ -9,5 +9,8 @@
     ],
     "[scss]": {
       "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "[yaml]": {
+      "editor.defaultFormatter": "redhat.vscode-yaml"
     }
 }

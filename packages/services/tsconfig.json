@@ -16,11 +16,6 @@
       "es2018",
       "dom"
     ],
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
     "plugins": [
       {
         "transform": "typescript-transform-paths",
