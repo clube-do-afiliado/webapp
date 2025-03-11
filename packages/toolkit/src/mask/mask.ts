@@ -24,15 +24,15 @@ export function maskCpf(value: string | undefined): string {
         .substring(0, 14);
 }
 
-export function maskcurrency(value = 0, country: Country = 'br'): string {
+export function maskCurrency(value = 0, country: Country = 'br'): string {
     const MAP = {
-        br: { locale: 'pt-BR', currency: 'BRL', },
+        br: { locale: 'pt-BR', currency: 'BRL' },
     };
     const mapped = MAP[country];
 
     return new Intl
-        .NumberFormat(mapped.locale, { style: 'currency', currency: mapped.currency, maximumSignificantDigits: 7 })
-        .format(value)
+        .NumberFormat(mapped.locale, { style: 'currency', currency: mapped.currency })
+        .format(value / 100)
         .replace(/\s/, ' ');
 }
 

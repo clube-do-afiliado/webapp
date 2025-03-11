@@ -15,3 +15,9 @@ export function getPage<T>(): T {
         .reverse()
         .filter(Boolean)[0] as T;
 }
+
+export function getPath<T>(): T {
+    return window.location.pathname
+        .split('/')
+        .filter(Boolean)[0] as T;
+}
