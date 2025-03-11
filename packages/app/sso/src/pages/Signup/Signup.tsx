@@ -14,9 +14,9 @@ import Container from '@cda/ui/components/Container';
 import ButtonIcon from '@cda/ui/components/ButtonIcon';
 import Typography from '@cda/ui/components/Typography';
 import { Card, CardContent } from '@cda/ui/components/Card';
-import Form, { Control, FormControl, useForm } from '@cda/ui/components/Form';
+import { Form, Control, FormControl, useForm } from '@cda/ui/components/Form';
 
-import { useAuth } from '@/context';
+import { useAuth } from '@cda/common/Auth';
 
 interface SignupForm {
     name: string;
@@ -27,7 +27,7 @@ interface SignupForm {
 
 export default function Signup() {
     const navigate = useNavigate();
-    const { createUser } = useAuth();
+    const { createByAuth } = useAuth();
 
     const [loading, setLoading] = useState(false);
     const [type, setType] = useState<'text' | 'password'>('password');
@@ -36,10 +36,10 @@ export default function Signup() {
 
     const [formGroup] = useForm<SignupForm>({
         form: {
-            name: new FormControl({ defaultValue: 'teste', type: 'text', required: true }),
-            email: new FormControl({ defaultValue: 'teste@teste.com', type: 'email', required: true }),
-            password: new FormControl({ defaultValue: '123123', type: 'password', required: true }),
-            confirmPassword: new FormControl({ defaultValue: '123123', type: 'password', required: true }),
+            name: new FormControl({ defaultValue: '', type: 'text', required: true }),
+            email: new FormControl({ defaultValue: '', type: 'email', required: true }),
+            password: new FormControl({ defaultValue: '', type: 'password', required: true }),
+            confirmPassword: new FormControl({ defaultValue: '', type: 'password', required: true }),
         },
         handle: {
             submit(form) {
@@ -47,7 +47,7 @@ export default function Signup() {
 
                 const { email, name, password } = form.values;
 
-                createUser({ email, name, password })
+                createByAuth({ email, name, password })
                     .finally(() => setLoading(false));
             },
         },

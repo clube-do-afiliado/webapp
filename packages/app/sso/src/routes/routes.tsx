@@ -3,6 +3,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import App from '@/App';
 import Signin from '@/pages/Signin';
 import Signup from '@/pages/Signup';
+import CreatePassword from '@/pages/CreatePassword';
 
 export const router = createBrowserRouter([
     {
@@ -24,6 +25,11 @@ export const router = createBrowserRouter([
                 path: '/signup',
                 loader: () => document.title = 'Clube do afiliado - Criar conta',
                 element: <Signup />,
+            },
+            {
+                path: '/create-password',
+                loader: () => document.title = 'Clube do afiliado - Criar senha',
+                element: <CreatePassword />,
             },
             {
                 path: '*',

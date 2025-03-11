@@ -7,6 +7,7 @@ import {
     GoogleAuthProvider,
     connectAuthEmulator,
     signInWithEmailAndPassword,
+    confirmPasswordReset,
     createUserWithEmailAndPassword,
 } from 'firebase/auth';
 
@@ -18,6 +19,7 @@ import UserServices from '@cda/services/user';
 export const url = {
     sso: import.meta.env.VITE_SSO_URL,
     admin: import.meta.env.VITE_ADMIN_URL,
+    store: import.meta.env.VITE_STORE_URL,
     backoffice: import.meta.env.VITE_BACKOFFICE_URL,
 };
 
@@ -55,6 +57,7 @@ export const authServices = new AuthServices({
     signOut: () => signOut(firebaseAuth),
     googleAuth: () => signInWithPopup(firebaseAuth, googleProvider),
     signInWithPassword: (email, password) => signInWithEmailAndPassword(firebaseAuth, email, password),
+    confirmPasswordReset: (oobCode: string, password: string) => confirmPasswordReset(firebaseAuth, oobCode, password),
     createUserWithEmailAndPassword: (email, password) => createUserWithEmailAndPassword(firebaseAuth, email, password),
 }, url.sso);
 

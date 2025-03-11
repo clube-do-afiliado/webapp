@@ -4,7 +4,9 @@ import { useEffect } from 'react';
 import AlertProvider from '@cda/ui/components/Alert';
 import { createTheme, ThemeProvider, useTheme } from '@cda/ui/theme';
 
-import { AuthProvider } from './context';
+import { AuthProvider } from '@cda/common/Auth';
+
+import { authServices, userServices, url } from '@/services/core';
 
 function setFavicon(color: string) {
     let link = document.querySelector<HTMLLinkElement>('link[rel~=\'icon\']');
@@ -40,7 +42,11 @@ export default function App() {
     return (
         <ThemeProvider theme={createTheme()}>
             <AlertProvider>
-                <AuthProvider>
+                <AuthProvider
+                    url={url}
+                    authServices={authServices}
+                    userServices={userServices}
+                >
                     <Content />
                 </AuthProvider>
             </AlertProvider>
