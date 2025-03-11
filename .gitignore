@@ -12,6 +12,7 @@ coverage/
 #ENV
 .env
 .env.local
+.env.hmg
 .env.qa
 .env.prod
 .env.test
