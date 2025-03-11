@@ -1,9 +1,8 @@
 import { cloneElement, HTMLAttributes } from 'react';
 
 import { joinClass } from '../../utils';
-import type { Colors } from '../../theme';
-
 import type { IconProps } from '../Icon';
+import type { Colors } from '../../theme';
 import type { Variant } from './interface';
 
 import './Tabs.scss';

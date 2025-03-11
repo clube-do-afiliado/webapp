@@ -4,11 +4,10 @@ import { slug } from '@cda/toolkit/string';
 
 import Icon from '../../components/Icon';
 import Stack from '../../components/Stack';
-import Typography from '../../components/Typography';
-import { useTheme, getContrastColor, convertPathToColor, MappedColors } from '../../theme';
-
 import { CHART_COLORS } from '../colors';
+import Typography from '../../components/Typography';
 import type { ChartData, ChartItem } from '../interface';
+import { useTheme, getContrastColor, convertPathToColor, MappedColors } from '../../theme';
 
 import './StackBar.scss';
 

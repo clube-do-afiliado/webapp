@@ -23,7 +23,9 @@
 //     });
 
 //     it('Should receive a custom class', () => {
-//         const { getByTestId } = render(<Tab data-testid="fourth-tab" label="Terceira Aba" className="custom-class" />);
+//         const { getByTestId } = render(
+//              <Tab data-testid="fourth-tab" label="Terceira Aba" className="custom-class" />
+//          );
 
 //         expect(getByTestId('fourth-tab')).toHaveClass('custom-class');
 //     });

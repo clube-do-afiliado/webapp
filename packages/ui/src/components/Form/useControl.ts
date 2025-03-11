@@ -1,8 +1,7 @@
 import { useContext } from 'react';
 
-import debounce from '../../utils/debounce';
-
 import FormContext from './FormContext';
+import debounce from '../../utils/debounce';
 
 function sanitizeOnlyNumbers(value: string) {
     const regex = /[\D]/g;

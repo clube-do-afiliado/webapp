@@ -9,11 +9,10 @@ import {
 } from 'react';
 
 import Icon from '../../components/Icon';
+import type { OptionProps } from './Option';
 import joinClass from '../../utils/joinClass';
 import { Menu, useMenu } from '../../components/Menu';
 import createComponent from '../../core/createComponent';
-
-import type { OptionProps } from './Option';
 
 import '../Input/Input.scss';
 import './Select.scss';

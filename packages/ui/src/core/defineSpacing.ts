@@ -1,8 +1,7 @@
 import type { CSSProperties } from 'react';
 
-import { useTheme } from '../theme';
-
 import { Plugin } from './plugin';
+import { useTheme } from '../theme';
 import type { CustomOptions } from './customOptions';
 
 export interface SpacingOptions {

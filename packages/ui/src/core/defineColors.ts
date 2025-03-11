@@ -1,9 +1,8 @@
 import type { CSSProperties } from 'react';
 
-import { useTheme, type PaletteBuilded } from '../theme';
-
 import { Plugin } from './plugin';
 import type { CustomOptions } from './customOptions';
+import { useTheme, type PaletteBuilded } from '../theme';
 
 export type Color = {
     color: (palette: PaletteBuilded) => string;

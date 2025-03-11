@@ -2,14 +2,13 @@ import React, { Children, ReactElement, useEffect, cloneElement, useState, useRe
 
 import { uuid } from '@cda/toolkit/uuid';
 
+import { IconProps } from '../Icon';
+import { Variant } from './interface';
 import { joinClass } from '../../utils';
 import type { Colors } from '../../theme';
+import type { TabProps } from './TabButton';
 import { useListenerResized } from '../../hooks';
 import createComponent from '../../core/createComponent';
-
-import { Variant } from './interface';
-import type { TabProps } from './TabButton';
-import { IconProps } from '../Icon';
 
 function validateCurrent(length: number, current: number) {
     if (current > length) {

@@ -1,12 +1,11 @@
 import { InputHTMLAttributes, useEffect, useState } from 'react';
 
+import COLORS from './colors';
 import { joinClass } from '../../utils';
 import Icon from '../../components/Icon';
 import Stack from '../../components/Stack';
-import { getContrastColor, useTheme } from '../../theme';
 import { Menu, useMenu } from '../../components/Menu';
-
-import COLORS from './colors';
+import { getContrastColor, useTheme } from '../../theme';
 
 import './ColorPicker.scss';
 

@@ -7,10 +7,9 @@ import React, {
     JSXElementConstructor,
 } from 'react';
 
-import createComponent from '../../core/createComponent';
-
 import FormGroup from './formGroup';
 import FormContext from './FormContext';
+import createComponent from '../../core/createComponent';
 
 type ChildrenElem = ReactElement<any, string | JSXElementConstructor<any>>[];
 

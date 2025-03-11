@@ -1,7 +1,6 @@
 import { ChangeEvent, Children, cloneElement, ReactElement, useCallback, useEffect, useState } from 'react';
 
 import Stack from '../../components/Stack';
-
 import type { CheckboxProps } from './Checkbox';
 
 type CheckboxData = { id: string; value: any; checked: boolean };

@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
+import Alert from './Alert';
 import Slide from '../../animations/Slide';
 import useResize from '../../hooks/useResize';
-
 import AlertModel, { AlertData } from './alertModel';
 import AlertContext, { type IAlertContext } from './AlertContext';
-import Alert from './Alert';
 
 import './Alert.scss';
 

@@ -5,13 +5,12 @@ import { maskCurrency } from '@cda/toolkit/mask';
 
 import { joinClass } from '../../utils';
 import Icon from '../../components/Icon';
+import { CHART_COLORS } from '../colors';
 import Stack from '../../components/Stack';
 import Typography from '../../components/Typography';
 import { Card, CardContent } from '../../components/Card';
-import { convertPathToColor, MappedColors, useTheme } from '../../theme';
-
-import { CHART_COLORS } from '../colors';
 import type { ChartData, ChartItem } from '../interface';
+import { convertPathToColor, MappedColors, useTheme } from '../../theme';
 
 import './Donut.scss';
 
