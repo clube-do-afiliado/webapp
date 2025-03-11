@@ -30,7 +30,7 @@
         &--#{$color} {
             color: var(--#{$color});
             background-color: var(--#{$color}-light);
-            box-shadow: $boxShadow;
+            box-shadow: $boxShadowSmall;
 
             .ui-alert__icon {
                 margin-right: 8px;

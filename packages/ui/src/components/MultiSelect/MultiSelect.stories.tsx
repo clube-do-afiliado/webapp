@@ -6,7 +6,7 @@ import Chip from '@/components/Chip';
 import Icon from '@/components/Icon';
 import { Checkbox } from '@/components/Checkbox';
 import ButtonIcon from '@/components/ButtonIcon';
-import Form, { Control, FormControl, useForm } from '@/components/Form';
+import { Form, Control, FormControl, useForm } from '@/components/Form';
 
 import MultiSelect from './MultiSelect';
 

@@ -74,6 +74,18 @@ export const WithIcon: StoryObj<typeof Chip> = {
     }
 };
 
+export const Size: StoryObj<typeof Chip> = {
+    render: () => {
+        return (
+            <Stack orientation="row" spacing="small">
+                <Chip label="small" variant="contained" size="small" />
+                <Chip label="medium" variant="contained" />
+                <Chip label="large" variant="contained" size="large" />
+            </Stack>
+        );
+    }
+};
+
 export const clickabel: StoryObj<typeof Chip> = {
     render: () => {
         return (

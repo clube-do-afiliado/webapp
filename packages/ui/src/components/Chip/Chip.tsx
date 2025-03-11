@@ -1,6 +1,6 @@
 import { cloneElement, HTMLAttributes, MouseEvent } from 'react';
 
-import { Colors } from '../../theme';
+import { Colors, Size } from '../../theme';
 import Ripple from '../../components/Ripple';
 import joinClass from '../../utils/joinClass';
 import type { IconProps } from '../../components/Icon';
@@ -10,6 +10,7 @@ import './Chip.scss';
 
 export interface ChipProps extends Omit<HTMLAttributes<HTMLElement>, 'children'> {
     label: string;
+    size?: Size;
     color?: Colors | 'default';
     variant?: 'contained' | 'outlined';
     icon?: React.JSX.Element;
@@ -18,6 +19,7 @@ export interface ChipProps extends Omit<HTMLAttributes<HTMLElement>, 'children'>
 function Chip({
     label,
     icon,
+    size = 'medium',
     color = 'default',
     variant = 'contained',
     onDelete,
@@ -27,6 +29,7 @@ function Chip({
         'ui-chip',
         `ui-chip--${color}`,
         `ui-chip--${color}--${variant}`,
+        `ui-chip--${size}`,
         onDelete && 'ui-chip--deletable',
         props.onClick && 'ui-chip--clickable',
         props.className

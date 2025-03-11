@@ -79,9 +79,7 @@ export default function BasePage({
                             <Stack justifyContent="center" alignItems="center" className="ui-page__loading-container">
                                 <Loading size={70} />
                             </Stack>
-                        ) : (
-                            children
-                        )
+                        ) : children
                     }
                 </div>
             </Slide>

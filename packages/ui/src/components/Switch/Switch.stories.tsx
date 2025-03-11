@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import Stack from '@/components/Stack';
-import Form, { Control, FormControl, useForm } from '@/components/Form';
+import { Form, Control, FormControl, useForm } from '@/components/Form';
 
 import Switch from './Switch';
 

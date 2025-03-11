@@ -102,7 +102,7 @@
         position: relative;
         border-radius: var(--radius);
         transition: all $animation;
-        box-shadow: $boxShadow;
+        box-shadow: $boxShadowSmall;
 
         display: flex;
         justify-content: center;

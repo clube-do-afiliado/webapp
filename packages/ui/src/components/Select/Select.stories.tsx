@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import Form, { Control, FormControl, useForm } from '@/components/Form';
+import { Form, Control, FormControl, useForm } from '@/components/Form';
 
 import Select from './Select';
 import Option from './Option';

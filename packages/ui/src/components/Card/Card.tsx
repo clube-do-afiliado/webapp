@@ -1,18 +1,21 @@
 import { HTMLAttributes, PropsWithChildren } from 'react';
 
+import Ripple from '../Ripple';
 import joinClass from '../../utils/joinClass';
 import createComponent from '../../core/createComponent';
 
 import './Card.scss';
 
-type CardProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
-function Card({ children, ...props }: CardProps) {
-
-    const cls = joinClass(['ui-card', props.className]);
+interface CardProps extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
+    onClick?: (e?: any) => void
+}
+function Card({ children, onClick, ...props }: CardProps) {
+    const cls = joinClass(['ui-card', onClick && 'ui-card--clickable', props.className]);
 
     return (
-        <div {...props} className={cls}>
+        <div {...props} className={cls} onMouseDown={onClick}>
             {children}
+            {onClick && <Ripple />}
         </div>
     );
 }

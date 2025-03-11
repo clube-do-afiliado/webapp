@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import Form, { useForm, Control, FormControl } from '@/components/Form';
+import { Form, useForm, Control, FormControl } from '@/components/Form';
 
 import Checkbox from './Checkbox';
 import CheckboxGroup from './CheckboxGroup';

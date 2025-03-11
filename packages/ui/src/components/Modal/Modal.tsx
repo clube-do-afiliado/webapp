@@ -1,12 +1,11 @@
 import { HTMLAttributes, useEffect, useState } from 'react';
 
+import ButtonIcon from '../ButtonIcon';
 import Icon from '../../components/Icon';
 import Stack from '../../components/Stack';
 import joinClass from '../../utils/joinClass';
 import createComponent from '../../core/createComponent';
 import { Card, CardContent } from '../../components/Card';
-
-import ButtonIcon from '../ButtonIcon';
 
 import './Modal.scss';
 
@@ -60,8 +59,8 @@ function Modal({ children, title, subtitle, isOpen, onClose, ...props }: ModalPr
         config.visible && (
             <div className={backdropClassName} onClick={onClose}>
                 <div className="ui-modal__container">
-                    <Card className={className} onClick={(e) => e.stopPropagation()}>
-                        <CardContent>
+                    <Card className={className}>
+                        <CardContent onClick={(e) => e.stopPropagation()}>
                             <Stack
                                 orientation="row"
                                 alignItems="flex-start"

@@ -1,10 +1,10 @@
-import { HtmlHTMLAttributes } from 'react';
+import { HtmlHTMLAttributes, PropsWithChildren } from 'react';
 
 import createComponent from '../../core/createComponent';
 
 import './Drawer.scss';
 
-interface DrawerContentProps extends HtmlHTMLAttributes<HTMLDivElement> { children: React.ReactNode; }
+type DrawerContentProps = PropsWithChildren<HtmlHTMLAttributes<HTMLDivElement>>
 function DrawerContent({ children, ...props }: DrawerContentProps) {
     return (
         <div className="box" {...props}>

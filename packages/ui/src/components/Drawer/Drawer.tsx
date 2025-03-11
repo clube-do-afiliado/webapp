@@ -14,12 +14,14 @@ type Config = { animation: AnimationClass, visible: boolean };
 interface DrawerProps extends React.HTMLAttributes<HTMLDivElement> {
     open: boolean;
     orientation?: Orientation;
-    children: React.ReactNode;
+    body: React.JSX.Element;
+    footer?: React.JSX.Element;
     onClose: () => void;
 }
 function Drawer({
     open,
-    children,
+    body,
+    footer,
     orientation = 'right',
     onClose,
     ...props
@@ -60,7 +62,8 @@ function Drawer({
                             <Icon name="times" />
                         </ButtonIcon>
                     </div>
-                    {children}
+                    {body}
+                    {footer}
                 </div>
                 <div
                     data-testid="drawer-overlay"
