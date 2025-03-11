@@ -1,13 +1,16 @@
+import logger from '@cda/toolkit/logger';
 import { decode } from '@cda/toolkit/jwt';
 import { local } from '@cda/toolkit/dom/local';
 import { Cookies } from '@cda/toolkit/dom/cookies';
 
-import { UserData } from '../user';
+import type { FirebaseUser } from '../user';
 
 export interface AuthConfig {
     signOut: () => Promise<any>;
     googleAuth?: () => Promise<any>;
+    sendPasswordResetEmail?: (email: string) => Promise<any>;
     signInWithPassword?: (email: string, password: string) => Promise<any>;
+    confirmPasswordReset?: (oobCode: string, password: string) => Promise<any>;
     createUserWithEmailAndPassword?: (email: string, password: string) => Promise<any>;
 }
 
@@ -26,12 +29,11 @@ export default class AuthServices {
             });
     }
 
-    public async logout(redirect: () => void) {
+    public async logout() {
         return this.methods.signOut()
             .then(() => {
                 local.remove('user');
                 this.cookies.remove('access_token');
-                redirect();
             });
     }
 
@@ -42,11 +44,30 @@ export default class AuthServices {
             });
     }
 
-    public async createUserWithPassword(email: string, password: string) {
+    public async createUserWithPassword(email: string, password: string, options?: { persist: boolean }) {
         return this.methods.createUserWithEmailAndPassword(email, password)
             .then(r => {
-                this.access_token = r._tokenResponse.idToken;
-                return decode<UserData>(r._tokenResponse.idToken);
+                if (options?.persist) { this.access_token = r._tokenResponse.idToken; }
+
+                return decode<FirebaseUser>(r._tokenResponse.idToken);
             });
+    }
+
+    public async sendMailToResetPassword(email: string) {
+        return this.methods.sendPasswordResetEmail(email)
+            .then(console.log);
+    }
+
+    public async confirmPasswordReset(password: string) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const oobCode = urlParams.get('oobCode');
+
+        if (!oobCode) {
+            logger.error('Código de redefinição ausente.');
+            return;
+        }
+
+        return this.methods.confirmPasswordReset(oobCode, password)
+            .then(console.log);
     }
 }

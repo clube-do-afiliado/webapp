@@ -1,2 +1,2 @@
-export { default } from './user';
+export { default } from './userServices';
 export type * from './interface';

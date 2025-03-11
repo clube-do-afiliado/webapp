@@ -2,7 +2,7 @@
 import { local } from '@cda/toolkit/dom/local';
 import type { Cookies } from '@cda/toolkit/dom/cookies';
 
-import Auth, { AuthConfig } from './auth';
+import Auth, { AuthConfig } from './authServices';
 
 jest.mock('@cda/toolkit/dom/local', () => ({
     local: {
