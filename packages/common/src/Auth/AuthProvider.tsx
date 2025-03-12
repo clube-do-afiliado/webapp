@@ -152,7 +152,7 @@ export default function AuthProvider({
                 logger.info('usuário criado no autenticador!', user);
                 return user;
             })
-            .then(user => userServices.createByAuth({ id: user.user_id, email, name }))
+            .then(user => userServices.createByAuth({ id: user?.user_id as string, email, name }))
             .then(user => {
                 logger.info('usuario criado!', user);
                 return user;

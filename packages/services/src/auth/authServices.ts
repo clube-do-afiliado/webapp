@@ -6,7 +6,7 @@ import { Cookies } from '@cda/toolkit/dom/cookies';
 import type { FirebaseUser } from '../user';
 
 export interface AuthConfig {
-    signOut: () => Promise<any>;
+    signOut?: () => Promise<any>;
     googleAuth?: () => Promise<any>;
     sendPasswordResetEmail?: (email: string) => Promise<any>;
     signInWithPassword?: (email: string, password: string) => Promise<any>;
@@ -23,6 +23,8 @@ export default class AuthServices {
     set access_token(token: string) { this.cookies.set('access_token', token); }
 
     public async login() {
+        if (!this.methods.googleAuth) { return; }
+
         return this.methods.googleAuth()
             .then(r => {
                 this.access_token = r.user.accessToken;
@@ -30,7 +32,9 @@ export default class AuthServices {
     }
 
     public async logout() {
-        return this.methods.signOut()
+        if (!this.methods.signOut) { return; }
+
+        return this.methods?.signOut()
             .then(() => {
                 local.remove('user');
                 this.cookies.remove('access_token');
@@ -38,14 +42,18 @@ export default class AuthServices {
     }
 
     public async loginWithPassword(email: string, password: string) {
-        return this.methods.signInWithPassword(email, password)
+        if (!this.methods.signInWithPassword) { return; }
+
+        return this.methods?.signInWithPassword(email, password)
             .then(r => {
                 this.access_token = r.user.accessToken;
             });
     }
 
     public async createUserWithPassword(email: string, password: string, options?: { persist: boolean }) {
-        return this.methods.createUserWithEmailAndPassword(email, password)
+        if (!this.methods.createUserWithEmailAndPassword) { return; }
+
+        return this.methods?.createUserWithEmailAndPassword(email, password)
             .then(r => {
                 if (options?.persist) { this.access_token = r._tokenResponse.idToken; }
 
@@ -54,11 +62,15 @@ export default class AuthServices {
     }
 
     public async sendMailToResetPassword(email: string) {
-        return this.methods.sendPasswordResetEmail(email)
+        if (!this.methods.sendPasswordResetEmail) { return; }
+
+        return this.methods?.sendPasswordResetEmail(email)
             .then(console.log);
     }
 
     public async confirmPasswordReset(password: string) {
+        if (!this.methods.confirmPasswordReset) { return; }
+
         const urlParams = new URLSearchParams(window.location.search);
         const oobCode = urlParams.get('oobCode');
 
@@ -67,7 +79,7 @@ export default class AuthServices {
             return;
         }
 
-        return this.methods.confirmPasswordReset(oobCode, password)
+        return this.methods?.confirmPasswordReset(oobCode, password)
             .then(console.log);
     }
 }

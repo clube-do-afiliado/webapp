@@ -1,0 +1,41 @@
+name: Setup
+
+on:
+  workflow_call:
+    inputs:
+      BUILD_ENV:
+        required: true
+        type: string
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: "yarn"
+
+      - name: Cache node_modules
+        id: cache-yarn
+        uses: actions/cache@v4
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-setup-${{ inputs.BUILD_ENV }}-${{ hashFiles('./yarn.lock') }}
+          restore-keys: ${{ runner.os }}-setup-${{ inputs.BUILD_ENV }}-${{ hashFiles('./yarn.lock') }}
+
+      - name: Cache Cypress
+        id: cache-cypress
+        uses: actions/cache@v4
+        with:
+          path: "~/.cache/Cypress"
+          key: cypress-cache-${{ runner.os }}-${{ hashFiles('./yarn.lock') }}
+          restore-keys: cypress-cache-${{ runner.os }}-${{ hashFiles('./yarn.lock') }}
+        
+      - name: Install dependencies
+        if: steps.cache-yarn.outputs.cache-hit != 'true'
+        run: yarn install --immutable

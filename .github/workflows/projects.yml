@@ -1,0 +1,105 @@
+name: Build Project
+
+on:
+  workflow_call:
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: string
+      PROJECT:
+        required: true
+        type: string
+      COMMAND:
+        required: true
+        type: string
+      BUILD_ENV:
+        required: true
+        type: string
+      PATH:
+        required: true
+        type: string
+      FIREBASE_PROJECT_ID:
+        required: true
+        type: string
+      SSO_URL:
+          required: true
+          type: string
+      ADMIN_URL:
+        required: true
+        type: string
+      STORE_URL:
+        required: true
+        type: string
+      BACKOFFICE_URL:
+        required: true
+        type: string
+    secrets:
+      FIREBASE_API_KEY:
+        required: true
+      FIREBASE_MESSAGING_SENDER_ID:
+        required: true
+      
+jobs:
+  environment:
+    runs-on: ubuntu-latest
+    outputs:
+      tag_name: ${{ steps.tag_name.outputs.value }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get TAG name
+        id: tag_name
+        run: echo "value=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+  build:
+    needs: [environment]
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.ENVIRONMENT }}
+    env:
+      # Environment
+      VITE_ENV: ${{ inputs.BUILD_ENV }}
+      VITE_RELEASE: ${{ needs.environment.outputs.tag_name }}
+      # Firebase
+      VITE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+      VITE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+      VITE_PROJECT_ID: ${{ inputs.FIREBASE_PROJECT_ID }}
+      VITE_AUTH_DOMAIN: ${{ inputs.FIREBASE_PROJECT_ID }}.firebaseapp.com
+      VITE_STORAGE_BUCKET: ${{ inputs.FIREBASE_PROJECT_ID }}.firebasestorage.app
+      VITE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+      VITE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+      # Variables
+      VITE_SSO_URL: ${{ inputs.SSO_URL }}
+      VITE_ADMIN_URL: ${{ inputs.ADMIN_URL }}
+      VITE_STORE_URL: ${{ inputs.STORE_URL }}
+      VITE_BACKOFFICE_URL: ${{ inputs.BACKOFFICE_URL }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "yarn"
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-setup-${{ inputs.BUILD_ENV }}-${{ hashFiles('./yarn.lock') }}
+
+      - name: Cache ${{ inputs.PROJECT }}
+        id: cache-project
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/packages/app/${{ inputs.PROJECT }}/${{ inputs.PATH }}
+          key: ${{ runner.os }}-project-${{ inputs.PROJECT }}-${{ inputs.BUILD_ENV }}-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-project-${{ inputs.PROJECT }}-${{ inputs.BUILD_ENV }}-${{ github.sha }}
+
+      - name: Build ${{ inputs.PROJECT }}
+        if: steps.cache-project.outputs.cache-hit != 'true'
+        run: |
+          make run ${{ inputs.PROJECT }} ${{ inputs.COMMAND }}
