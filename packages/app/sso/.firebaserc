@@ -14,7 +14,7 @@
     "clube-do-afiliado-homolog": {
       "hosting": {
         "sso": [
-          "sso-clube-do-afiliado"
+          "hmg-sso-clube-do-afiliado"
         ]
       }
     }

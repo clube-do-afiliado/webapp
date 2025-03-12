@@ -14,7 +14,7 @@
     "clube-do-afiliado-homolog": {
       "hosting": {
         "backoffice": [
-          "backoffice-clube-do-afiliado"
+          "hmg-backoffice-clube-do-afiliado"
         ]
       }
     }
