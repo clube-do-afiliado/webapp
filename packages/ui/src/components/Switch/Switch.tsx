@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, useMemo, useState } from 'react';
+import { InputHTMLAttributes, useEffect, useMemo, useState } from 'react';
 
 import { uuid } from '@cda/toolkit/uuid';
 
@@ -33,6 +33,8 @@ function Switch({ label, error, helperText, color = 'primary', ...props }: Switc
     ]);
 
     const id = useMemo(() => `ui-switch-${uuid()}`, []);
+
+    useEffect(() => { setChecked(Boolean(props.checked)); }, [props.checked]);
 
     const handleToggle = () => {
         if (props.onChange) {
