@@ -13,6 +13,8 @@ export default function PermissionsList({ value, onChange }: PermissionsListProp
 
     useEffect(() => { if (onChange) { onChange(data); } }, [data]);
 
+    useEffect(() => { setData(value); }, [value]);
+
     const handleSelectPermission = (permission: Permission) => {
         const shouldRemove = data.includes(permission);
 

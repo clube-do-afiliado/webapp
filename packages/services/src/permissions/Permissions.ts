@@ -8,4 +8,4 @@ export default [
     'magalu:*',
     'mercado-livre:*',
     'amazon:*',
-] as const;
+] as const satisfies string[];

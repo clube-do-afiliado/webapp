@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import Input from '@cda/ui/components/Input';
+import Stack from '@cda/ui/components/Stack';
 import Button from '@cda/ui/components/Button';
 import Loading from '@cda/ui/components/Loading';
 import Typography from '@cda/ui/components/Typography';
 import { Form, FormControl, useForm, Control } from '@cda/ui/components/Form';
 import { Modal, ModalFooter, HelperModalProps } from '@cda/ui/components/Modal';
 
+import permissions from '@cda/services/permissions';
 import type { RoleConfig } from '@cda/services/roles';
 
 import { useRoles } from '@cda/common/Roles';
@@ -43,6 +45,10 @@ export default function FormRoleModal({ role, isOpen, onToggleModal }: HelperMod
     }, [role]);
 
     useEffect(() => { if (!isOpen) { formGroup.reset(); } }, [isOpen]);
+
+    const handleSelectAll = () => {
+        formGroup.setValues({ permissions: permissions as any[] });
+    };
 
     return (
         <Modal
@@ -88,15 +94,23 @@ export default function FormRoleModal({ role, isOpen, onToggleModal }: HelperMod
                         />
                     )}
                 />
-                <Typography noMargin variant="body1" color="text.secondary">Permissões</Typography>
+                <Stack orientation="row" justifyContent="space-between">
+                    <Typography noMargin variant="body1" color="text.secondary">Permissões</Typography>
+                    <Button
+                        size="small"
+                        type="button"
+                        variant="text"
+                        onClick={handleSelectAll}
+                    >
+                        Selecionar tudo
+                    </Button>
+                </Stack>
                 <div style={{ maxHeight: 400, overflow: 'auto' }}>
                     <Control
                         type="object"
                         controlName="permissions"
                         field={(control) => (
-                            <PermissionsList
-                                value={control.value}
-                            />
+                            <PermissionsList value={control.value} />
                         )}
                     />
                 </div>

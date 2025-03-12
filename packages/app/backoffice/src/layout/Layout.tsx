@@ -49,7 +49,6 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                     }}
                     onUpdateMode={toggleTheme}
                     onProfile={() => console.log('Profile')}
-                    onStartGuide={() => console.log('Start guide')}
                 />
             </Slide>
             <Stack orientation="row" nogap>
