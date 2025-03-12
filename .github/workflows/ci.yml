@@ -32,7 +32,7 @@ jobs:
     needs: [unit-tests]
     uses: ./.github/workflows/projects.yml
     with:
-      ENVIRONMENT: SSO STG
+      ENVIRONMENT: SSO HMG
       BUILD_ENV: local
       PATH: dist
       PROJECT: sso

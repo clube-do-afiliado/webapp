@@ -1,0 +1,54 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: string
+      PROJECT:
+        required: true
+        type: string
+      BUILD_ENV:
+        required: true
+        type: string
+      PATH: 
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.ENVIRONMENT }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: "yarn"
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-setup-${{ inputs.BUILD_ENV }}-${{ hashFiles('./yarn.lock') }}
+
+      - name: Cache ${{ inputs.PROJECT }}
+        id: cache-project
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/packages/app/${{ inputs.PROJECT }}/${{ inputs.PATH }}
+          key: ${{ runner.os }}-project-${{ inputs.PROJECT }}-${{ inputs.BUILD_ENV }}-${{ github.sha }}
+
+      - name: Firebase Deploy - ${{ inputs.BUILD_ENV }}
+        uses: w9jds/firebase-action@v13.15.0
+        with:
+          args: deploy --only hosting:${{ inputs.PROJECT }} --project=${{ inputs.BUILD_ENV }}
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_PATH: packages/app/${{ inputs.PROJECT }}

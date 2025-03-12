@@ -1,12 +1,20 @@
 {
   "projects": {
-    "production": "desafio-caju"
+    "production": "clube-do-afiliado",
+    "homolog": "clube-do-afiliado-homolog"
   },
   "targets": {
-    "desafio-caju": {
+    "clube-do-afiliado": {
       "hosting": {
         "sso": [
-          "sso-desafio-caju"
+          "sso-clube-do-afiliado"
+        ]
+      }
+    },
+    "clube-do-afiliado-homolog": {
+      "hosting": {
+        "sso": [
+          "sso-clube-do-afiliado"
         ]
       }
     }

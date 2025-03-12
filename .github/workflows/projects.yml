@@ -18,9 +18,6 @@ on:
       PATH:
         required: true
         type: string
-      FIREBASE_PROJECT_ID:
-        required: true
-        type: string
       SSO_URL:
           required: true
           type: string
@@ -31,6 +28,9 @@ on:
         required: true
         type: string
       BACKOFFICE_URL:
+        required: true
+        type: string
+      FIREBASE_PROJECT_ID:
         required: true
         type: string
     secrets:
