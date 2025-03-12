@@ -19,7 +19,7 @@ interface HeaderProps {
     user: User;
     onProfile: () => void;
     onUpdateMode: () => void;
-    onStartGuide: () => void;
+    onStartGuide?: () => void;
 }
 export default function Header({
     user,
@@ -42,14 +42,18 @@ export default function Header({
             </div>
 
             <Stack orientation="row" justifyContent="flex-end" alignItems="center">
-                <Button
-                    size="small"
-                    variant="text"
-                    startIcon={<Icon name="question-circle" />}
-                    onClick={onStartGuide}
-                >
-                    Ajuda
-                </Button>
+                {
+                    onStartGuide && (
+                        <Button
+                            size="small"
+                            variant="text"
+                            startIcon={<Icon name="question-circle" />}
+                            onClick={onStartGuide}
+                        >
+                            Ajuda
+                        </Button>
+                    )
+                }
                 <ButtonIcon onClick={onUpdateMode}>
                     <Icon name={modeIcon} />
                 </ButtonIcon>
