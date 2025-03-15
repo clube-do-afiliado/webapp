@@ -1,12 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import Page from '@cda/ui/layout/Page';
 import { debounce } from '@cda/ui/utils';
 import { useFilter } from '@cda/ui/hooks';
 import Icon from '@cda/ui/components/Icon';
-import Slide from '@cda/ui/animations/Slide';
-import Input from '@cda/ui/components/Input';
 import Stack from '@cda/ui/components/Stack';
+import Input from '@cda/ui/components/Input';
+import Slide from '@cda/ui/animations/Slide';
 import Button from '@cda/ui/components/Button';
 import Loading from '@cda/ui/components/Loading';
 import { useModal } from '@cda/ui/components/Modal';
@@ -14,33 +14,34 @@ import { useDrawer } from '@cda/ui/components/Drawer';
 import ButtonIcon from '@cda/ui/components/ButtonIcon';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
 import { Form, Control, FormControl, useForm } from '@cda/ui/components/Form';
-import Tooltip from '@cda/ui/components/Tooltip';
 
 import { slug } from '@cda/toolkit/string';
+import { orderByIndex } from '@cda/toolkit/array';
 
-import type { UserData } from '@cda/services/user';
+import { Plan } from '@cda/services/plans';
 
 import { EmptyContent } from '@cda/common/EmptyContent';
+import { planPriorityOrder, usePlans } from '@cda/common/Plans';
 
 import { release } from '@/services/core';
 
-import useUsers from './useUsers';
-import UserCard from './components/UserCard';
-import UserDrawer from './components/UserDrawer';
-import CreateUserModal from './components/FormUserModal';
+import CardPlan from './components/CardPlan';
+import PlanDrawer from './components/PlanDrawer';
+import FormPlanModal from './components/FormPlanModal';
 
-export default function Users() {
+export default function Plans() {
     const [open, toggle] = useModal();
-    const [openUserDrawer, toggleUserDrawer] = useDrawer();
+    const [openDrawer, toggleDrawer] = useDrawer();
 
-    const { users, getUsers } = useUsers();
+    const { plans } = usePlans();
+    const { filter, filtered, reset } = useFilter(plans);
 
-    const { filter, filtered, reset } = useFilter(users);
+    const [selectedPlanId, setSelectedPlanId] = useState<string>();
+    const [loadingList, setLoadingList] = useState(false);
 
-    const [selectedUserId, setSelectedUserId] = useState<string>();
-    const [loadingList, setLoadingList] = useState(true);
-
-    const selectedUser = useMemo(() => users.find(u => u.id === selectedUserId), [users, selectedUserId]);
+    const selectedPlan = useMemo(() => {
+        return plans.find(r => r.id === selectedPlanId);
+    }, [plans, selectedPlanId]);
 
     const [formGroup] = useForm<{ name: string; }>({
         form: {
@@ -65,19 +66,17 @@ export default function Users() {
         }
     }, []);
 
-    useEffect(() => { getUsers().then(() => setLoadingList(false)); }, []);
-
     const resetForm = () => { formGroup.setValues({ name: '' }); };
 
-    const handleOpenDrawer = (user: UserData) => {
-        setSelectedUserId(user.id);
-        toggleUserDrawer();
+    const handleSelectPlan = (plan: Plan) => {
+        setSelectedPlanId(plan.id);
+        toggleDrawer();
     };
 
     return (
         <Page
-            title="Usuários"
-            subtitle="Aqui você pode visualizar e gerenciar todos os usuários"
+            title="Planos"
+            subtitle="Aqui você pode visualizar e gerenciar todos os planos"
             release={release}
             action={
                 <Button
@@ -85,12 +84,13 @@ export default function Users() {
                     startIcon={<Icon name="plus" />}
                     onClick={toggle}
                 >
-                    Adicionar usuário
+                    Novo plano
                 </Button>
             }
         >
+
             <Stack>
-                <Grid xl={3} lg={4} md={6} sm={12}>
+                <Grid xl={2} lg={3} md={8} sm={12}>
                     <GridItem>
                         <Form formGroup={formGroup}>
                             <Control
@@ -100,7 +100,7 @@ export default function Users() {
                                     <Input
                                         fullWidth
                                         type="text"
-                                        placeholder="Nome do usuário"
+                                        placeholder="Nome do plano"
                                         startIcon={<Icon name="search" />}
                                         endIcon={
                                             control.value && (
@@ -121,52 +121,49 @@ export default function Users() {
                 {
                     loadingList && (
                         <Stack
-                            orientation="row"
                             alignItems="center"
                             justifyContent="center"
-                            style={{ height: 250 }}
+                            style={{ height: 100 }}
                         >
-                            <Loading size={50} />
+                            <Loading />
                         </Stack>
                     )
                 }
                 {
+                    !loadingList && !filtered.length && (
+                        <EmptyContent
+                            icon="file-check-alt"
+                            message="Nenhum plano foi encontrado"
+                        />
+                    )
+                }
+                {
                     !loadingList && Boolean(filtered.length) && (
-                        <Grid xl={3} lg={4} md={6} sm={12}>
+                        <Grid xl={2} lg={3} md={4} sm={12}>
                             {
-                                filtered.map((user, i) => (
-                                    <Tooltip key={user.id} label="ASdasdasdasdasdasdasdasdsd" direction="right">
-                                        <GridItem >
+                                orderByIndex(filtered, 'id', planPriorityOrder)
+                                    .map((plan, i) => (
+                                        <GridItem key={plan.id}>
                                             <Slide enter delay={(i + 1) * 100}>
-                                                <UserCard
-                                                    key={user.id}
-                                                    user={user}
-                                                    onClick={handleOpenDrawer}
+                                                <CardPlan
+                                                    plan={plan}
+                                                    onClick={() => handleSelectPlan(plan)}
                                                 />
                                             </Slide>
                                         </GridItem>
-                                    </Tooltip>
-                                ))
+                                    ))
                             }
-                        </Grid>)
+                        </Grid>
+                    )
                 }
             </Stack>
-            {
-                !loadingList && !filtered.length && (
-                    <EmptyContent
-                        message="Nenhum usuário encontrado"
-                        icon="user-exclamation"
-                    />
-                )
-            }
-            <UserDrawer
-                user={selectedUser}
-                isOpen={openUserDrawer}
-                onToggleDrawer={toggleUserDrawer}
-            />
-            <CreateUserModal
-                isOpen={open}
-                onToggleModal={toggle}
+
+            <FormPlanModal isOpen={open} onToggleModal={toggle} />
+
+            <PlanDrawer
+                integration={selectedPlan}
+                isOpen={openDrawer}
+                onToggleDrawer={toggleDrawer}
             />
         </Page>
     );

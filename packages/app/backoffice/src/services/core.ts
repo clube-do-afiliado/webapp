@@ -14,8 +14,9 @@ import {
 import DB from '@cda/services/db';
 import AuthServices from '@cda/services/auth';
 import UserServices from '@cda/services/user';
-import PlansServices from '@cda/services/plans';
 import RolesServices from '@cda/services/roles';
+import PlansServices from '@cda/services/plans';
+import IntegrationsServices from '@cda/services/integrations';
 
 // VARIABLES
 export const url = {
@@ -66,5 +67,6 @@ if (isLocal) {
 
 // ENTITY SERVICES
 export const userServices = new UserServices(db, url.sso);
-export const planServices = new PlansServices(db);
 export const rolesServices = new RolesServices(db);
+export const plansServices = new PlansServices(db);
+export const integrationsServices = new IntegrationsServices(db);

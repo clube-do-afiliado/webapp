@@ -10,6 +10,7 @@ import Content from '@cda/ui/layout/Content';
 import Loading from '@cda/ui/components/Loading';
 import { Sidebar, SidebarButton } from '@cda/ui/layout/Sidebar';
 import { createTheme, useTheme, themeDefaultLight, themeDefaultDark } from '@cda/ui/theme';
+import Tooltip from '@cda/ui/components/Tooltip';
 
 import { useAuth } from '@cda/common/Auth';
 
@@ -54,32 +55,48 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
             <Stack orientation="row" nogap>
                 <Slide enter direction="left" timeout={.3}>
                     <Sidebar
+                        compact
                         upButtons={
-                            <>
-                                <SidebarButton
-                                    path="users"
-                                    icon={<Icon name="users-alt" />}
-                                    onClick={() => navigate('/users')}
-                                />
-                                <SidebarButton
-                                    path="stores"
-                                    icon={<Icon name="store-alt" />}
-                                    onClick={() => navigate('/stores')}
-                                />
-                                <SidebarButton
-                                    path="roles"
-                                    icon={<Icon name="file-shield-alt" />}
-                                    onClick={() => navigate('/roles')}
-                                />
-                                <SidebarButton
-                                    path="plans"
-                                    icon={<Icon name="file-check-alt" />}
-                                    onClick={() => navigate('/plans')}
-                                />
-                            </>
+                            <div>
+                                <Tooltip label="Usuários" direction="right">
+                                    <SidebarButton
+                                        path="users"
+                                        icon={<Icon name="users-alt" />}
+                                        onClick={() => navigate('/users')}
+                                    />
+                                </Tooltip>
+                                <Tooltip label="Lojas" direction="right">
+                                    <SidebarButton
+                                        path="stores"
+                                        icon={<Icon name="store-alt" />}
+                                        onClick={() => navigate('/stores')}
+                                    />
+                                </Tooltip>
+                                <Tooltip label="Integrações" direction="right">
+                                    <SidebarButton
+                                        path="integrations"
+                                        icon={<Icon name="channel" />}
+                                        onClick={() => navigate('/integrations')}
+                                    />
+                                </Tooltip>
+                                <Tooltip label="Roles" direction="right">
+                                    <SidebarButton
+                                        path="roles"
+                                        icon={<Icon name="constructor" />}
+                                        onClick={() => navigate('/roles')}
+                                    />
+                                </Tooltip>
+                                <Tooltip label="Planos" direction="right">
+                                    <SidebarButton
+                                        path="plans"
+                                        icon={<Icon name="file-check-alt" />}
+                                        onClick={() => navigate('/plans')}
+                                    />
+                                </Tooltip>
+                            </div>
                         }
                         downButtons={
-                            <>
+                            <div>
                                 <SidebarButton
                                     icon={<Icon name="setting" />}
                                 />
@@ -87,7 +104,7 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                                     icon={<Icon name="signout" />}
                                     onClick={logout}
                                 />
-                            </>
+                            </div>
                         }
                     />
                 </Slide>

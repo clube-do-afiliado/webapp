@@ -1,11 +1,10 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import { RolesProvider } from '@cda/common/Roles';
-
 import App from '@/App';
 import { RolesPage } from '@/pages/Roles';
-import { rolesServices } from '@/services/core';
-import { UsersProvider, UsersPage } from '@/pages/Users';
+import { PlansPage } from '@/pages/Plans';
+import { UsersPage } from '@/pages/Users';
+import { IntegrationsPage } from '@/pages/Integrations';
 
 export const router = createBrowserRouter([
     {
@@ -22,20 +21,28 @@ export const router = createBrowserRouter([
                 path: '/users',
                 loader: () => document.title = 'Clube do afiliado - Usuários',
                 element: (
-                    <UsersProvider>
-                        <RolesProvider rolesServices={rolesServices}>
-                            <UsersPage />
-                        </RolesProvider>
-                    </UsersProvider>
+                    <UsersPage />
                 ),
             },
             {
                 path: '/roles',
                 loader: () => document.title = 'Clube do afiliado - Permissões',
                 element: (
-                    <RolesProvider rolesServices={rolesServices}>
-                        <RolesPage />
-                    </RolesProvider>
+                    <RolesPage />
+                ),
+            },
+            {
+                path: '/plans',
+                loader: () => document.title = 'Clube do afiliado - Planos',
+                element: (
+                    <PlansPage />
+                ),
+            },
+            {
+                path: '/integrations',
+                loader: () => document.title = 'Clube do afiliado - Integrações',
+                element: (
+                    <IntegrationsPage />
                 ),
             },
             {

@@ -12,6 +12,7 @@ import type { UserData } from '@cda/services/user';
 import { useAuth } from '@cda/common/Auth';
 
 import RoleList from '@/components/RolesList';
+import PlanList from '@/components/PlansList';
 
 import useUsers from '../useUsers';
 
@@ -28,21 +29,20 @@ export default function FormUserModal({
 
     const isEdit = useMemo(() => Boolean(user), [user]);
 
-    const [formGroup] = useForm<Pick<UserData, 'name' | 'email' | 'roles'>>({
+    const [formGroup] = useForm<Pick<UserData, 'name' | 'email' | 'roles' | 'plans'>>({
         form: {
-            name: new FormControl({ defaultValue: user?.name || 'Teste backoffice', required: true }),
-            email: new FormControl({ defaultValue: user?.email || 'wacevik480@oziere.com', required: true }),
-            roles: new FormControl({ defaultValue: user?.roles || ['free-plan', 'user'], required: true }),
+            name: new FormControl({ defaultValue: user?.name || '', required: true }),
+            email: new FormControl({ defaultValue: user?.email || '', required: true }),
+            roles: new FormControl({ defaultValue: user?.roles || [], required: true }),
+            plans: new FormControl({ defaultValue: user?.plans || [], required: true }),
         },
         handle: {
             submit: (form) => {
-                const { name, email, roles } = form.values;
-
                 let promise!: Promise<any>;
 
-                if (user) { promise = updateUser({ ...user, name, email, roles }); }
+                if (user) { promise = updateUser({ ...user, ...form.values }); }
                 if (!user) {
-                    promise = createByBackoffice({ name, email, roles })
+                    promise = createByBackoffice({ ...form.values })
                         .then(getUsers);
                 }
 
@@ -51,7 +51,7 @@ export default function FormUserModal({
                     .finally(() => setLoading(false));
             }
         }
-    }, [user]);
+    }, [isOpen, user]);
 
     useEffect(() => { if (!isOpen) { formGroup.reset(); } }, [isOpen]);
 
@@ -99,6 +99,16 @@ export default function FormUserModal({
                         />
                     )}
                 />
+                <Typography noMargin variant="body1" color="text.secondary">Planos</Typography>
+                <div style={{ maxHeight: 400, overflow: 'auto' }}>
+                    <Control
+                        type="object"
+                        controlName="plans"
+                        field={(control) => (
+                            <PlanList value={control.value} />
+                        )}
+                    />
+                </div>
                 <Typography noMargin variant="body1" color="text.secondary">Roles</Typography>
                 <div style={{ maxHeight: 400, overflow: 'auto' }}>
                     <Control

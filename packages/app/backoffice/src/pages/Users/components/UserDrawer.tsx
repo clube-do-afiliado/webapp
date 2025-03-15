@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Icon from '@cda/ui/components/Icon';
 import Chip from '@cda/ui/components/Chip';
@@ -11,12 +11,29 @@ import Typography from '@cda/ui/components/Typography';
 import ButtonIcon from '@cda/ui/components/ButtonIcon';
 import { Drawer, DrawerContent, DrawerFooter, HelperDrawerProps } from '@cda/ui/components/Drawer';
 
+import type { Plan } from '@cda/services/plans';
 import type { UserData } from '@cda/services/user';
 
 import { useAuth } from '@cda/common/Auth';
+import { PlanChip, usePlans } from '@cda/common/Plans';
 
 import FormUserModal from './FormUserModal';
 import DeleteUserModal from './StatusUserModal';
+
+function UserPlan({ planName }: { planName: string }) {
+    const [plan, setPlan] = useState<Plan | null>();
+
+    const { getPlan } = usePlans();
+
+    useEffect(() => {
+        getPlan(planName)
+            .then(plan => setPlan(plan));
+    }, [planName]);
+
+    return (
+        plan && <PlanChip {...plan} />
+    );
+}
 
 export default function UserDrawer({ isOpen, user, onToggleDrawer }: HelperDrawerProps<{ user?: UserData }>) {
     const [openEditModal, toggleEditModal] = useModal();
@@ -83,11 +100,13 @@ export default function UserDrawer({ isOpen, user, onToggleDrawer }: HelperDrawe
                                     <Chip
                                         size="small"
                                         label={user?.status || ''}
-                                        color={isActive ? 'success' : 'error'} />
+                                        color={isActive ? 'success' : 'error'}
+                                    />
                                 </Stack>
                             </Stack>
                             <Divider />
-                            <Stack orientation="row">
+                            <Stack orientation="row" alignItems="center">
+                                <Typography noMargin>Roles:</Typography>
                                 {
                                     user?.roles.map(role => (
                                         <Chip
@@ -95,6 +114,15 @@ export default function UserDrawer({ isOpen, user, onToggleDrawer }: HelperDrawe
                                             label={role}
                                             variant="contained"
                                         />
+                                    ))
+                                }
+                            </Stack>
+                            <Divider />
+                            <Stack orientation="row" alignItems="center">
+                                <Typography noMargin>Planos:</Typography>
+                                {
+                                    user?.plans && user?.plans.map(plan => (
+                                        <UserPlan key={plan} planName={plan} />
                                     ))
                                 }
                             </Stack>

@@ -1,13 +1,21 @@
 import { Outlet } from 'react-router-dom';
-import { useEffect } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 
-import AlertProvider from '@cda/ui/components/Alert';
+import { AlertProvider } from '@cda/ui/components/Alert';
 import { createTheme, ThemeProvider, useTheme } from '@cda/ui/theme';
 
-import { AuthProvider } from '@cda/common/Auth';
+import logger from '@cda/toolkit/logger';
+
+import { AuthProvider, useAuth } from '@cda/common/Auth';
+import { AccessControlProvider } from '@cda/common/AccessControl';
+import { PlansProvider, usePlans } from '@cda/common/Plans';
+import { IntegrationsProvider, useIntegrations } from '@cda/common/Integrations';
+import { RolesProvider, useRoles } from '@cda/common/Roles';
 
 import Layout from '@/layout';
-import { authServices, userServices, url } from '@/services/core';
+import { url, authServices, userServices, rolesServices, plansServices, integrationsServices } from '@/services/core';
+
+import { UsersProvider } from './pages/Users';
 
 function setFavicon(color: string) {
     let link = document.querySelector<HTMLLinkElement>('link[rel~=\'icon\']');
@@ -32,12 +40,43 @@ function setFavicon(color: string) {
 function Content() {
     const { theme: { palette } } = useTheme();
 
-    useEffect(() => { setFavicon(palette.primary.main); }, []);
+    const { user } = useAuth();
+
+    const { getPlans } = usePlans();
+    const { getRoles } = useRoles();
+    const { getIntegrations } = useIntegrations();
+
+    useEffect(() => {
+        setFavicon(palette.primary.main);
+
+        Promise.all([getIntegrations(), getPlans(), getRoles()])
+            .then(() => logger.log('Informações base carregadas'));
+    }, []);
 
     return (
-        <Layout>
-            <Outlet />
-        </Layout>
+        <AccessControlProvider
+            user={user}
+            rolesServices={rolesServices}
+            plansServices={plansServices}
+        >
+            <Layout>
+                <Outlet />
+            </Layout>
+        </AccessControlProvider>
+    );
+}
+
+function Providers({ children }: PropsWithChildren) {
+    return (
+        <RolesProvider rolesServices={rolesServices}>
+            <PlansProvider plansServices={plansServices}>
+                <IntegrationsProvider integrationsServices={integrationsServices}>
+                    <UsersProvider>
+                        {children}
+                    </UsersProvider>
+                </IntegrationsProvider>
+            </PlansProvider>
+        </RolesProvider>
     );
 }
 
@@ -49,9 +88,11 @@ export default function App() {
                     shouldAuthenticate
                     url={url}
                     authServices={authServices}
-                    userServices={userServices}
+                    usersServices={userServices}
                 >
-                    <Content />
+                    <Providers>
+                        <Content />
+                    </Providers>
                 </AuthProvider>
             </AlertProvider>
         </ThemeProvider>

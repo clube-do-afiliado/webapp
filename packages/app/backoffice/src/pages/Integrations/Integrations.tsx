@@ -1,12 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import Page from '@cda/ui/layout/Page';
 import { debounce } from '@cda/ui/utils';
 import { useFilter } from '@cda/ui/hooks';
 import Icon from '@cda/ui/components/Icon';
-import Slide from '@cda/ui/animations/Slide';
-import Input from '@cda/ui/components/Input';
 import Stack from '@cda/ui/components/Stack';
+import Input from '@cda/ui/components/Input';
+import Slide from '@cda/ui/animations/Slide';
 import Button from '@cda/ui/components/Button';
 import Loading from '@cda/ui/components/Loading';
 import { useModal } from '@cda/ui/components/Modal';
@@ -14,33 +14,34 @@ import { useDrawer } from '@cda/ui/components/Drawer';
 import ButtonIcon from '@cda/ui/components/ButtonIcon';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
 import { Form, Control, FormControl, useForm } from '@cda/ui/components/Form';
-import Tooltip from '@cda/ui/components/Tooltip';
 
 import { slug } from '@cda/toolkit/string';
 
-import type { UserData } from '@cda/services/user';
+import { Integration } from '@cda/services/integrations';
 
 import { EmptyContent } from '@cda/common/EmptyContent';
+import { useIntegrations } from '@cda/common/Integrations';
 
 import { release } from '@/services/core';
 
-import useUsers from './useUsers';
-import UserCard from './components/UserCard';
-import UserDrawer from './components/UserDrawer';
-import CreateUserModal from './components/FormUserModal';
+import CardIntegration from './components/CardIntegration';
+import IntegrationDrawer from './components/IntegrationDrawer';
+import FormIntegrationsModal from './components/FormIntegrationsModal';
 
-export default function Users() {
+export default function Plans() {
     const [open, toggle] = useModal();
-    const [openUserDrawer, toggleUserDrawer] = useDrawer();
+    const [openDrawer, toggleDrawer] = useDrawer();
 
-    const { users, getUsers } = useUsers();
+    const { integrations } = useIntegrations();
+    const { filter, filtered, reset } = useFilter(integrations);
 
-    const { filter, filtered, reset } = useFilter(users);
+    const [loadingList, setLoadingList] = useState(false);
 
-    const [selectedUserId, setSelectedUserId] = useState<string>();
-    const [loadingList, setLoadingList] = useState(true);
+    const [selectedIntegrationId, setSelectedIntegrationId] = useState<string>();
 
-    const selectedUser = useMemo(() => users.find(u => u.id === selectedUserId), [users, selectedUserId]);
+    const selectedIntegration = useMemo(() => {
+        return integrations.find(r => r.id === selectedIntegrationId);
+    }, [integrations, selectedIntegrationId]);
 
     const [formGroup] = useForm<{ name: string; }>({
         form: {
@@ -59,25 +60,23 @@ export default function Users() {
                         filter((user) => slug(user.name).includes(slug(name)));
                     }
 
-                    setTimeout(() => { setLoadingList(false); }, 1000);
+                    setTimeout(() => { setLoadingList(false); }, 500);
                 }, 500);
             }
         }
     }, []);
 
-    useEffect(() => { getUsers().then(() => setLoadingList(false)); }, []);
-
     const resetForm = () => { formGroup.setValues({ name: '' }); };
 
-    const handleOpenDrawer = (user: UserData) => {
-        setSelectedUserId(user.id);
-        toggleUserDrawer();
+    const handleSelectIntegration = (integration: Integration) => {
+        setSelectedIntegrationId(integration.id);
+        toggleDrawer();
     };
 
     return (
         <Page
-            title="Usuários"
-            subtitle="Aqui você pode visualizar e gerenciar todos os usuários"
+            title="Integrações"
+            subtitle="Aqui você pode visualizar e gerenciar todas as integrações"
             release={release}
             action={
                 <Button
@@ -85,7 +84,7 @@ export default function Users() {
                     startIcon={<Icon name="plus" />}
                     onClick={toggle}
                 >
-                    Adicionar usuário
+                    Nova integração
                 </Button>
             }
         >
@@ -100,7 +99,7 @@ export default function Users() {
                                     <Input
                                         fullWidth
                                         type="text"
-                                        placeholder="Nome do usuário"
+                                        placeholder="Nome da integração"
                                         startIcon={<Icon name="search" />}
                                         endIcon={
                                             control.value && (
@@ -134,39 +133,34 @@ export default function Users() {
                     !loadingList && Boolean(filtered.length) && (
                         <Grid xl={3} lg={4} md={6} sm={12}>
                             {
-                                filtered.map((user, i) => (
-                                    <Tooltip key={user.id} label="ASdasdasdasdasdasdasdasdsd" direction="right">
-                                        <GridItem >
-                                            <Slide enter delay={(i + 1) * 100}>
-                                                <UserCard
-                                                    key={user.id}
-                                                    user={user}
-                                                    onClick={handleOpenDrawer}
-                                                />
-                                            </Slide>
-                                        </GridItem>
-                                    </Tooltip>
+                                filtered.map((integration, i) => (
+                                    <GridItem key={integration.id}>
+                                        <Slide enter delay={(i + 1) * 100} >
+                                            <CardIntegration
+                                                integration={integration}
+                                                onClick={() => handleSelectIntegration(integration)}
+                                            />
+                                        </Slide>
+                                    </GridItem>
                                 ))
                             }
-                        </Grid>)
+                        </Grid>
+                    )
+                }
+                {
+                    !loadingList && !filtered.length && (
+                        <EmptyContent
+                            icon="channel"
+                            message="Nenhuma integração foi encontrada"
+                        />
+                    )
                 }
             </Stack>
-            {
-                !loadingList && !filtered.length && (
-                    <EmptyContent
-                        message="Nenhum usuário encontrado"
-                        icon="user-exclamation"
-                    />
-                )
-            }
-            <UserDrawer
-                user={selectedUser}
-                isOpen={openUserDrawer}
-                onToggleDrawer={toggleUserDrawer}
-            />
-            <CreateUserModal
-                isOpen={open}
-                onToggleModal={toggle}
+            <FormIntegrationsModal isOpen={open} onToggleModal={toggle} />
+            <IntegrationDrawer
+                integration={selectedIntegration}
+                isOpen={openDrawer}
+                onToggleDrawer={toggleDrawer}
             />
         </Page>
     );
