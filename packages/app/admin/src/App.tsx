@@ -1,13 +1,27 @@
 import { Outlet } from 'react-router-dom';
-import { useEffect } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 
-import AlertProvider from '@cda/ui/components/Alert';
+import { AlertProvider } from '@cda/ui/components/Alert';
 import { createTheme, ThemeProvider, useTheme } from '@cda/ui/theme';
 
-import { AuthProvider } from '@cda/common/Auth';
+import logger from '@cda/toolkit/logger';
+
+import { SitesProvider, useSites } from '@cda/common/Sites';
+import { AuthProvider, useAuth } from '@cda/common/Auth';
+import { PlansProvider, usePlans } from '@cda/common/Plans';
+import { AccessControlProvider } from '@cda/common/AccessControl';
+import { IntegrationsProvider, useIntegrations } from '@cda/common/Integrations';
 
 import Layout from '@/layout';
-import { authServices, userServices, url } from '@/services/core';
+import {
+    url,
+    authServices,
+    userServices,
+    rolesServices,
+    plansServices,
+    sitesServices,
+    integrationsServices,
+} from '@/services/core';
 
 function setFavicon(color: string) {
     let link = document.querySelector<HTMLLinkElement>('link[rel~=\'icon\']');
@@ -18,7 +32,7 @@ function setFavicon(color: string) {
         document.getElementsByTagName('head')[0].appendChild(link);
     }
 
-    fetch('https://cdn-web-80894.web.app/assets/favicon/favicon.svg')
+    fetch('https://cdn.clubedoafiliado.com/assets/favicon/favicon.svg')
         .then((response) => response.text())
         .then((svgText) => {
             const updatedSVG = svgText.replace(/fill="[^"]*"/, `color="${color}"`);
@@ -32,12 +46,43 @@ function setFavicon(color: string) {
 function Content() {
     const { theme: { palette } } = useTheme();
 
-    useEffect(() => { setFavicon(palette.primary.main); }, []);
+    const { user } = useAuth();
+
+    const { getPlans } = usePlans();
+    const { getUserSites } = useSites();
+    const { getIntegrations } = useIntegrations();
+
+    useEffect(() => {
+        setFavicon(palette.primary.main);
+
+        if (!user) { return; }
+
+        Promise.all([getIntegrations(), getPlans(), getUserSites(user.id)])
+            .then(() => logger.log('Informações base carregadas'));
+    }, [user]);
 
     return (
-        <Layout>
-            <Outlet />
-        </Layout>
+        <AccessControlProvider
+            user={user}
+            rolesServices={rolesServices}
+            plansServices={plansServices}
+        >
+            <Layout>
+                <Outlet />
+            </Layout>
+        </AccessControlProvider>
+    );
+}
+
+function Providers({ children }: PropsWithChildren) {
+    return (
+        <PlansProvider plansServices={plansServices}>
+            <IntegrationsProvider integrationsServices={integrationsServices}>
+                <SitesProvider sitesServices={sitesServices}>
+                    {children}
+                </SitesProvider>
+            </IntegrationsProvider>
+        </PlansProvider>
     );
 }
 
@@ -49,9 +94,11 @@ export default function App() {
                     shouldAuthenticate
                     url={url}
                     authServices={authServices}
-                    userServices={userServices}
+                    usersServices={userServices}
                 >
-                    <Content />
+                    <Providers>
+                        <Content />
+                    </Providers>
                 </AuthProvider>
             </AlertProvider>
         </ThemeProvider>

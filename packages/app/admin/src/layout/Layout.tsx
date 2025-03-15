@@ -56,24 +56,57 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                 <Slide enter direction="left" timeout={.3}>
                     <Sidebar
                         upButtons={
-                            <>
+                            <div>
                                 <SidebarButton
                                     path="home"
+                                    label="Início"
                                     icon={<Icon name="home" />}
                                     onClick={() => navigate('/home')}
                                 />
-                            </>
+                                <SidebarButton
+                                    path="site"
+                                    label="Meu site"
+                                    icon={<Icon name="window" />}
+                                    onClick={() => navigate('/site')}
+                                />
+                                <SidebarButton
+                                    path="stores"
+                                    label="Lojas"
+                                    icon={<Icon name="store" />}
+                                    onClick={() => navigate('/stores')}
+                                />
+                                <SidebarButton
+                                    path="products"
+                                    label="Produtos"
+                                    icon={<Icon name="box" />}
+                                    onClick={() => navigate('/products')}
+                                />
+                                <SidebarButton
+                                    path="templates"
+                                    label="Templates"
+                                    icon={<Icon name="image" />}
+                                    onClick={() => navigate('/templates')}
+                                />
+                                <SidebarButton
+                                    path="bio"
+                                    label="Link na bio"
+                                    icon={<Icon name="user-square" />}
+                                    onClick={() => navigate('/bio')}
+                                />
+                            </div>
                         }
                         downButtons={
-                            <>
+                            <div>
                                 <SidebarButton
+                                    label="Configuração"
                                     icon={<Icon name="setting" />}
                                 />
                                 <SidebarButton
+                                    label="Sair"
                                     icon={<Icon name="signout" />}
                                     onClick={logout}
                                 />
-                            </>
+                            </div>
                         }
                     />
                 </Slide>
