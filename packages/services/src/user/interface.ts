@@ -6,6 +6,7 @@ export interface UserData {
     email: string;
     picture: string;
     roles: string[];
+    plans: string[];
     status: UserStatus;
 }
 

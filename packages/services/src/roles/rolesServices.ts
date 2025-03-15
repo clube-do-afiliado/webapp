@@ -8,6 +8,14 @@ export default class RolesServices {
 
     constructor(private db: db) { }
 
+    async details(id: string) {
+        return this.db.getItem<RoleConfig>({
+            path: RolesServices.PATH,
+            pathSegments: [],
+            filters: [{ field: 'id', operator: '==', value: id }]
+        });
+    }
+
     async list() {
         return this.db.getList<RoleConfig>({
             path: RolesServices.PATH,

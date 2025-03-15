@@ -18,6 +18,7 @@ export default [
         },
         rules: {
             'react/react-in-jsx-scope': 'off',
+            'react/display-name': 'off',
             'react/jsx-uses-react': 'off',
             'react/jsx-uses-vars': 'error',
             'indent': ['error', 4, { 'SwitchCase': 1 }],
@@ -42,6 +43,7 @@ export default [
                         ['/^react/'],
                         'module',
                         '/^@storybook/',
+                        '/^@hello-pangea/',
                         // '/^@(?!/)/',
                         '/^@cda/ui/',
                         '/^@cda/toolkit/',

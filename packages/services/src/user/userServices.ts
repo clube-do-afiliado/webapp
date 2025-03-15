@@ -30,6 +30,7 @@ export default class UserServices {
             name: data?.name,
             email: data?.email,
             roles: data?.roles,
+            plans: data?.plans,
             status: data?.status,
             picture: data?.picture,
         };
@@ -54,14 +55,19 @@ export default class UserServices {
     }
 
     async createByAuth(user: Pick<UserData, 'email' | 'name' | 'id'>) {
+        console.log('createByAuth', user);
+
         const { email } = user;
 
         const newUser: UserData = {
             ...user,
             roles: ['user'],
+            plans: ['gratis'],
             status: 'active',
             picture: `https://robohash.org/${email}`
         };
+
+        console.log({ newUser });
 
         return this.db.setItem<UserData>({
             data: newUser,
@@ -75,6 +81,7 @@ export default class UserServices {
             ...user,
             id: uuid(),
             picture: '',
+            plans: [],
             status: 'active',
         };
 

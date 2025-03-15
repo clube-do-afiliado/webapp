@@ -1,8 +1,9 @@
 import type { Permissions } from '../permissions';
 
-export interface RoleConfig {
+export interface Integration {
     id: string;
     name: string;
-    description: string;
+    plan: string;
+    image: string;
     permissions: Permissions[];
 }

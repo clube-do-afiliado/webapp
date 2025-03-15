@@ -1,3 +1,3 @@
 import Permissions from './Permissions';
 
-export type Permission = typeof Permissions[number];
+export type Permissions = typeof Permissions[number];
