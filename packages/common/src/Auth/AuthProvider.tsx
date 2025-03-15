@@ -4,13 +4,16 @@ import { createContext, useEffect, useMemo, useState } from 'react';
 import Icon from '@cda/ui/components/Icon';
 import { useAlert } from '@cda/ui/components/Alert';
 
-import { getParams } from '@cda/toolkit/url';
 import logger from '@cda/toolkit/logger';
 import { uuid } from '@cda/toolkit/uuid';
+import { getParams } from '@cda/toolkit/url';
 
 import type { UserData } from '@cda/services/user';
 import type UserServices from '@cda/services/user';
 import type AuthServices from '@cda/services/auth';
+import type SitesServices from '@cda/services/sites';
+
+import generateDefaultSite from '../Sites/defaultSite';
 
 type BasicUser = { name: string; email: string; password: string }
 
@@ -54,8 +57,9 @@ export const AuthContext = createContext<AuthContextConfig>({
 
 interface AuthProviderProps {
     shouldAuthenticate?: boolean;
-    userServices: UserServices;
     authServices: AuthServices;
+    usersServices: UserServices;
+    sitesServices?: SitesServices;
     children: React.JSX.Element;
     url: { admin: string; sso: string; backoffice: string; store: string; };
 }
@@ -64,7 +68,8 @@ export default function AuthProvider({
     shouldAuthenticate = false,
     children,
     authServices,
-    userServices,
+    usersServices,
+    sitesServices,
 }: AuthProviderProps) {
     const { addAlert } = useAlert();
 
@@ -118,9 +123,9 @@ export default function AuthProvider({
 
         if (window.location.href.includes('error')) { return; }
 
-        const email = params.email || userServices.currentByToken.email;
+        const email = params.email || usersServices.currentByToken.email;
 
-        return userServices.getByEmail(email)
+        return usersServices.getByEmail(email)
             .then((user) => { setUser(user as UserData); })
             .catch(() => {
                 authServices.logout()
@@ -131,7 +136,7 @@ export default function AuthProvider({
 
     const loginWithPassword = async ({ email, password }: Pick<BasicUser, 'email' | 'password'>) => {
         return authServices.loginWithPassword(email, password)
-            .then(() => userServices.getByEmail(email))
+            .then(() => usersServices.getByEmail(email))
             .then(user => { redirect(user as UserData); })
             .catch((e) => {
                 const { code } = e;
@@ -147,14 +152,22 @@ export default function AuthProvider({
     };
 
     const createByAuth = async ({ email, name, password }: BasicUser) => {
+        if (!sitesServices) { throw new Error('sitesServices is not defined'); }
+
         return authServices.createUserWithPassword(email, password, { persist: true })
             .then(user => {
                 logger.info('usuário criado no autenticador!', user);
                 return user;
             })
-            .then(user => userServices.createByAuth({ id: user?.user_id as string, email, name }))
+            .then(user => usersServices.createByAuth({ id: user?.user_id as string, email, name }))
             .then(user => {
                 logger.info('usuario criado!', user);
+                return user;
+            })
+            .then(async user => {
+                await sitesServices.create(generateDefaultSite(`Loja ${user.name}`, user.id))
+                    .then(() => logger.log('loja criada!'));
+
                 return user;
             })
             .then((user) => redirect(user))
@@ -174,7 +187,7 @@ export default function AuthProvider({
     const createByBackoffice = async ({ email, name, roles }: Pick<UserData, 'name' | 'email' | 'roles'>) => {
         return authServices.createUserWithPassword(email, uuid())
             .then(() => authServices.sendMailToResetPassword(email))
-            .then(() => userServices.createByBackoffice({ email, name, roles }))
+            .then(() => usersServices.createByBackoffice({ email, name, roles }))
             .then(user => {
                 addAlert({
                     color: 'success',

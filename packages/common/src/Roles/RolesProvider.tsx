@@ -58,25 +58,25 @@ export default function RolesProvider({ children, rolesServices }: PropsWithChil
     const createRole = async (data: Omit<RoleConfig, 'id'>) => {
         return rolesServices.create(data)
             .then(res => setRoles((prev) => ([...prev, res])))
-            .then(() => addAlert({ color: 'success', message: `"${data.name}" foi adicionada` }))
+            .then(() => addAlert({ color: 'success', message: `A role "${data.name}" foi adicionada` }))
             .catch(() => addAlert({ color: 'error', message: 'Não foi possível criar a role' }));
     };
 
     const getRoles = async () => {
-        rolesServices.list()
+        return rolesServices.list()
             .then(r => setRoles(r))
             .finally(() => setLoading(false));
     };
 
     const deleteRole = async (id: string) => {
-        rolesServices.delete(id)
+        return rolesServices.delete(id)
             .then(() => setRoles(prev => prev.filter(r => r.id !== id)))
             .then(() => addAlert({ color: 'success', message: 'Role deletada com sucesso' }))
             .catch(() => addAlert({ color: 'error', message: 'Não foi possível deletar a role' }));
     };
 
     const updateRole = async (data: RoleConfig) => {
-        rolesServices.update(data)
+        return rolesServices.update(data)
             .then(() => setRoles(prev => prev.map(r => r.id === data.id ? data : r)))
             .then(() => addAlert({ color: 'success', message: `A role "${data.name}" foi editada` }))
             .then(() => addAlert({ color: 'success', message: 'Não foi possível editar a role' }));
