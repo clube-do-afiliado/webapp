@@ -28,3 +28,8 @@ export function slug(str: string) {
         .replace(/[^\w\s]/gi, '')
         .replace(/\s+/g, '-');
 }
+
+export function capitalize(str: string) {
+    if (!str) { return ''; }
+    return str[0].toUpperCase() + str.slice(1);
+}

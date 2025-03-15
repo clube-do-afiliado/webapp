@@ -1,4 +1,4 @@
-export function shuffle(array: any[]) {
+export function shuffle<T>(array: T[]) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
@@ -6,6 +6,10 @@ export function shuffle(array: any[]) {
 
     return array;
 }
+
+export const flatten = <T>(array: Array<T>) => [].concat(...array);
+
+export const uniq = <T>(array: Array<T>) => [...new Set(array)];
 
 export function removeDuplicate(a: any[]) {
     const objs = [];
@@ -36,4 +40,8 @@ export function getRandom<T>(arr: T[]): T {
 
 export function getFilledArray(length: number) {
     return Array.from(Array(length), (_, index) => index);
+}
+
+export function orderByIndex<T>(arr: Array<T>, prop: keyof T, order: string[]) {
+    return arr.sort((a, b) => order.indexOf(a[prop as any]) - order.indexOf(b[prop as any]));
 }
