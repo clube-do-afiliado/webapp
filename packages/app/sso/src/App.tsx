@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
 
-import AlertProvider from '@cda/ui/components/Alert';
+import { AlertProvider } from '@cda/ui/components/Alert';
 import { createTheme, ThemeProvider, useTheme } from '@cda/ui/theme';
 
 import { AuthProvider } from '@cda/common/Auth';
 
-import { authServices, userServices, url } from '@/services/core';
+import { authServices, userServices, url, siteServices } from '@/services/core';
 
 function setFavicon(color: string) {
     let link = document.querySelector<HTMLLinkElement>('link[rel~=\'icon\']');
@@ -45,7 +45,8 @@ export default function App() {
                 <AuthProvider
                     url={url}
                     authServices={authServices}
-                    userServices={userServices}
+                    usersServices={userServices}
+                    sitesServices={siteServices}
                 >
                     <Content />
                 </AuthProvider>
