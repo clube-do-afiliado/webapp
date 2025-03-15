@@ -116,7 +116,11 @@ export default function MultiSelect<T extends Record<string, any>>({
         return cloneElement(icon, {
             type: 'button',
             color: 'text.secondary',
-            className: joinClass([icon.props.className, 'ui-multiselect__icon', `ui-multiselect__icon--${direction}`]),
+            className: joinClass([
+                icon.props.className,
+                'ui-multiselect__icon',
+                `ui-multiselect__icon--margin-${direction}`
+            ]),
             onClick: (e: MouseEvent<any, globalThis.MouseEvent>) => {
                 e.stopPropagation();
                 if (icon.props.onClick) { icon.props.onClick(e); };

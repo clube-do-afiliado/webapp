@@ -3,9 +3,10 @@
 .ui-header {
     height: $header-height;
     color: var(--primary);
+    padding: 0px 32px;
+    transition: all $animation;
     border-bottom: 1px solid var(--divider);
     background-color: var(--background-default);
-    padding: 0px 32px;
 
     display: flex;
     justify-content: space-between;

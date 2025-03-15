@@ -19,7 +19,7 @@ export default function Control<Form>({
     action = 'onInput',
 }: ControlProps<Form>) {
     const { formGroup } = useContext(FormContext);
-    const { control, update } = useControl<Form>(controlName);
+    const { control, update } = useControl<Form, any>(controlName);
 
     const renderChildren = (child: ReactElement<ControlProps<Form>>) => {
         const getValue = (e: any) => {

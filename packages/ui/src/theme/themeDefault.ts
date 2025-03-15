@@ -31,21 +31,21 @@ export const themeDefaultLight: Theme = {
 export const themeDefaultDark: Theme = {
     palette: {
         mode: 'dark',
-        info: '#3767e1',
-        error: '#f44336',
-        warning: '#ff9800',
-        success: '#4caf50',
-        primary: '#06e092',
-        secondary: '#31bbd1',
-        grey: '#616161',
+        info: '#8C7DD1',
+        error: '#FF5C72',
+        warning: '#FFA726',
+        success: '#48C78E',
+        primary: '#4962b5',
+        secondary: '#FF857A',
+        grey: '#2A2A2A',
         text: {
-            primary: '#fff',
-            secondary: 'rgba(255, 255, 255, 0.7)',
-            disabled: 'rgba(255, 255, 255, 0.5)'
+            primary: 'rgba(255, 255, 255, 0.87)',
+            secondary: 'rgba(255, 255, 255, 0.6)',
+            disabled: 'rgba(255, 255, 255, 0.38)'
         },
         background: {
-            paper: '#424242',
-            default: '#303030',
+            paper: '#242424',
+            default: '#181818',
         },
         divider: 'rgba(255, 255, 255, 0.12)'
     },

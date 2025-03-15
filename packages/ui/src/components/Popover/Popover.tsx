@@ -1,27 +1,33 @@
-import { cloneElement, HtmlHTMLAttributes, useMemo, useState } from 'react';
+import { cloneElement, HtmlHTMLAttributes, useMemo, useRef, useState } from 'react';
 
 import { uuid } from '@cda/toolkit/uuid';
 
 import { useTheme } from '../../theme';
 import { joinClass } from '../../utils';
+import useOutsideClick from '../../hooks/useOutsideClick';
 
-import './Tooltip.scss';
+import './Popover.scss';
 
-type TooltipCoordinate = { top?: number; left?: number; };
+type PopoverCoordinate = { top?: number; left?: number; };
 type Direction = 'top' | 'right' | 'bottom' | 'left';
 
-interface TooltipProps { children: React.JSX.Element; direction?: Direction; label: string | React.JSX.Element; }
-export default function Tooltip({ children, label, direction = 'bottom' }: TooltipProps) {
+interface PopoverProps { children: React.JSX.Element; direction?: Direction; label: string | React.JSX.Element; }
+export default function Popover({ children, label, direction = 'bottom' }: PopoverProps) {
     const { theme: { spacing } } = useTheme();
+
+    const ref = useRef<HTMLDivElement>(null);
+
+    useOutsideClick(ref, () => handleLeave(), []);
+
     const [open, setOpen] = useState(false);
     const [animate, setAnimate] = useState(false);
-    const [coordinate, setCoordinate] = useState<TooltipCoordinate | null>(null);
+    const [coordinate, setCoordinate] = useState<PopoverCoordinate | null>(null);
 
-    const id = useMemo(() => `tooltip-${uuid()}`, []);
+    const id = useMemo(() => `popover-${uuid()}`, []);
 
     const className = joinClass([
-        'ui-tooltip',
-        animate && 'ui-tooltip--visible',
+        'ui-popover',
+        animate && 'ui-popover--visible',
     ]);
 
     const changePosition = (target: HTMLElement) => {
@@ -80,13 +86,12 @@ export default function Tooltip({ children, label, direction = 'bottom' }: Toolt
 
     const renderChildren = () => {
         return cloneElement<HtmlHTMLAttributes<HTMLDivElement>>(children, {
-            onMouseEnter: (e) => { handleEnter(e); },
-            onMouseDown: () => { handleLeave(); }
+            onClick: (e) => { handleEnter(e); },
         });
     };
 
     return (
-        <div style={{ position: 'relative' }} onMouseLeave={handleLeave}>
+        <div ref={ref} style={{ position: 'relative', cursor: 'pointer' }}>
             {renderChildren()}
             <span id={id} className={className} style={{
                 ...coordinate,

@@ -1,7 +1,8 @@
 @use '../Layout.scss' as *;
 
 .ui-sidebar {
-    max-width: 56px;
+    width: 200px;
+    z-index: 2;
     position: sticky;
     top: 0;
     border-right: 1px solid var(--divider);
@@ -13,13 +14,20 @@
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
+    background-color: var(--background-default);
+    transition: all $animation;
+
+    &--compact {
+        max-width: 56px;
+    }
 
     &__button {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
+        gap: 15px;
         padding: 8px 16px;
-        transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        transition: all $animation;
         cursor: pointer;
         position: relative;
         color: var(--text-disabled);
@@ -35,8 +43,18 @@
             background-color: rgba(0, 0, 0, 0.04);
         }
 
+        &__label {
+            font-size: $font-medium;
+        }
+
+        &--active {
+            .ui-sidebar__button__icon {
+                color: var(--primary) !important;
+            }
+        }
+
         &__icon {
-            color: currentColor !important;
+            color: var(--text-disabled) !important;
         }
     }
 }

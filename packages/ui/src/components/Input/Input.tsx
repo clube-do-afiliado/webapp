@@ -27,6 +27,7 @@ function Input({
     endIcon,
     startIcon,
     type = 'text',
+    disabled,
     ...props
 }: InputProps) {
     const containerClss = joinClass([
@@ -42,6 +43,7 @@ function Input({
 
     const clss = joinClass([
         'ui-input',
+        disabled && 'ui-input--disabled',
         error && 'ui-input--error',
         props.className
     ]);
@@ -54,9 +56,10 @@ function Input({
 
     const renderIcon = (icon: ReactElement<ButtonIconProps>, direction: 'left' | 'right') => {
         return cloneElement(icon, {
+            disabled,
             type: 'button',
             color: 'text.secondary',
-            className: joinClass([icon.props.className, 'ui-input__icon', `ui-input__icon--${direction}`]),
+            className: joinClass([icon.props.className, 'ui-input__icon', `ui-input__icon--margin-${direction}`]),
             onClick: (e: MouseEvent<any, globalThis.MouseEvent>) => {
                 e.stopPropagation();
                 if (icon.props.onClick) { icon.props.onClick(e); };
@@ -69,7 +72,7 @@ function Input({
             {label && <label className={labelClss}>{label} {props.required && '*'}</label>}
             <div className={clss}>
                 {startIcon && renderIcon(startIcon as React.JSX.Element, 'right')}
-                <input {...props} type={type} />
+                <input {...props} type={type} disabled={disabled} />
                 {endIcon && renderIcon(endIcon as React.JSX.Element, 'left')}
             </div>
             <span className={helperTextClss}>{helperText}</span>

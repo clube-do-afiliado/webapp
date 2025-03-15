@@ -1,5 +1,3 @@
-// @use "../../styles/main.scss" as *
-
 .ui-input-container {
     width: fit-content;
     position: relative;
@@ -31,6 +29,7 @@
     font-family: $font-regular;
     position: relative;
     background-color: var(--background-default);
+    transition: all $animation;
 
     display: flex;
     justify-content: space-between;
@@ -44,6 +43,12 @@
         border-color: var(--error);
     }
 
+    &--disabled {
+        cursor: not-allowed;
+        background: var(--divider);
+        color: var(--text-disabled);
+    }
+
     input {
         background: transparent;
         height: 100%;
@@ -54,6 +59,7 @@
         padding: $proportion;
         font: inherit;
         color: var(--text-primary);
+        transition: all $animation;
 
         &:-internal-autofill-selected {
             -webkit-text-fill-color: var(--divider);
@@ -64,16 +70,16 @@
             opacity: 1;
         }
 
-        &:disabled {
-            cursor: not-allowed;
-            background: var(--divider);
-            color: var(--text-disabled);
-        }
+        // &:disabled {
+        //     cursor: not-allowed;
+        //     background: var(--divider);
+        //     color: var(--text-disabled);
+        // }
 
-        &:read-only {
-            background: var(--divider);
-            color: var(--text-disabled);
-        }
+        // &:read-only {
+        //     background: var(--divider);
+        //     color: var(--text-disabled);
+        // }
     }
 
     &__helper-text {
@@ -92,14 +98,24 @@
     }
 
     &__icon {
-        &--left {
+        &--margin-left {
             margin-right: 8px;
             margin-left: -8px;
         }
 
-        &--right {
+        &--margin-right {
             margin-right: -8px;
             margin-left: 8px;
+        }
+
+        &--padding-left {
+            padding-right: 8px;
+            padding-left: -8px;
+        }
+
+        &--padding-right {
+            padding-right: -8px;
+            padding-left: 8px;
         }
     }
 }

@@ -1,5 +1,5 @@
 import type { ThemeBuilded, ThemeOptions } from './Theme';
-import generateSupportColors from './generateSupportColors';
+import { generateSupportColors } from './generateSupportColors';
 import { themeDefaultDark, themeDefaultLight } from './themeDefault';
 
 export default function createTheme(theme?: ThemeOptions): ThemeBuilded {

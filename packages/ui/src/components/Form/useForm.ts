@@ -6,7 +6,7 @@ interface UseForm<T> { form: AbstractControl<T>; handle?: Handle<T>; validator?:
 export default function useForm<Form>({ form, handle, validator }: UseForm<Form>, deps: any[]) {
     const [formGroup, setFormGroup] = useState<FormGroup<Form>>(new FormGroup(form, handle, validator));
 
-    useEffect(() => { setFormGroup(new FormGroup(form, handle, validator)); }, deps);
+    useEffect(() => { setFormGroup(new FormGroup(form, handle, validator)); }, [...deps]);
 
     const updateForm = (values: Partial<Form>) => {
         setFormGroup(prevForm => {

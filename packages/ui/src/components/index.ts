@@ -21,6 +21,7 @@ export * from './Logo';
 export * from './Menu';
 export * from './Modal';
 export * from './MultiSelect';
+export * from './Popover';
 export * from './Ripple';
 export * from './Select';
 export * from './Skeleton';

@@ -8,18 +8,21 @@ import createComponent from '../../core/createComponent';
 import Icon, { type IconProps } from '../../components/Icon';
 
 import './Alert.scss';
+import Stack from '../Stack';
 
 export interface AlertProps extends HtmlHTMLAttributes<HTMLDivElement> {
     color?: Colors;
     icon?: React.JSX.Element;
+    fullWidth?: boolean;
     children: React.JSX.Element | string;
     onClose?: () => void;
 }
-function Alert({ children, icon, color = 'primary', onClose, ...props }: AlertProps) {
+function Alert({ children, icon, fullWidth, color = 'primary', onClose, ...props }: AlertProps) {
 
     const className = joinClass([
         'ui-alert',
-        `ui-alert--${color}`
+        `ui-alert--${color}`,
+        fullWidth && 'ui-alert--fullWidth'
     ]);
 
     const message = typeof children === 'string'
@@ -34,14 +37,16 @@ function Alert({ children, icon, color = 'primary', onClose, ...props }: AlertPr
 
     return (
         <div className={className} {...props}>
-            {
-                icon && (
-                    <div className="ui-alert__icon">
-                        {renderIcon(icon)}
-                    </div>
-                )
-            }
-            {message}
+            <Stack orientation="row" alignItems="center" spacing="small">
+                {
+                    icon && (
+                        <div className="ui-alert__icon">
+                            {renderIcon(icon)}
+                        </div>
+                    )
+                }
+                {message}
+            </Stack>
             {
                 !!onClose && (
                     <ButtonIcon onClick={onClose} color={`${color}.dark`} className="ui-alert__button">

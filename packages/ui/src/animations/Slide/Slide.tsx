@@ -37,7 +37,7 @@ export default function Slide({
     tag = 'div',
     delay = 50,
     timeout = .2,
-    direction = 'right',
+    direction = 'left',
     ...props
 }: SlideProps) {
     const CustomTag = tag;

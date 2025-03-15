@@ -31,7 +31,7 @@ const Child = () => {
     );
 };
 
-export const Variants: StoryObj<typeof AlertProvider> = {
+export const Colors: StoryObj<typeof AlertProvider> = {
     render: () => {
         return (
             <Stack>

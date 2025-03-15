@@ -5,7 +5,7 @@ import {
     cloneElement,
     MouseEvent,
     Children,
-    useState
+    useMemo,
 } from 'react';
 
 import Icon from '../../components/Icon';
@@ -37,12 +37,16 @@ function Select({
     gutterBottom,
     startIcon,
     children,
+    disabled,
+    onChange,
     ...props
 }: SelectProps) {
     const arrayChildren = Children.toArray(children) as ReactElement<OptionProps>[];
 
-    const [value, setValue] = useState(arrayChildren.find((child) =>
-        child.props.value === props.value)?.props.children || '');
+    const newValue = useMemo(() => {
+        return arrayChildren.find((child) =>
+            child.props.value === props.value)?.props.children || '';
+    }, [props.value]);
 
     const [open, el, ref, toggle] = useMenu();
 
@@ -60,6 +64,7 @@ function Select({
     const clss = joinClass([
         'ui-input',
         'ui-select',
+        disabled && 'ui-select--disabled',
         error && 'ui-input--error',
         props.className
     ]);
@@ -72,7 +77,7 @@ function Select({
 
     const renderIcon = (icon: ReactElement<ButtonHTMLAttributes<any>>) => {
         return cloneElement(icon, {
-            className: joinClass([icon.props.className, 'ui-input__icon', 'ui-input__icon--right']),
+            className: joinClass([icon.props.className, 'ui-input__icon', 'ui-input__icon--padding-right']),
             type: 'button',
             onClick: (e: MouseEvent<any, globalThis.MouseEvent>) => {
                 e.stopPropagation();
@@ -85,9 +90,7 @@ function Select({
         return arrayChildren.map((child) => {
             return cloneElement(child, {
                 onClick: (e) => {
-                    setValue(child.props.children);
-
-                    if (props.onChange) { props.onChange(e as any); }
+                    if (onChange) { onChange(e as any); }
                 }
             });
         });
@@ -96,14 +99,16 @@ function Select({
     return (
         <div className={containerClss}>
             {label && <label className={labelClss}>{label} {props.required && '*'}</label>}
-            <button type="button" className={clss} onClick={toggle}>
-                {startIcon && renderIcon(startIcon as React.JSX.Element)}
-                <input {...props} readOnly type="text" value={value} />
+            <button type="button" className={clss} onClick={toggle} >
+                <div>
+                    {startIcon && renderIcon(startIcon as React.JSX.Element)}
+                </div>
+                <input {...props} readOnly type="text" value={newValue} disabled={disabled} />
                 <div ref={ref}>
                     <Icon
                         name="angle-down"
                         color="text.secondary"
-                        className="ui-input__icon ui-input__icon--left"
+                        className="ui-input__icon ui-input__icon--margin-left"
                     />
                 </div>
             </button>

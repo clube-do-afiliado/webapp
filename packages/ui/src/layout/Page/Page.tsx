@@ -11,7 +11,7 @@ import './Page.scss';
 
 export interface BaseProps extends PropsWithChildren {
     title: string;
-    release: string;
+    release?: string;
     loading?: boolean;
     subtitle?: string;
     action?: React.JSX.Element;
@@ -65,7 +65,12 @@ export default function BasePage({
                                 <Typography variant="h5" noMargin>{title}</Typography>
                                 {
                                     subtitle && (
-                                        <Typography variant="subtitle2" weight="normal" noMargin>
+                                        <Typography
+                                            noMargin
+                                            weight="normal"
+                                            variant="subtitle2"
+                                            color="text.secondary"
+                                        >
                                             {subtitle}
                                         </Typography>
                                     )
@@ -84,13 +89,17 @@ export default function BasePage({
                 </div>
             </Slide>
 
-            <Stack
-                alignItems="center"
-                justifyContent="center"
-                sx={{ color: ({ text }) => text.secondary }}
-            >
-                <span>Versão: {release}</span>
-            </Stack>
+            {
+                release && (
+                    <Stack
+                        alignItems="center"
+                        justifyContent="center"
+                        sx={{ color: ({ text }) => text.secondary }}
+                    >
+                        <span>Versão: {release}</span>
+                    </Stack>
+                )
+            }
         </Stack>
     );
 }

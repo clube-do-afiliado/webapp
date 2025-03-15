@@ -82,7 +82,11 @@ export const State: StoryObj<typeof Input> = {
     render: () => {
         return (
             <>
-                <Input placeholder="disabled" disabled gutterBottom />
+                <Input placeholder="disabled" disabled gutterBottom startIcon={
+                    <ButtonIcon>
+                        <IconComponent name="search" />
+                    </ButtonIcon>
+                } />
                 <Input placeholder="Read only" readOnly />
             </>
         );

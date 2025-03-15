@@ -8,12 +8,12 @@ import createComponent from '../../core/createComponent';
 import './Grid.scss';
 
 interface GridProps extends GridBaseProps { children: React.ReactNode; gap?: number; }
-function Grid({ children, sm, md, lg, gap = 15, ...props }: Readonly<GridProps>) {
+function Grid({ children, sm, md, lg, xl, gap = 15, ...props }: Readonly<GridProps>) {
     const arrayChildren = Children.toArray(children) as ReactElement<GridItemProps>[];
 
     const renderChildren = () => {
         return arrayChildren.map((child) => {
-            const sizes = { sm, md, lg };
+            const sizes = { sm, md, lg, xl };
 
             return cloneElement(child, { ...sizes, ...child.props });
         });
@@ -23,7 +23,7 @@ function Grid({ children, sm, md, lg, gap = 15, ...props }: Readonly<GridProps>)
         <div
             {...props}
             className={joinClass(['grid', props.className])}
-            style={{ gap }}
+            style={{ gap, ...props.style }}
         >
             {renderChildren()}
         </div>

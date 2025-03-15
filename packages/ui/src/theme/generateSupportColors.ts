@@ -4,7 +4,7 @@ import { adjustLightness } from './adjustLightness';
 import { getOpacityColor } from './getOpacityColor';
 import { getContrastColor } from './getContrastColor';
 
-export default function generateSupportColors(hex: string): Color {
+export function generateSupportColors(hex: string): Color {
     const variation = 20;
 
     const hsl = hexToHsl(hex);
