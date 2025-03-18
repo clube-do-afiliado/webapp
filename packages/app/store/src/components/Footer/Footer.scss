@@ -1,0 +1,75 @@
+@use "@/styles/global.scss" as *;
+
+.footer {
+    min-height: $footer-height;
+
+
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    .container {
+        padding-left: 32px;
+        padding-right: 32px;
+
+        width: 100%;
+        max-width: 1280px;
+
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+
+
+        .socials {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            gap: 15px;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--divider);
+            margin-block-start: 0.5em;
+            margin-block-end: 0.5em;
+            border-radius: var(--radius);
+        }
+
+        .create-info {
+            font-family: "poppins-regular";
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .security {
+            width: 100%;
+            list-style: none;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-block-end: 0px;
+            margin-block-start: 0px;
+            padding-inline-start: 0px;
+
+            li {
+                img {
+                    width: 100%;
+                }
+            }
+
+            @media only screen and (max-width: 899px) {
+                display: block;
+                text-align: center;
+
+                li img {
+                    width: 124px;
+                }
+            }
+        }
+    }
+}

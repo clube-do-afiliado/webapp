@@ -1,0 +1,23 @@
+{
+  "name": "@cda/store",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "rm -rf .next && env-cmd -f .env.dev next dev -p 3002",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "15.2.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "env-cmd": "^10.1.0",
+    "typescript": "^5.8.2"
+  }
+}

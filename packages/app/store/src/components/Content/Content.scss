@@ -1,0 +1,15 @@
+@use "@/styles/global.scss" as *;
+
+.main {
+    min-height: calc(100vh - #{$header-height} - #{$footer-height});
+    display: flex;
+    justify-content: center;
+
+    .container {
+        width: 100%;
+        max-width: 1280px;
+
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+}
