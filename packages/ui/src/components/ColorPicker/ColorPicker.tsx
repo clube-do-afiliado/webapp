@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, useEffect, useState } from 'react';
+import { InputHTMLAttributes, useEffect, useMemo, useState } from 'react';
 
 import COLORS from './colors';
 import { joinClass } from '../../utils';
@@ -8,6 +8,7 @@ import { Menu, useMenu } from '../../components/Menu';
 import { getContrastColor, useTheme } from '../../theme';
 
 import './ColorPicker.scss';
+import { uuid } from '@cda/toolkit/uuid';
 
 interface ColorPickerProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string;
@@ -31,6 +32,8 @@ export default function ColorPicker({
     const [color, setColor] = useState<string>(value as string);
 
     const [open, el, ref, toggle] = useMenu();
+
+    const id = useMemo(() => uuid(), []);
 
     const labelClss = joinClass([
         'ui-color-picker__label',
@@ -68,6 +71,8 @@ export default function ColorPicker({
             props.onInput({ target: { value: color } } as React.ChangeEvent<HTMLInputElement>);
         }
     }, [color]);
+
+    useEffect(() => { setColor(value as string); }, [value]);
 
     const iconClassName = (c: string) => joinClass([
         'ui-color-picker__color__icon',
@@ -127,7 +132,7 @@ export default function ColorPicker({
                         ))
                     }
                     <label
-                        htmlFor="color-picker"
+                        htmlFor={`color-picker-${id}`}
                         className="ui-color-picker__color"
                         style={{ backgroundColor: palette.grey.main }}
                     >
@@ -138,7 +143,7 @@ export default function ColorPicker({
                         />
                         <input
                             type="color"
-                            id="color-picker"
+                            id={`color-picker-${id}`}
                             value={color}
                             onChange={handleColorChange}
                             onInput={handleColorChange}

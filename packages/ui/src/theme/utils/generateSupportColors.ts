@@ -1,4 +1,4 @@
-import type { Color } from './Theme';
+import type { Color } from '../Theme';
 import { hexToHsl } from './hexToHsl';
 import { adjustLightness } from './adjustLightness';
 import { getOpacityColor } from './getOpacityColor';

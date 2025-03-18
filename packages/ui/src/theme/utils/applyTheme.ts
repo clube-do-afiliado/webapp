@@ -1,4 +1,4 @@
-import type { ThemeBuilded, Color } from './Theme';
+import type { ThemeBuilded, Color } from '../Theme';
 
 function setColor(name: string, color: Color) {
     document.documentElement.style.setProperty(`--${name}`, color.main);
@@ -8,7 +8,7 @@ function setColor(name: string, color: Color) {
     document.documentElement.style.setProperty(`--${name}-opacity`, color.opacity);
 }
 
-export default function applyTheme(theme: ThemeBuilded) {
+export function applyTheme(theme: ThemeBuilded) {
     const { palette, shape, spacing } = theme;
 
     // COLORS

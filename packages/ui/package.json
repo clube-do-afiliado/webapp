@@ -17,7 +17,8 @@
       "require": "./src/*/index.ts"
     },
     "./styles/*": "./src/styles/*",
-    "./assets/*": "./assets/*"
+    "./assets/*": "./assets/*",
+    "./component-styles/*": "./src/components/*/*"
   },
   "scripts": {
     "storybook": "storybook dev -p 6006",
@@ -39,8 +40,8 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "peerDependencies": {
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react": "^19.1.0",
+    "react-dom": "^19.0.0"
   },
   "packageManager": "yarn@3.2.1",
   "dependencies": {

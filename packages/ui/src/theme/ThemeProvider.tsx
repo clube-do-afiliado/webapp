@@ -1,9 +1,9 @@
 import { createContext, useEffect, useMemo, useState, type PropsWithChildren } from 'react';
 
-import applyTheme from './applyTheme';
-import createTheme from './createTheme';
+import { createTheme } from './utils/createTheme';
+import { applyTheme } from './utils/applyTheme';
 import type { Mode, ThemeBuilded } from './Theme';
-import { themeDefaultLight } from './themeDefault';
+import { themeDefaultLight } from './utils/themeDefault';
 
 export interface ThemeContextConfig {
     theme: ThemeBuilded;

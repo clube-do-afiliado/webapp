@@ -1,4 +1,4 @@
-export function getContrastColor(hexColor) {
+export function getContrastColor(hexColor: string) {
     // Converter hexadecimal para RGB
     const r = parseInt(hexColor.slice(1, 3), 16) / 255;
     const g = parseInt(hexColor.slice(3, 5), 16) / 255;

@@ -81,7 +81,7 @@ function Select({
             type: 'button',
             onClick: (e: MouseEvent<any, globalThis.MouseEvent>) => {
                 e.stopPropagation();
-                if (icon.props.onClick) { icon.props.onClick(e); };
+                if (icon.props.onClick && !disabled) { icon.props.onClick(e); };
             }
         });
     };
@@ -99,7 +99,7 @@ function Select({
     return (
         <div className={containerClss}>
             {label && <label className={labelClss}>{label} {props.required && '*'}</label>}
-            <button type="button" className={clss} onClick={toggle} >
+            <button type="button" className={clss} onClick={toggle} disabled={disabled}>
                 <div>
                     {startIcon && renderIcon(startIcon as React.JSX.Element)}
                 </div>

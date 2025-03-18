@@ -1,4 +1,4 @@
-import type { Theme } from './Theme';
+import type { Theme } from '../Theme';
 
 export const defaultSpacing: Theme['spacing'] = 8;
 export const defaultShape: Theme['shape'] = { radius: 4 };

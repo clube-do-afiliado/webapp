@@ -1,5 +1,6 @@
 import { cloneElement, HtmlHTMLAttributes } from 'react';
 
+import Stack from '../Stack';
 import { Colors } from '../../theme';
 import { joinClass } from '../../utils';
 import ButtonIcon from '../../components/ButtonIcon';
@@ -8,20 +9,28 @@ import createComponent from '../../core/createComponent';
 import Icon, { type IconProps } from '../../components/Icon';
 
 import './Alert.scss';
-import Stack from '../Stack';
 
 export interface AlertProps extends HtmlHTMLAttributes<HTMLDivElement> {
     color?: Colors;
     icon?: React.JSX.Element;
+    variant?: 'opacity' | 'contained';
     fullWidth?: boolean;
     children: React.JSX.Element | string;
     onClose?: () => void;
 }
-function Alert({ children, icon, fullWidth, color = 'primary', onClose, ...props }: AlertProps) {
-
+function Alert({
+    children,
+    icon,
+    fullWidth,
+    color = 'primary',
+    variant = 'contained',
+    onClose,
+    ...props
+}: AlertProps) {
     const className = joinClass([
         'ui-alert',
         `ui-alert--${color}`,
+        `ui-alert--${color}--${variant}`,
         fullWidth && 'ui-alert--fullWidth'
     ]);
 

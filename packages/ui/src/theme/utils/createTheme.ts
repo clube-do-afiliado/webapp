@@ -1,8 +1,8 @@
-import type { ThemeBuilded, ThemeOptions } from './Theme';
+import type { ThemeBuilded, ThemeOptions } from '../Theme';
 import { generateSupportColors } from './generateSupportColors';
-import { themeDefaultDark, themeDefaultLight } from './themeDefault';
+import { themeDefaultDark, themeDefaultLight } from '../utils/themeDefault';
 
-export default function createTheme(theme?: ThemeOptions): ThemeBuilded {
+export function createTheme(theme?: ThemeOptions): ThemeBuilded {
     const mode = theme?.palette?.mode || 'light';
     const ref = mode === 'dark' ? themeDefaultDark : themeDefaultLight;
 

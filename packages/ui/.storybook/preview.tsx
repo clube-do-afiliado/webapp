@@ -3,7 +3,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import ThemeProvider from '../src/theme/ThemeProvider';
-import createTheme from '../src/theme/createTheme';
+import { createTheme } from '../src/theme/utils/createTheme';
 
 import './style.css';
 

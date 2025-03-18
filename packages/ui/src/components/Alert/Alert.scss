@@ -31,8 +31,15 @@
     @each $color in $colors {
         &--#{$color} {
             color: var(--#{$color});
-            background-color: var(--#{$color}-opacity);
             box-shadow: $boxShadowSmall;
+
+            &--opacity {
+                background-color: var(--#{$color}-opacity);
+            }
+
+            &--contained {
+                background-color: var(--#{$color}-light);
+            }
 
             .ui-alert__icon {
                 margin-right: 8px;
