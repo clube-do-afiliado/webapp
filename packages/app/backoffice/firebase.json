@@ -1,7 +1,7 @@
 {
   "hosting": [
     {
-      "target": "sso",
+      "target": "backoffice",
       "public": "dist",
       "ignore": [
         "firebase.json",

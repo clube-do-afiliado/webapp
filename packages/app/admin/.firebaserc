@@ -6,15 +6,15 @@
   "targets": {
     "clube-do-afiliado": {
       "hosting": {
-        "backoffice": [
-          "backoffice-clube-do-afiliado"
+        "admin": [
+          "admin-clube-do-afiliado"
         ]
       }
     },
     "clube-do-afiliado-homolog": {
       "hosting": {
-        "backoffice": [
-          "hmg-backoffice-clube-do-afiliado"
+        "admin": [
+          "hmg-admin-clube-do-afiliado"
         ]
       }
     }

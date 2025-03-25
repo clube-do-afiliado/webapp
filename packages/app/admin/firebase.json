@@ -1,7 +1,7 @@
 {
   "hosting": [
     {
-      "target": "sso",
+      "target": "admin",
       "public": "dist",
       "ignore": [
         "firebase.json",
