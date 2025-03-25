@@ -1,6 +1,6 @@
 import Page from '@cda/ui/layout/Page';
 import Slide from '@cda/ui/animations/Slide';
-import { Grid, GridItem } from '@cda/ui/components/grid';
+import { Grid, GridItem } from '@cda/ui/components/Grid';
 
 import { orderByIndex } from '@cda/toolkit/array';
 
