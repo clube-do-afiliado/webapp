@@ -5,7 +5,7 @@ import Switch from '@cda/ui/components/Switch';
 import Typography from '@cda/ui/components/Typography';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
 
-import permissions, { type Permissions } from '@cda/services/Permissions';
+import permissions, { type Permissions } from '@cda/services/permissions';
 
 interface PermissionssListProps { onChange?: (data: Permissions[]) => void; value: Permissions[] }
 export default function PermissionssList({ value, onChange }: PermissionssListProps) {
