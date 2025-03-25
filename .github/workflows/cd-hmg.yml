@@ -37,7 +37,7 @@ jobs:
       ENVIRONMENT: ${{ needs.project-env.outputs.PROJECT_ENV }} HMG
       BUILD_ENV: homolog
       PATH: dist
-      PROJECT: admin
+      PROJECT: ${{inputs.project}}
       COMMAND: build
       FIREBASE_PROJECT_ID: clube-do-afiliado-homolog
       SSO_URL:  ${{ vars.STG_SSO_URL }}
