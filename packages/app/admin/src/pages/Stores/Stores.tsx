@@ -1,28 +1,28 @@
 import Page from '@cda/ui/layout/Page';
-import Slide from '@cda/ui/animations/Slide';
-import { Grid, GridItem } from '@cda/ui/components/grid';
+// import Slide from '@cda/ui/animations/Slide';
+// import { Grid, GridItem } from '@cda/ui/components/grid';
 
-import { orderByIndex } from '@cda/toolkit/array';
+// import { orderByIndex } from '@cda/toolkit/array';
 
-import { planPriorityOrder } from '@cda/common/Plans';
-import { AccessControl } from '@cda/common/AccessControl';
-import { useIntegrations } from '@cda/common/Integrations';
+// import { planPriorityOrder } from '@cda/common/Plans';
+// import { AccessControl } from '@cda/common/AccessControl';
+// import { useIntegrations } from '@cda/common/Integrations';
 
 import { release } from '@/services/core';
 
-import StoreCard from './components/StoreCard';
+// import StoreCard from './components/StoreCard';
 
 export default function Stores() {
-    const { integrations, loading } = useIntegrations();
+    // const { integrations, loading } = useIntegrations();
 
     return (
         <Page
             title="Lojas"
             subtitle="Conheça nosso catálogo de lojas"
-            loading={loading}
+            // loading={loading}
             release={release}
         >
-            {
+            {/* {
                 !loading && Boolean(integrations.length) && (
                     <Grid xl={3} lg={4} md={6} sm={12}>
                         {
@@ -45,7 +45,7 @@ export default function Stores() {
                         }
                     </Grid>
                 )
-            }
+            } */}
         </Page>
     );
 }
