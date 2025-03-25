@@ -1,9 +1,9 @@
-import type { Color, PaletteBuilded } from './Theme';
+import type { Color, PaletteBuilded } from '../Theme';
 
 const getColorsVariations = (color: Color) => {
-    const arr = ['main', 'dark', 'light'];
+    const arr: Array<keyof Color> = ['main', 'dark', 'light'];
 
-    return arr.map(i => color[i]);
+    return arr.map<string>(c => color[c]);
 };
 
 export const COLORS = (palette: PaletteBuilded) => [

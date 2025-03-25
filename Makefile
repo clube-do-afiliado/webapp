@@ -53,13 +53,17 @@ define delete_dependencies
 	rm -Rf ./packages/$(1)/node_modules
 endef
 
-clean-dependencies:
+clean-modules:
 	rm -Rf ./node_modules
 	rm -Rf yarn.lock
 	$(call delete_dependencies,toolkit)
 	$(call delete_dependencies,ui)
+	$(call delete_dependencies,common)
+	$(call delete_dependencies,services)
 	$(call delete_dependencies,app/sso)
 	$(call delete_dependencies,app/backoffice)
+	$(call delete_dependencies,app/admin)
+	$(call delete_dependencies,app/store)
 	@printf "${SUCCESS_TEXT}>>>> dependencies deleted successfully ${RESET_TEXT}\n";
 
 build-dependencies:

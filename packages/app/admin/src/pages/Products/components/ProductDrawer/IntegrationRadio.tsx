@@ -1,16 +1,14 @@
 import { useState } from 'react';
 
 import { joinClass } from '@cda/ui/utils';
-import { Grid, GridItem } from '@cda/ui/components/Grid';
-import { useControl } from '@cda/ui/components/Form';
-import Typography from '@cda/ui/components/Typography';
-
-import './ProductDrawer.scss';
 import Ripple from '@cda/ui/components/Ripple';
 import Avatar from '@cda/ui/components/Avatar';
-import Icon from '@cda/ui/components/Icon';
+import { useControl } from '@cda/ui/components/Form';
+import Typography from '@cda/ui/components/Typography';
+import { Grid, GridItem } from '@cda/ui/components/Grid';
 
 import { useIntegrations } from '@cda/common/Integrations';
+import './ProductDrawer.scss';
 
 import type { ProductForm } from './interface';
 

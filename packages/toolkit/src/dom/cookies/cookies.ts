@@ -14,7 +14,7 @@ export class Cookies<T extends string> {
     public get<K>(key: T, decrypt = false): K {
         const data = C.get(`${key}`);
         const value = decrypt && data ? JSON.parse(window.atob(data)) : data;
-        return data ? value : data;
+        return data || value;
     }
 
     public set(key: T, data: any, encrypt = false, expires?: number | Date, path = '/') {

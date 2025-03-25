@@ -7,7 +7,8 @@ export function shuffle<T>(array: T[]) {
     return array;
 }
 
-export const flatten = <T>(array: Array<T>) => [].concat(...array);
+export const flatten = <T>(array: Array<T | T[]>): T[] =>
+    array.reduce<T[]>((acc, val) => acc.concat(val), []);
 
 export const uniq = <T>(array: Array<T>) => [...new Set(array)];
 

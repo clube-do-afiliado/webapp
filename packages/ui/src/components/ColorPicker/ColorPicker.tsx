@@ -1,5 +1,7 @@
 import { InputHTMLAttributes, useEffect, useMemo, useState } from 'react';
 
+import { uuid } from '@cda/toolkit/uuid';
+
 import COLORS from './colors';
 import { joinClass } from '../../utils';
 import Icon from '../../components/Icon';
@@ -8,7 +10,6 @@ import { Menu, useMenu } from '../../components/Menu';
 import { getContrastColor, useTheme } from '../../theme';
 
 import './ColorPicker.scss';
-import { uuid } from '@cda/toolkit/uuid';
 
 interface ColorPickerProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string;

@@ -1,11 +1,13 @@
 'use server';
 
+import { notFound } from 'next/navigation';
+
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { sitesServices, productsServices } from '@/services/core';
-import BaseProviders from '@/providers/BaseProviders';
 import Content from '@/components/Content';
 import Products from '@/components/Products';
+import BaseProviders from '@/providers/BaseProviders';
+import { sitesServices, productsServices } from '@/services/core';
 
 interface NextPageProps<
     TParams extends Record<string, unknown> = Record<string, unknown>,
@@ -20,7 +22,7 @@ export default async function Page({ params }: NextPageProps<{ slug: string }>) 
 
     const site = await sitesServices.getUserStoresBySlug(slug);
 
-    if (!site) { throw new Error(`A loja "${slug}" não foi encontrada`); }
+    if (!site) { return; }
 
     const products = await productsServices.getVisibleStoreProducts(site.id);
 

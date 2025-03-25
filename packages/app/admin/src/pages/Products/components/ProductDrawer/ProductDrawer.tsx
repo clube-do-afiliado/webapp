@@ -13,10 +13,10 @@ import { Product } from '@cda/services/products';
 import { useProducts } from '@cda/common/Products';
 
 import ProductInfo from './ProductInfo';
+import useProductForm from './useProductForm';
 import DeleteProductModal from '../DeleteProductModal';
 
 import './ProductDrawer.scss';
-import useProductForm from './useProductForm';
 
 export default function ProductDrawer({
     isOpen,
