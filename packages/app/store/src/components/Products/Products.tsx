@@ -1,12 +1,16 @@
 import type { Site } from '@cda/services/sites';
+import type { Product } from '@cda/services/products';
 
-interface ProductsProps { site: Site }
-export default function Products({ site }: ProductsProps) {
+interface ProductsProps { site: Site; products: Product[] }
+export default function Products({ products }: ProductsProps) {
 
     return (
         <div>
-            {site.id}
-            lista de produtos
+            {
+                Boolean(products.length) && products.map(p => (
+                    <div key={p.id}>{p.name}</div>
+                ))
+            }
         </div>
     );
 }

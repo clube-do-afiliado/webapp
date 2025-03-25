@@ -1,6 +1,8 @@
 // @use "../../styles/main.scss" as *
 
 .ui-typography {
+    transition: all $animation;
+
     &--no-margin {
         margin: 0;
         margin-block-end: 0;

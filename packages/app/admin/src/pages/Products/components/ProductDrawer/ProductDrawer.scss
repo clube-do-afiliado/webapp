@@ -1,0 +1,44 @@
+.product-drawer {
+    .title {
+        overflow: hidden;
+        overflow-wrap: break-word;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+    }
+
+    .image-container {
+        height: 80px !important;
+        width: 80px !important;
+        position: relative;
+
+        img {
+            color: transparent;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: absolute;
+        }
+    }
+
+    .integration-radio {
+        transition: all $animation;
+        border: 3px solid var(--divider);
+        border-radius: 50px;
+        position: relative;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: $boxShadowRegular;
+        }
+
+        &--active {
+            border: 3px solid var(--secondary);
+        }
+
+        img {
+            width: 100%;
+        }
+    }
+}

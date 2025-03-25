@@ -51,8 +51,8 @@ function Drawer({
 
     return (
         config.visible && (
-            <div className="drawer" {...props}>
-                <div className={joinClass(['drawer-content', orientation, config.animation])}>
+            <div className="ui-drawer" {...props}>
+                <div className={joinClass(['ui-drawer-content', orientation, config.animation])}>
                     <div className="close-button">
                         <ButtonIcon
                             onClick={onClose}
@@ -67,7 +67,7 @@ function Drawer({
                 </div>
                 <div
                     data-testid="drawer-overlay"
-                    className={joinClass(['drawer-overlay', config.animation])}
+                    className={joinClass(['ui-drawer-overlay', config.animation])}
                     onClick={onClose}
                 />
             </div>

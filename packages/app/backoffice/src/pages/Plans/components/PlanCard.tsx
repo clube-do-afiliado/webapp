@@ -7,7 +7,7 @@ import { Plan } from '@cda/services/plans';
 import Dot from './Dot';
 
 interface CardIntegrationProps { plan: Plan; onClick: (plan: Plan) => void; }
-export default function CardIntegration({ plan, onClick }: CardIntegrationProps) {
+export default function PlanCard({ plan, onClick }: CardIntegrationProps) {
     return (
         <Card onClick={onClick}>
             <CardContent>

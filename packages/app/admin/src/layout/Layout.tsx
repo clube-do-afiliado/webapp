@@ -15,6 +15,11 @@ import { useAuth } from '@cda/common/Auth';
 
 interface LayoutProps { children: React.JSX.Element; }
 export default function Layout({ children }: React.PropsWithChildren<LayoutProps>) {
+    const themes = {
+        light: themeDefaultLight,
+        dark: themeDefaultDark,
+    };
+
     const navigate = useNavigate();
     const { theme, updateTheme } = useTheme();
 
@@ -22,14 +27,7 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
 
     const [loading, setLoading] = useState(true);
 
-    const themes = {
-        light: themeDefaultLight,
-        dark: themeDefaultDark,
-    };
-
-    useEffect(() => {
-        if (user) { setLoading(false); }
-    }, [user]);
+    useEffect(() => { if (user) { setLoading(false); } }, [user]);
 
     const toggleTheme = () => {
         updateTheme(createTheme(theme.palette.mode === 'dark'

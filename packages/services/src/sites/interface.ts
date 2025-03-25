@@ -1,11 +1,7 @@
-export interface Product {
-    name: string;
-    price: number;
-    tags: string[];
-    images: string[];
-}
+import { Product } from '../products';
 
 export interface Information {
+    name: string;
     title: string;
     description: string;
 }
@@ -32,7 +28,6 @@ export interface Social {
 export interface Site {
     id: string;
     slug: string;
-    name: string;
     ownerId: string;
     socials: Social;
     theme: SiteTheme;

@@ -2,7 +2,7 @@
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { sitesServices } from '@/services/core';
+import { sitesServices, productsServices } from '@/services/core';
 import BaseProviders from '@/providers/BaseProviders';
 import Content from '@/components/Content';
 import Products from '@/components/Products';
@@ -22,11 +22,13 @@ export default async function Page({ params }: NextPageProps<{ slug: string }>) 
 
     if (!site) { throw new Error(`A loja "${slug}" não foi encontrada`); }
 
+    const products = await productsServices.getVisibleStoreProducts(site.id);
+
     return (
         <BaseProviders site={site}>
             <Header site={site} />
             <Content title="Produtos">
-                <Products site={site} />
+                <Products site={site} products={products} />
             </Content>
             <Footer site={site} />
         </BaseProviders>

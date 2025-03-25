@@ -19,6 +19,11 @@ export default function StoreCard({ integration, allowed }: StoreCardProps) {
 
     const plan = useMemo(() => plans.find(p => p.id === integration?.plan), [integration]);
 
+    const handleClick = () => {
+        if (allowed) { console.log('Configurar'); }
+        if (!allowed) { console.log('Fazer upgrade'); }
+    };
+
     return (
         <Card>
             <CardContent>
@@ -31,13 +36,17 @@ export default function StoreCard({ integration, allowed }: StoreCardProps) {
                         {plan && <PlanChip {...plan} />}
                     </Stack>
                     <Button
-                        disabled={!allowed}
-                        color="secondary"
+                        variant={allowed ? 'contained' : 'text'}
+                        color={allowed ? 'secondary' : 'primary'}
+                        onClick={handleClick}
                         startIcon={
-                            <Icon name="cog" />
+                            allowed
+                                ? <Icon name="cog" />
+                                : <Icon name="rocket" />
                         }
                     >
-                        Configurar
+                        {!allowed && 'Fazer upgrade'}
+                        {allowed && 'Configurar'}
                     </Button>
                 </Stack>
             </CardContent>

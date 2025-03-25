@@ -40,7 +40,7 @@ export default function DeleteIntegrationModal({
             onClose={onToggleModal}
         >
             <Typography>
-                Tem certeza que deseja deletar a integration <strong>&quot;{integration?.name}&quot;</strong>?
+                Tem certeza que deseja deletar a integração <strong>&quot;{integration?.name}&quot;</strong>?
             </Typography>
             <ModalFooter>
                 <Button

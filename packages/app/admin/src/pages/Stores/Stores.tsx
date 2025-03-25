@@ -16,8 +16,12 @@ export default function Stores() {
     const { integrations, loading } = useIntegrations();
 
     return (
-        <Page title="Lojas" loading={loading} release={release}>
-
+        <Page
+            title="Lojas"
+            subtitle="Conheça nosso catálogo de lojas"
+            loading={loading}
+            release={release}
+        >
             {
                 !loading && Boolean(integrations.length) && (
                     <Grid xl={3} lg={4} md={6} sm={12}>

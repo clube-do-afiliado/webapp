@@ -6,8 +6,9 @@ import { createTheme, ThemeProvider, useTheme } from '@cda/ui/theme';
 
 import logger from '@cda/toolkit/logger';
 
-import { SitesProvider, useSites } from '@cda/common/Sites';
+import { ProductsProvider } from '@cda/common/Products';
 import { AuthProvider, useAuth } from '@cda/common/Auth';
+import { SitesProvider, useSites } from '@cda/common/Sites';
 import { PlansProvider, usePlans } from '@cda/common/Plans';
 import { AccessControlProvider } from '@cda/common/AccessControl';
 import { IntegrationsProvider, useIntegrations } from '@cda/common/Integrations';
@@ -20,6 +21,7 @@ import {
     rolesServices,
     plansServices,
     sitesServices,
+    productsServices,
     integrationsServices,
 } from '@/services/core';
 
@@ -79,7 +81,9 @@ function Providers({ children }: PropsWithChildren) {
         <PlansProvider plansServices={plansServices}>
             <IntegrationsProvider integrationsServices={integrationsServices}>
                 <SitesProvider sitesServices={sitesServices}>
-                    {children}
+                    <ProductsProvider productsServices={productsServices}>
+                        {children}
+                    </ProductsProvider>
                 </SitesProvider>
             </IntegrationsProvider>
         </PlansProvider>

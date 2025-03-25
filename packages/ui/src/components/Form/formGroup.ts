@@ -47,6 +47,8 @@ export default class FormGroup<F> {
     }
 
     public submit() {
+        this.dirty();
+
         if (this.isValid && this.handle.submit) { this.handle.submit(this); }
     }
 

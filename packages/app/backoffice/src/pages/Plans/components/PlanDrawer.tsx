@@ -16,11 +16,11 @@ import Dot from './Dot';
 import DeletePlanModal from './DeletePlanModal';
 import FormPlansModal from './FormPlanModal';
 
-export default function UserDrawer({
+export default function PlanDrawer({
     isOpen,
-    integration: plan,
+    plan,
     onToggleDrawer
-}: HelperDrawerProps<{ integration?: Plan }>) {
+}: HelperDrawerProps<{ plan?: Plan }>) {
     const [open, toggleModal] = useModal();
     const [openEdit, toggleEditModal] = useModal();
 

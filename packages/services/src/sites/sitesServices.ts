@@ -24,11 +24,19 @@ export default class SitesServices {
         });
     }
 
-    async getUserStoreDetails(ownerId: string) {
+    async getUserStores(ownerId: string) {
         return this.db.getList<Site>({
             path: SitesServices.PATH,
             pathSegments: [],
             filters: [{ field: 'ownerId', operator: '==', value: ownerId }],
+        });
+    }
+
+    async getUserStoresBySlug(slug: string) {
+        return this.db.getItem<Site>({
+            path: SitesServices.PATH,
+            pathSegments: [],
+            filters: [{ field: 'slug', operator: '==', value: slug }],
         });
     }
 

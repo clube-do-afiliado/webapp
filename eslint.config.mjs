@@ -41,6 +41,7 @@ export default [
                     newlinesBetween: 'always',
                     groups: [
                         ['/^react/'],
+                        ['/^next/'],
                         'module',
                         '/^@storybook/',
                         '/^@hello-pangea/',

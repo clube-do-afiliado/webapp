@@ -1,7 +1,4 @@
 import { useRef, useState } from 'react';
-
-import useOutsideClick from '../../hooks/useOutsideClick';
-
 type UseMenu = [
     boolean,
     HTMLElement | null,
@@ -14,8 +11,6 @@ export default function useMenu(): UseMenu {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const open = Boolean(anchorEl);
-
-    useOutsideClick(ref, () => handleClose(), []);
 
     const handleOpen = (event?: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event ? event.currentTarget : null);

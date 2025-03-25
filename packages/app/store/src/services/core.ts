@@ -6,6 +6,7 @@ import UserServices from '@cda/services/user';
 import RolesServices from '@cda/services/roles';
 import PlansServices from '@cda/services/plans';
 import SitesServices from '@cda/services/sites';
+import ProductsServices from '@cda/services/products';
 import IntegrationsServices from '@cda/services/integrations';
 
 // VARIABLES
@@ -46,4 +47,5 @@ export const userServices = new UserServices(db, url.sso);
 export const rolesServices = new RolesServices(db);
 export const plansServices = new PlansServices(db);
 export const sitesServices = new SitesServices(db);
+export const productsServices = new ProductsServices(db);
 export const integrationsServices = new IntegrationsServices(db);

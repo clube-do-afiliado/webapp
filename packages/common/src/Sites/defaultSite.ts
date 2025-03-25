@@ -7,10 +7,10 @@ import type { Site } from '@cda/services/sites';
 export default function generateDefaultSite(nameSite: string, ownerId: string): Omit<Site, 'id'> {
     const { palette } = themeDefaultLight;
     return {
-        name: nameSite,
         slug: slug(nameSite),
         ownerId: ownerId,
         information: {
+            name: nameSite,
             title: nameSite,
             description: 'Essa é minha loja de promoções'
         },

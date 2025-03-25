@@ -4,7 +4,6 @@ import Logo from '../../components/Logo';
 import Stack from '../../components/Stack';
 import Avatar from '../../components/Avatar';
 import Button from '../../components/Button';
-import Tooltip from '../../components/Tooltip';
 import ButtonIcon from '../../components/ButtonIcon';
 
 import './Header.scss';
@@ -57,15 +56,13 @@ export default function Header({
                 <ButtonIcon onClick={onUpdateMode}>
                     <Icon name={modeIcon} />
                 </ButtonIcon>
-                <Tooltip direction="bottom" label={name}>
-                    <Avatar
-                        alt={name}
-                        name={name}
-                        src={picture}
-                        sx={{ backgroundColor: ({ secondary }) => secondary.main }}
-                        onClick={onProfile}
-                    />
-                </Tooltip>
+                <Avatar
+                    alt={name}
+                    name={name}
+                    src={picture}
+                    sx={{ backgroundColor: ({ secondary }) => secondary.main }}
+                    onClick={onProfile}
+                />
             </Stack>
         </div>
     );

@@ -25,7 +25,7 @@ function Avatar({ src, alt, name, ...props }: AvatarProps) {
     ]);
 
     const content = () => {
-        if (src) { return <img style={{ width: '100%' }} src={src} alt={alt} />; }
+        if (src) { return <img loading="lazy" style={{ width: '100%' }} src={src} alt={alt} />; }
         if (name) { return <span>{getInitials(name)}</span>; }
 
         return (

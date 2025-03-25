@@ -65,7 +65,7 @@ export default function SitesProvider({ children, sitesServices }: PropsWithChil
     const createSite = async (data: Omit<Site, 'id'>) => {
         return sitesServices.create(data)
             .then(res => setSites((prev) => ([...prev, res])))
-            .then(() => addAlert({ color: 'success', message: `A role "${data.name}" foi adicionada` }))
+            .then(() => addAlert({ color: 'success', message: `A role "${data.information.name}" foi adicionada` }))
             .catch(() => addAlert({ color: 'error', message: 'Não foi possível criar a role' }));
     };
 
@@ -76,7 +76,7 @@ export default function SitesProvider({ children, sitesServices }: PropsWithChil
     };
 
     const getUserSites = async (ownerId: string) => {
-        return sitesServices.getUserStoreDetails(ownerId)
+        return sitesServices.getUserStores(ownerId)
             .then(r => setUserSites(r))
             .finally(() => setLoading(false));
     };
@@ -91,8 +91,8 @@ export default function SitesProvider({ children, sitesServices }: PropsWithChil
     const updateSite = async (data: Site) => {
         return sitesServices.update(data)
             .then(() => setSites(prev => prev.map(r => r.id === data.id ? data : r)))
-            .then(() => addAlert({ color: 'success', message: `A role "${data.name}" foi editada` }))
-            .then(() => addAlert({ color: 'success', message: 'Não foi possível editar a role' }));
+            .then(() => addAlert({ color: 'success', message: `o site "${data.information.name}" foi editado` }))
+            .catch(() => addAlert({ color: 'error', message: 'Não foi possível editar o site' }));
     };
 
     return (

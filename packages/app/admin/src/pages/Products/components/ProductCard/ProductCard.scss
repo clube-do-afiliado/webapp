@@ -1,0 +1,48 @@
+.product-card {
+    .top-container {
+        position: relative;
+        background-color: white;
+
+        .image-container {
+            height: 160px;
+            position: relative;
+
+            img {
+                color: transparent;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                position: absolute;
+            }
+        }
+
+        .integration {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            overflow: hidden;
+            border-radius: 50px;
+            box-shadow: $boxShadowSmall;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+
+    .bottom-container {
+        .title {
+            min-height: 28px;
+            overflow: hidden;
+            overflow-wrap: break-word;
+            line-break: strict;
+            white-space: normal;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+        }
+    }
+}

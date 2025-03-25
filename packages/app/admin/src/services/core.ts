@@ -1,15 +1,7 @@
 import { initializeApp } from 'firebase/app';
+import { getAuth, connectAuthEmulator } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
-import {
-    getAuth,
-    signOut,
-    signInWithPopup,
-    GoogleAuthProvider,
-    connectAuthEmulator,
-    signInWithEmailAndPassword,
-    confirmPasswordReset,
-    createUserWithEmailAndPassword,
-} from 'firebase/auth';
+import { getFunctions, httpsCallable, connectFunctionsEmulator } from 'firebase/functions';
 
 import DB from '@cda/services/db';
 import AuthServices from '@cda/services/auth';
@@ -17,7 +9,9 @@ import UserServices from '@cda/services/user';
 import RolesServices from '@cda/services/roles';
 import PlansServices from '@cda/services/plans';
 import SitesServices from '@cda/services/sites';
+import ServerFunctions from '@cda/services/serverFunctions';
 import IntegrationsServices from '@cda/services/integrations';
+import ProductsServices, { ProductInfo } from '@cda/services/products';
 
 // VARIABLES
 export const url = {
@@ -44,22 +38,17 @@ const app = initializeApp({
 
 // FIREBASE SERVICES
 const firebaseAuth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
 const firestore = getFirestore(app);
+const functions = getFunctions(app, 'us-central1');
 
-export const authServices = new AuthServices({
-    signOut: () => signOut(firebaseAuth),
-    googleAuth: () => signInWithPopup(firebaseAuth, googleProvider),
-    signInWithPassword: (email, password) => signInWithEmailAndPassword(firebaseAuth, email, password),
-    confirmPasswordReset: (oobCode: string, password: string) => confirmPasswordReset(firebaseAuth, oobCode, password),
-    createUserWithEmailAndPassword: (email, password) => createUserWithEmailAndPassword(firebaseAuth, email, password),
-}, url.sso);
+export const authServices = new AuthServices({}, url.sso);
 
 export const db = new DB(firestore);
 
 if (isLocal) {
     connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
     connectAuthEmulator(firebaseAuth, 'http://127.0.0.1:9099');
+    connectFunctionsEmulator(functions, '127.0.0.1', 5001);
 }
 
 // ENTITY SERVICES
@@ -67,4 +56,10 @@ export const userServices = new UserServices(db, url.sso);
 export const rolesServices = new RolesServices(db);
 export const plansServices = new PlansServices(db);
 export const sitesServices = new SitesServices(db);
+export const productsServices = new ProductsServices(db);
 export const integrationsServices = new IntegrationsServices(db);
+
+export const serverFunctions = new ServerFunctions({
+    'getInfo': httpsCallable<{ url: string }, ProductInfo>(functions, 'getInfo'),
+});
+

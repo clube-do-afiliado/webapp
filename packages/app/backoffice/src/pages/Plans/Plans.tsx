@@ -25,7 +25,7 @@ import { planPriorityOrder, usePlans } from '@cda/common/Plans';
 
 import { release } from '@/services/core';
 
-import CardPlan from './components/CardPlan';
+import PlanCard from './components/PlanCard';
 import PlanDrawer from './components/PlanDrawer';
 import FormPlanModal from './components/FormPlanModal';
 
@@ -145,7 +145,7 @@ export default function Plans() {
                                     .map((plan, i) => (
                                         <GridItem key={plan.id}>
                                             <Slide enter delay={(i + 1) * 100}>
-                                                <CardPlan
+                                                <PlanCard
                                                     plan={plan}
                                                     onClick={() => handleSelectPlan(plan)}
                                                 />
@@ -161,7 +161,7 @@ export default function Plans() {
             <FormPlanModal isOpen={open} onToggleModal={toggle} />
 
             <PlanDrawer
-                integration={selectedPlan}
+                plan={selectedPlan}
                 isOpen={openDrawer}
                 onToggleDrawer={toggleDrawer}
             />

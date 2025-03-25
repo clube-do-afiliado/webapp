@@ -16,6 +16,7 @@ type Config = { animation: AnimationClass, state: State; width: CSSProperties['w
 
 interface MenuListProps extends React.HTMLAttributes<HTMLDivElement> {
     open: boolean;
+    autoClose?: boolean;
     maxHeight?: CSSProperties['maxHeight'];
     direction?: Direction;
     anchorEl: HTMLElement | null;
@@ -30,6 +31,7 @@ export default forwardRef<HTMLDivElement, MenuListProps>(function Menu({
     anchorEl,
     direction = 'left',
     maxHeight,
+    autoClose,
     onClose,
     ...props
 }: MenuListProps, ref) {
@@ -83,7 +85,10 @@ export default forwardRef<HTMLDivElement, MenuListProps>(function Menu({
     const handleClose = () => {
         setConfig(prev => ({ ...prev, animation: 'close' }));
 
-        setTimeout(() => { setConfig(prev => ({ ...prev, state: 'invisible' })); }, ANIMATION_DURATION);
+        setTimeout(() => {
+            setConfig(prev => ({ ...prev, state: 'invisible' }));
+            onClose();
+        }, ANIMATION_DURATION);
     };
 
     const renderChildren = () => {
@@ -94,7 +99,7 @@ export default forwardRef<HTMLDivElement, MenuListProps>(function Menu({
                 onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
                     debounce.delay(() => {
 
-                        if (child.props.autoClose) {
+                        if (autoClose) {
                             onClose(e);
                             handleClose();
                         }
@@ -107,31 +112,32 @@ export default forwardRef<HTMLDivElement, MenuListProps>(function Menu({
     };
 
     return (
-        <div
-            id={id}
-            ref={ref}
-            style={{
-                width: width || config.width,
-                top: coordinate?.top,
-                left: coordinate?.left,
-                display: config?.state === 'visible' ? 'block' : 'none',
-                transition: `all ${ANIMATION_DURATION}ms ease-in`,
-                zIndex: 50,
-            }}
-            className={joinClass(['ui-menu', config?.animation])}
-            {...props}
-        >
-            <Card>
-                <CardContent
-                    className="ui-menu__content"
-                    sx={{ py: 1 }}
-                    style={{ display: 'flex', flexDirection: 'column', maxHeight }}
-                >
-                    {renderChildren()}
-                </CardContent>
-            </Card>
-        </div>
+        <>
+            <div
+                id={id}
+                ref={ref}
+                style={{
+                    width: width || config.width,
+                    top: coordinate?.top,
+                    left: coordinate?.left,
+                    display: config?.state === 'visible' ? 'block' : 'none',
+                    transition: `all ${ANIMATION_DURATION}ms ease-in`,
+                    zIndex: 50,
+                }}
+                className={joinClass(['ui-menu', config?.animation])}
+                {...props}
+            >
+                <Card>
+                    <CardContent
+                        className="ui-menu__content"
+                        sx={{ py: 1 }}
+                        style={{ display: 'flex', flexDirection: 'column', maxHeight }}
+                    >
+                        {renderChildren()}
+                    </CardContent>
+                </Card>
+            </div>
+            {open && <div className="ui-menu__overlay" onClick={handleClose} />}
+        </>
     );
 });
-
-// export default createComponent(Menu);

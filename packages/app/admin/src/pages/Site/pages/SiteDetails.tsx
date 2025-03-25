@@ -5,9 +5,6 @@ import Stack from '@cda/ui/components/Stack';
 import Slide from '@cda/ui/animations/Slide';
 import Button from '@cda/ui/components/Button';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
-import { Form, FormControl, useForm } from '@cda/ui/components/Form';
-
-import type { Site } from '@cda/services/sites';
 
 import { useSites, generateDefaultSite } from '@cda/common/Sites';
 
@@ -28,36 +25,6 @@ export default function SitePage() {
 
     const currentSite = useMemo(() => userSites.find(u => u.slug === slug), [userSites]);
 
-    const [formGroup] = useForm<Omit<Site, 'id' | 'slug' | 'ownerId'>>({
-        form: {
-            name: new FormControl({
-                defaultValue: currentSite?.name || defaultSite.name,
-                required: true
-            }),
-            information: new FormControl({
-                defaultValue: currentSite?.information || defaultSite.information,
-                required: true
-            }),
-            products: new FormControl({
-                defaultValue: currentSite?.products || defaultSite.products,
-                required: true
-            }),
-            socials: new FormControl({
-                defaultValue: currentSite?.socials || defaultSite.socials,
-                required: true
-            }),
-            theme: new FormControl({
-                defaultValue: currentSite?.theme || defaultSite.theme,
-                required: true
-            }),
-        },
-        handle: {
-            submit: (form) => {
-                console.log(form.values);
-            }
-        }
-    }, [currentSite]);
-
     const goTo = (type: 'info' | 'theme' | 'social') => {
         if (type === 'info') { refInfo.current?.scrollIntoView({ behavior: 'smooth' }); }
         if (type === 'theme') { refTheme.current?.scrollIntoView({ behavior: 'smooth' }); }
@@ -67,30 +34,29 @@ export default function SitePage() {
     return (
         <Grid style={{ position: 'relative' }}>
             <GridItem xl={10} lg={8} md={8} sm={12}>
-                <Form formGroup={formGroup}>
-                    <Stack>
-                        <Slide enter delay={250}>
-                            <InformationForm ref={refInfo} />
-                        </Slide>
-                        <Slide enter delay={250} direction="right">
-                            <ThemeForm ref={refTheme} />
-                        </Slide>
-                        <Slide enter delay={250}>
-                            <SocialForm ref={refSocial} />
-                        </Slide>
-                    </Stack>
-                    <div style={{
-                        position: 'fixed',
-                        bottom: 30,
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        zIndex: 9999
-                    }}>
-                        <Button color="secondary" type="submit">
-                            Salvar configurações
-                        </Button>
-                    </div>
-                </Form>
+                <Stack>
+                    <Slide enter delay={250}>
+                        <InformationForm
+                            ref={refInfo}
+                            site={currentSite}
+                            defaultSite={defaultSite}
+                        />
+                    </Slide>
+                    <Slide enter delay={250} direction="right">
+                        <ThemeForm
+                            ref={refTheme}
+                            site={currentSite}
+                            defaultSite={defaultSite}
+                        />
+                    </Slide>
+                    <Slide enter delay={250}>
+                        <SocialForm
+                            ref={refSocial}
+                            site={currentSite}
+                            defaultSite={defaultSite}
+                        />
+                    </Slide>
+                </Stack>
             </GridItem>
             <GridItem xl={2} lg={4} md={4} sm={12}>
                 <Button

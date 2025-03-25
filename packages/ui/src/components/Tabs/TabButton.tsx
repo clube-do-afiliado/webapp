@@ -38,8 +38,8 @@ export default function Tab({ icon, label, variant = 'line', color = 'primary', 
     return (
         <button
             type="button"
-            className={className}
             {...props}
+            className={className}
         >
             {renderIcon()}
             {label}

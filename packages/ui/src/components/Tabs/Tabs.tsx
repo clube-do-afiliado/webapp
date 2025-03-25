@@ -102,7 +102,12 @@ function Tabs({
                             variant,
                             'tabIndex': index + 1,
                             'aria-checked': isActive,
-                            style: variant === 'rounded' && isActive ? { color: 'transparent' } : {},
+                            style: {
+                                color: variant === 'rounded' && isActive
+                                    ? 'transparent'
+                                    : '',
+                                ...child.props.style
+                            },
                             onClick: () => handleClick(index),
                         })
                     }
