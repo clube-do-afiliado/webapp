@@ -29,6 +29,14 @@ jobs:
         id: convert
         run: |
           echo "::set-output name=PROJECT_ENV::$(echo ${{ inputs.project }} | tr '[:lower:]' '[:upper:]')"
+  
+  echo:
+    needs: [project-env]
+    runs-on: ubuntu-latest
+    steps:
+      - name: ECHO
+        run: |
+          echo ${{ needs.project-env.outputs.PROJECT_ENV }} HMG
 
   build-project:
     needs: [setup, project-env]
