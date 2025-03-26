@@ -1,6 +1,7 @@
 import C from 'js-cookie';
 
 import { CookieAttributes } from './interface';
+import { getDomain } from '../../url';
 
 export class Cookies<T extends string> {
     private save(key: T, data: any, att: CookieAttributes): void {
@@ -12,7 +13,7 @@ export class Cookies<T extends string> {
     }
 
     public get<K>(key: T, decrypt = false): K {
-        const data = C.get(`${key}`);
+        const data = C.get(key);
         const value = decrypt && data ? JSON.parse(window.atob(data)) : data;
         return data || value;
     }
@@ -20,7 +21,7 @@ export class Cookies<T extends string> {
     public set(key: T, data: any, encrypt = false, expires?: number | Date, path = '/') {
         if (data) {
             const value = encrypt ? window.btoa(JSON.stringify(data)) : data;
-            this.save(key, value, { path, expires: expires || 1, });
+            this.save(key, value, { path, domain: getDomain(), expires: expires || 1, });
         }
     }
 }
