@@ -19,7 +19,7 @@ function Item() {
 export const SameGrid: StoryObj<typeof Grid> = {
     render: () => {
         return (
-            <Grid sm={12} md={6} lg={3}>
+            <Grid xl={3} lg={4} md={6} sm={12}  >
                 <GridItem>
                     <Item />
                 </GridItem>
@@ -40,7 +40,7 @@ export const SameGrid: StoryObj<typeof Grid> = {
 export const ChildrenWithDifferentGrid: StoryObj<typeof Grid> = {
     render: () => {
         return (
-            <Grid sm={12} md={6} lg={3}>
+            <Grid xl={3} lg={4} md={6} sm={12}>
                 <GridItem md={12} lg={8}>
                     <Item />
                 </GridItem>

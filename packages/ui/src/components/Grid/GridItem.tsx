@@ -8,10 +8,15 @@ import createComponent from '../../core/createComponent';
 import './Grid.scss';
 
 export interface GridItemProps extends GridBaseProps { children: React.ReactNode; }
-function GridItem({ children, xl = 1, lg = xl, md = lg, sm = md, ...props }: Readonly<GridItemProps>) {
+function GridItem({ children, xl = 1, lg, md, sm, ...props }: Readonly<GridItemProps>) {
     const [size, setSize] = useState<keyof Size>('md');
 
-    const MAP = { sm, lg, md, xl };
+    const MAP = {
+        xl,
+        lg: lg || xl,
+        md: md || lg || xl,
+        sm: sm || md || lg || xl,
+    };
 
     useResize({
         onXs: () => setSize('sm'),

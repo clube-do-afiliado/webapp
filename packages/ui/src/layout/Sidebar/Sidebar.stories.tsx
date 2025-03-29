@@ -10,10 +10,11 @@ const meta: Meta<typeof Sidebar> = {
     component: Sidebar,
 };
 
-export const template: StoryObj<typeof Sidebar> = {
+export const compact: StoryObj<typeof Sidebar> = {
     render: () => {
         return (
             <Sidebar
+                compact
                 upButtons={
                     <>
                         <SidebarButton path="iframe.html" icon={<Icon name="home" />} />
@@ -25,6 +26,28 @@ export const template: StoryObj<typeof Sidebar> = {
                     <>
                         <SidebarButton icon={<Icon name="setting" />} />
                         <SidebarButton icon={<Icon name="signout" />} />
+                    </>
+                }
+            />
+        );
+    }
+};
+
+export const WithLabel: StoryObj<typeof Sidebar> = {
+    render: () => {
+        return (
+            <Sidebar
+                upButtons={
+                    <>
+                        <SidebarButton label="Home" path="iframe.html" icon={<Icon name="home" />} />
+                        <SidebarButton label="Profile" icon={<Icon name="users-alt" />} />
+                        <SidebarButton label="Bitcoin" icon={<Icon name="bitcoin-circle" />} />
+                    </>
+                }
+                downButtons={
+                    <>
+                        <SidebarButton label="Settings" icon={<Icon name="setting" />} />
+                        <SidebarButton label="Logout" icon={<Icon name="signout" />} />
                     </>
                 }
             />
