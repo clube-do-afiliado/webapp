@@ -4,33 +4,41 @@ import { getContrastColor } from '@cda/ui/theme/utils';
 
 import type { Site, Social } from '@cda/services/sites';
 
-import './Footer.scss';
 import SocialButton from '../SocialButton';
+
+import './Footer.scss';
 
 interface FooterProps { site: Site; }
 export default function Footer({ site }: FooterProps) {
-    const background = getContrastColor(site.theme.headerColor);
+    const background = site.theme.primaryColor;
     const color = getContrastColor(background);
+
+    const hasSocial = Object.keys(site.socials).some(k => site.socials[k]);
 
     return (
         <footer className="footer">
             <div className="container">
-                <span style={{ textAlign: 'center' }}>Siga nas redes sociais:</span>
-                <div className="socials">
-                    {
-                        Object.entries(site.socials)
-                            .map(([key, value]) => value && (
-                                <SocialButton
-                                    key={key}
-                                    social={key as keyof Social}
-                                    value={value}
-                                    background={background}
-                                    color={color}
-                                />
-                            ))
-                    }
-                </div>
-
+                {
+                    hasSocial && (
+                        <>
+                            <span style={{ textAlign: 'center' }}>Siga nas redes sociais:</span>
+                            <div className="socials">
+                                {
+                                    Object.entries(site.socials)
+                                        .map(([key, value]) => value && (
+                                            <SocialButton
+                                                key={key}
+                                                social={key as keyof Social}
+                                                value={value}
+                                                background={background}
+                                                color={color}
+                                            />
+                                        ))
+                                }
+                            </div>
+                        </>
+                    )
+                }
                 <div className="create-info">
                     Direitos autorais @ {new Date().getFullYear()} - {site.information.name}
                 </div>
@@ -52,6 +60,6 @@ export default function Footer({ site }: FooterProps) {
                     </li>
                 </ul>
             </div>
-        </footer>
+        </footer >
     );
 }

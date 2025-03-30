@@ -1,0 +1,25 @@
+.grid {
+    @include grid(15px, 12);
+
+    &__item {
+        @include for-xl {
+            @include grid-column-span(3);
+        }
+
+        @include for-lg {
+            @include grid-column-span(3);
+        }
+
+        @include for-md {
+            @include grid-column-span(4);
+        }
+
+        @include for-sm {
+            @include grid-column-span(6);
+        }
+
+        @include for-xs {
+            @include grid-column-span(12);
+        }
+    }
+}

@@ -1,6 +1,10 @@
-@use "@cda/ui/styles/mixin.scss" as *;
-@use "@cda/ui/styles/reset.scss" as *;
-@use "@cda/ui/styles/variables.scss" as *;
+@forward "@cda/ui/styles/mixin.scss";
+@forward "@cda/ui/styles/reset.scss";
+@forward "@cda/ui/styles/variables.scss";
 
 $header-height: 54px;
 $footer-height: 258px;
+
+body {
+    background: var(--background-default);
+}

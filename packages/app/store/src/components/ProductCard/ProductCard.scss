@@ -1,0 +1,102 @@
+.product-card {
+    height: 100%;
+    cursor: pointer;
+    position: relative;
+    border-radius: var(--radius);
+    border: 1px solid var(--divider);
+    background-color: var(--background-default);
+    transition: all $animation;
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &:hover {
+        box-shadow: $boxShadowRegular;
+    }
+
+    .product-header {
+        min-height: 15px;
+
+        .product-discount {
+            z-index: 9;
+            background-color: var(--primary);
+            color: var(--primary-contrast);
+            border-radius: 4px;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 14px;
+            padding: 2px 7px;
+        }
+    }
+
+    .product-image-container {
+        position: relative;
+        width: 100%;
+        height: 225px;
+        overflow: hidden;
+
+        .product-image {
+            height: max-content !important;
+        }
+
+        .product-badge {
+            position: absolute;
+            right: 15px;
+        }
+    }
+
+    .product-integration-container {
+        position: relative;
+
+        .product-integration {
+            border-radius: 50px;
+            overflow: hidden;
+            position: absolute;
+            bottom: -7px;
+            right: 15px;
+            box-shadow: $boxShadowSmall;
+        }
+    }
+
+    .product-info {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+
+        .product-title {
+            overflow: hidden;
+            overflow-wrap: break-word;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+
+        .product-price-container {
+            min-height: 56px;
+            display: flex;
+
+            justify-content: flex-end;
+            align-items: baseline;
+            flex-direction: column;
+
+            .product-original-price {
+                text-decoration: line-through;
+                font-size: $font-regular;
+                color: var(--text-secondary);
+            }
+
+            .product-price {
+                font-size: $font-large;
+                color: var(--secondary);
+            }
+        }
+    }
+}

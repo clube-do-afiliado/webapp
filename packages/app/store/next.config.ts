@@ -3,6 +3,7 @@ import type { NextConfig } from 'next';
 import path from 'path';
 
 const nextConfig: NextConfig = {
+    output: 'standalone',
     env: {
         ENV: process.env.ENV,
         THEME: process.env.THEME,
@@ -27,12 +28,23 @@ const nextConfig: NextConfig = {
             {
                 protocol: 'https',
                 hostname: 'cdn.awsli.com.br',
-            }
+            },
+            {
+                protocol: 'https',
+                hostname: 'a-static.mlcdn.com.br',
+            },
+            {
+                protocol: 'https',
+                hostname: 'cdn.clubedoafiliado.com',
+            },
         ]
     },
     sassOptions: {
-        includePaths: [path.join(__dirname, 'styles')]
-    }
+        includePaths: [path.join(__dirname, 'styles')],
+        additionalData: `
+            @use "@/styles/global.scss" as *;
+        `,
+    },
 };
 
 export default nextConfig;
