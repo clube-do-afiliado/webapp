@@ -40,3 +40,7 @@ export function maskDate(dateString: string): string {
     const [year, month, day] = dateString.split('-');
     return `${day}/${month}/${year}`;
 }
+
+export function maskPercent(value: number): string {
+    return `${(value * 100).toPrecision(2)}%`;
+}
