@@ -1,8 +1,8 @@
 import { cloneElement, HtmlHTMLAttributes } from 'react';
 
 import Stack from '../Stack';
-import { Colors } from '../../theme';
 import { joinClass } from '../../utils';
+import { Colors, useTheme } from '../../theme';
 import ButtonIcon from '../../components/ButtonIcon';
 import Typography from '../../components/Typography';
 import createComponent from '../../core/createComponent';
@@ -27,6 +27,10 @@ function Alert({
     onClose,
     ...props
 }: AlertProps) {
+    const { theme } = useTheme();
+
+    const themeRef = theme.palette.mode === 'dark' ? 'light' : 'dark';
+
     const className = joinClass([
         'ui-alert',
         `ui-alert--${color}`,
@@ -35,12 +39,12 @@ function Alert({
     ]);
 
     const message = typeof children === 'string'
-        ? <Typography variant="body1" color={`${color}.dark`}>{children}</Typography>
+        ? <Typography variant="body1" color={`${color}.${themeRef}`}>{children}</Typography>
         : children;
 
     const renderIcon = (icon: React.JSX.Element) => {
         return cloneElement<IconProps>(icon, {
-            color: `${color}.dark`
+            color: `${color}.${themeRef}`
         });
     };
 

@@ -10,8 +10,8 @@ export const themeDefaultLight: Theme = {
         error: '#f83a54',
         warning: '#ff9800',
         success: '#2ECC71',
-        primary: '#1A2A5F',
-        secondary: '#FF6F61',
+        primary: '#174F62',
+        secondary: '#F87315',
         grey: '#F4F4F4',
         text: {
             primary: 'rgba(0, 0, 0, 0.87)',

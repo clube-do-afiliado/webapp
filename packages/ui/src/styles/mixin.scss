@@ -27,20 +27,32 @@
 }
 
 // MEDIA QUERY
-@mixin for-expanded {
-    @media only screen and (min-width: 1200px) {
+@mixin for-xl {
+    @media only screen and (min-width: 1536px) {
         @content;
     }
 }
 
-@mixin for-medium {
+@mixin for-lg {
+    @media only screen and (max-width: 1535px) {
+        @content;
+    }
+}
+
+@mixin for-md {
     @media only screen and (max-width: 1199px) {
         @content;
     }
 }
 
-@mixin for-compacted {
+@mixin for-sm {
     @media only screen and (max-width: 899px) {
+        @content;
+    }
+}
+
+@mixin for-xs {
+    @media only screen and (max-width: 599px) {
         @content;
     }
 }

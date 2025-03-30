@@ -7,7 +7,7 @@
     align-items: end;
     flex-direction: column;
 
-    @include for-compacted {
+    @include for-md {
         right: auto;
         left: 50%;
         transform: translateX(-50%);
