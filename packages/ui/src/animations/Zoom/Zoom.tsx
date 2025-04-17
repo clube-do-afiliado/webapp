@@ -12,8 +12,23 @@ const styledHide = (timeout: number): Style => ({
     transition: `all ${timeout}s cubic-bezier(1, 0.01, 0, 0.99)`,
 });
 
-interface ZoomProps { enter: boolean, delay?: number; timeout?: number; children: React.ReactNode; }
-export default function Zoom({ children, enter, delay = 0, timeout = .2 }: Readonly<ZoomProps>) {
+interface ZoomProps extends React.HTMLAttributes<HTMLDivElement> {
+    enter: boolean;
+    delay?: number;
+    timeout?: number;
+    children: React.ReactNode;
+    tag?: React.ElementType;
+}
+export default function Zoom({
+    children,
+    enter,
+    tag = 'div',
+    delay = 50,
+    timeout = .2,
+    ...props
+}: Readonly<ZoomProps>) {
+    const CustomTag = tag;
+
     const [style, setStyle] = useState<Style>(styledHide(timeout));
 
     useEffect(() => {
@@ -23,8 +38,8 @@ export default function Zoom({ children, enter, delay = 0, timeout = .2 }: Reado
     }, [enter]);
 
     return (
-        <div style={{ ...style }}>
+        <CustomTag {...props} style={{ ...style, ...props.style }}>
             {children}
-        </div>
+        </CustomTag>
     );
 }

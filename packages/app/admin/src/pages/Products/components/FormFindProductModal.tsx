@@ -4,6 +4,7 @@ import Icon from '@cda/ui/components/Icon';
 import Input from '@cda/ui/components/Input';
 import Alert from '@cda/ui/components/Alert';
 import Stack from '@cda/ui/components/Stack';
+import Slide from '@cda/ui/animations/Slide';
 import Button from '@cda/ui/components/Button';
 import Loading from '@cda/ui/components/Loading';
 import Typography from '@cda/ui/components/Typography';
@@ -60,6 +61,12 @@ export default function FormFindProductModal({ isOpen, onToggleModal, onGetProdu
         formGroup.reset();
     }, [isOpen]);
 
+    const handleToggle = () => {
+        if (loading) { return; }
+
+        onToggleModal();
+    };
+
     return (
         <Modal
             isOpen={isOpen}
@@ -68,50 +75,70 @@ export default function FormFindProductModal({ isOpen, onToggleModal, onGetProdu
                     Buscar produto
                 </Typography>
             }
-            onClose={onToggleModal}
+            onClose={handleToggle}
         >
-
-            <Form formGroup={formGroup}>
-                <Stack>
-                    <Alert
-                        fullWidth
-                        variant="opacity"
-                        color="info"
-                        icon={
-                            <Icon name="info-circle" />
-                        }
-                    >
-                        Adicione a url do produto no seu link de afiliado
-                    </Alert>
-                    <Control
-                        controlName="url"
-                        field={(control) => (
-                            <Input
-                                fullWidth
-                                placeholder="ex: https://produto.com.br"
-                                data-cy="url-product"
-                                value={control.value}
-                                error={control.isInvalid}
-                                helperText={control.messageError}
-                            />
-                        )}
-                    />
-                    <ModalFooter>
-                        <Button
-                            type="submit"
-                            disabled={loading}
-                            startIcon={
-                                <Icon name="search" />
-                            }
-                            loading={
-                                loading && <Loading />
-                            }
+            {
+                loading && (
+                    <Slide enter direction="top">
+                        <Stack
+                            alignItems="center"
+                            orientation="column"
+                            justifyContent="flex-start"
+                            sx={{ pb: 2 }}
                         >
-                            Buscar
-                        </Button>
-                    </ModalFooter>
-                </Stack>
-            </Form>
+                            <Typography noMargin color="text.secondary">Buscando informações do produto</Typography>
+                            <Loading size={35} />
+                        </Stack>
+                    </Slide>
+                )
+            }
+            {
+                !loading && (
+                    <Slide enter direction="top">
+                        <Form formGroup={formGroup}>
+                            <Stack>
+                                <Alert
+                                    fullWidth
+                                    variant="opacity"
+                                    color="info"
+                                    icon={
+                                        <Icon name="info-circle" />
+                                    }
+                                >
+                                    Adicione a url do produto no seu link de afiliado
+                                </Alert>
+                                <Control
+                                    controlName="url"
+                                    field={(control) => (
+                                        <Input
+                                            fullWidth
+                                            placeholder="ex: https://produto.com.br"
+                                            data-cy="url-product"
+                                            value={control.value}
+                                            error={control.isInvalid}
+                                            helperText={control.messageError}
+                                        />
+                                    )}
+                                />
+                                <ModalFooter>
+                                    <Button
+                                        type="submit"
+                                        disabled={loading}
+                                        startIcon={
+                                            <Icon name="search" />
+                                        }
+                                        loading={
+                                            loading && <Loading />
+                                        }
+                                    >
+                                        Buscar
+                                    </Button>
+                                </ModalFooter>
+                            </Stack>
+                        </Form>
+                    </Slide>
+                )
+            }
         </Modal>
     );
 }

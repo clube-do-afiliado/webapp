@@ -35,8 +35,8 @@ export const themeDefaultDark: Theme = {
         error: '#FF5C72',
         warning: '#FFA726',
         success: '#48C78E',
-        primary: '#4962b5',
-        secondary: '#FF857A',
+        primary: '#F87315',
+        secondary: '#2D9CC1',
         grey: '#2A2A2A',
         text: {
             primary: 'rgba(255, 255, 255, 0.87)',

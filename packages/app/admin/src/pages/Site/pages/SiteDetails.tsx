@@ -8,7 +8,7 @@ import { Grid, GridItem } from '@cda/ui/components/Grid';
 
 import { useSites, generateDefaultSite } from '@cda/common/Sites';
 
-import ThemeForm from '../components/ThemeForm';
+import ThemeForm from '../components/ThemeForm/ThemeForm';
 import InformationForm from '../components/InformationForm';
 import SocialForm from '../components/SocialForm';
 

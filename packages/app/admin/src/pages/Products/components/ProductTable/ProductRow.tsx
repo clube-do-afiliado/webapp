@@ -63,9 +63,10 @@ export default function ProductRow({ product, onToggleDrawer }: ProductRowProps)
             </TableCell>
             <TableCell align="center">
                 <Switch
+                    auto
                     checked={product.visible}
                     color="secondary"
-                    style={{ margin: 'auto', width: 'fit-content' }}
+                    style={{ width: 'fit-content' }}
                     onChange={handleProductVisibility}
                 />
             </TableCell>

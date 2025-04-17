@@ -31,8 +31,9 @@ function Tabs({
     onChange,
     ...props
 }: TabsProps) {
-    const [_current, setCurrent] = useState(current);
     const arrayChildren = Children.toArray(children) as ReactElement<TabProps>[];
+
+    const [_current, setCurrent] = useState(current);
     const scrollRef = useRef<HTMLDivElement[] | null>([]);
 
     const classNameMarker = joinClass([
@@ -49,7 +50,12 @@ function Tabs({
 
     useEffect(() => { validateCurrent(arrayChildren.length - 1, _current); }, []);
 
-    useEffect(() => { setCurrent(current); }, [current]);
+    useEffect(() => {
+        const firstEnableButton = arrayChildren.findIndex(children => !children.props.disabled);
+        const currentIsDisabled = arrayChildren[current].props.disabled;
+
+        setCurrent(currentIsDisabled ? firstEnableButton : current);
+    }, [current]);
 
     useEffect(() => {
         setBorderLine();
@@ -100,7 +106,7 @@ function Tabs({
                         cloneElement(child, {
                             id: _id,
                             variant,
-                            'tabIndex': index + 1,
+                            tabIndex: index + 1,
                             'aria-checked': isActive,
                             style: {
                                 color: variant === 'rounded' && isActive

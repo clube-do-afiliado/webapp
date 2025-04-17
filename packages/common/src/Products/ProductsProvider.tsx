@@ -73,7 +73,7 @@ export default function ProductsProvider({ children, productsServices }: PropsWi
     const deleteProduct = async (id: string) => {
         return productsServices.delete(id)
             .then(() => setProducts(prev => prev.filter(r => r.id !== id)))
-            .then(() => addAlert({ color: 'success', message: 'O deletado com sucesso' }))
+            .then(() => addAlert({ color: 'success', message: 'Produto deletado com sucesso' }))
             .catch(() => addAlert({ color: 'error', message: 'Não foi possível deletar o produto' }));
     };
 

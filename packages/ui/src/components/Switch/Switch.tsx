@@ -12,8 +12,9 @@ interface SwitchProps extends InputHTMLAttributes<HTMLInputElement> {
     error?: boolean;
     helperText?: string;
     color?: Colors;
+    auto?: boolean;
 }
-function Switch({ label, error, helperText, color = 'primary', ...props }: SwitchProps) {
+function Switch({ label, error, helperText, auto = false, color = 'primary', ...props }: SwitchProps) {
     const [checked, setChecked] = useState(Boolean(props.checked));
 
     const classNameCheckbox = joinClass([
@@ -45,7 +46,7 @@ function Switch({ label, error, helperText, color = 'primary', ...props }: Switc
     };
 
     return (
-        <div className="ui-switch-container">
+        <div className="ui-switch-container" style={{ margin: auto ? 'auto' : 'inherit' }}>
             <label htmlFor={id} className={classNameLabel}>
                 {label}
             </label>

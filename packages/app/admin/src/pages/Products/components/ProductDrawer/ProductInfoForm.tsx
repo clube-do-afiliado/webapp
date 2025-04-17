@@ -10,7 +10,7 @@ import IntegrationRadio from './IntegrationRadio';
 import type { ProductForm } from './interface';
 
 interface ProductInfoProps { formGroup: FormGroup<ProductForm> }
-export default function ProductInfo({ formGroup }: ProductInfoProps) {
+export default function ProductInfoForm({ formGroup }: ProductInfoProps) {
     const { userSites } = useSites();
 
     return (
@@ -29,10 +29,27 @@ export default function ProductInfo({ formGroup }: ProductInfoProps) {
                             >
                                 {
                                     userSites.map(site => (
-                                        <Option key={site.id} value={site.id}>{site.information.name}</Option>
+                                        <Option key={site.id} value={site.id}>
+                                            {site.information.name}
+                                        </Option>
                                     ))
                                 }
                             </Select>
+                        )}
+                    />
+                </GridItem>
+                <GridItem xl={12}>
+                    <Control
+                        controlName="url"
+                        field={(control) => (
+                            <Input
+                                fullWidth
+                                label="Url do produto"
+                                data-cy="url-product"
+                                value={control.value}
+                                error={control.isInvalid}
+                                helperText={control.messageError}
+                            />
                         )}
                     />
                 </GridItem>
@@ -44,6 +61,21 @@ export default function ProductInfo({ formGroup }: ProductInfoProps) {
                                 fullWidth
                                 label="Nome do produto"
                                 data-cy="name-product"
+                                value={control.value}
+                                error={control.isInvalid}
+                                helperText={control.messageError}
+                            />
+                        )}
+                    />
+                </GridItem>
+                <GridItem xl={12}>
+                    <Control
+                        controlName="image"
+                        field={(control) => (
+                            <Input
+                                fullWidth
+                                label="Imagem"
+                                data-cy="name-image"
                                 value={control.value}
                                 error={control.isInvalid}
                                 helperText={control.messageError}

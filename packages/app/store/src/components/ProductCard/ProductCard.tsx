@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image';
 
 import { maskCurrency, maskPercent } from '@cda/toolkit/mask';
@@ -18,7 +17,7 @@ export default function ProductCard({ product, integrations }: ProductCardProps)
                 {
                     Boolean(product.originalPrice) && (
                         <span className="product-discount">
-                            - {maskPercent(product.price / product.originalPrice)}
+                            - {maskPercent(1 - (product.price / product.originalPrice))}
                         </span>
                     )
                 }

@@ -16,6 +16,7 @@ export * from './Grid';
 export * from './Guide';
 export * from './Icon';
 export * from './Input';
+export * from './InputFile';
 export * from './Loading';
 export * from './Logo';
 export * from './Menu';

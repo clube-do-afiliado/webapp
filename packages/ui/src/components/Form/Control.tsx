@@ -23,6 +23,8 @@ export default function Control<Form>({
 
     const renderChildren = (child: ReactElement<ControlProps<Form>>) => {
         const getValue = (e: any) => {
+            console.log('getValue', type);
+
             if (['radio', 'checkbox'].includes(type)) { return e.target['checked']; }
 
             if (['object'].includes(type)) { return e; }
@@ -33,6 +35,7 @@ export default function Control<Form>({
         return cloneElement(child, {
             required: control.required,
             onBlur: (e: any) => {
+                console.log('onBlur', e);
                 control.dirty = true;
 
                 update(getValue(e));
@@ -40,6 +43,7 @@ export default function Control<Form>({
                 if (child.props.onBlur) { child.props.onBlur(e); }
             },
             onInput: (e: any) => {
+                console.log('onInput', e);
                 update(getValue(e));
 
                 if (action === 'onInput') { control.dirty = true; };
@@ -47,6 +51,8 @@ export default function Control<Form>({
                 if (child.props.onInput) { child.props.onInput(e); }
             },
             onChange: (e: any) => {
+                console.log('onChange', e);
+
                 update(getValue(e));
 
                 if (action === 'onChange') { control.dirty = true; };

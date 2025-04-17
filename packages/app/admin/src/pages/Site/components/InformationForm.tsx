@@ -111,11 +111,6 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
                                                 label="Título"
                                                 data-cy="title-information"
                                                 value={control.value}
-                                                endIcon={
-                                                    <ButtonIcon onClick={handleGoToSite}>
-                                                        <Icon name="external-link-alt" />
-                                                    </ButtonIcon>
-                                                }
                                             />
                                         )}
                                     />

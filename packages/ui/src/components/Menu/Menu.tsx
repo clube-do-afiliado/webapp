@@ -95,7 +95,7 @@ export default forwardRef<HTMLDivElement, MenuListProps>(function Menu({
         return arrayChildren.map((child, index) => {
             return cloneElement(child, {
                 'tabIndex': index + 1,
-                key: index,
+                key: `button-${index}`,
                 onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
                     debounce.delay(() => {
 

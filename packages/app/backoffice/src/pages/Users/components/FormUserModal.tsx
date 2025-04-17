@@ -6,6 +6,7 @@ import Loading from '@cda/ui/components/Loading';
 import Typography from '@cda/ui/components/Typography';
 import { Form, FormControl, useForm, Control } from '@cda/ui/components/Form';
 import { Modal, ModalFooter, HelperModalProps } from '@cda/ui/components/Modal';
+import Divider from '@cda/ui/components/Divider';
 
 import type { UserData } from '@cda/services/user';
 
@@ -109,6 +110,7 @@ export default function FormUserModal({
                         )}
                     />
                 </div>
+                <Divider />
                 <Typography noMargin variant="body1" color="text.secondary">Roles</Typography>
                 <div style={{ maxHeight: 400, overflow: 'auto' }}>
                     <Control

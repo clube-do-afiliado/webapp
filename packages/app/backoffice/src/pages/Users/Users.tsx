@@ -14,7 +14,6 @@ import { useDrawer } from '@cda/ui/components/Drawer';
 import ButtonIcon from '@cda/ui/components/ButtonIcon';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
 import { Form, Control, FormControl, useForm } from '@cda/ui/components/Form';
-import Tooltip from '@cda/ui/components/Tooltip';
 
 import { slug } from '@cda/toolkit/string';
 
@@ -135,17 +134,15 @@ export default function Users() {
                         <Grid xl={3} lg={4} md={6} sm={12}>
                             {
                                 filtered.map((user, i) => (
-                                    <Tooltip key={user.id} label="ASdasdasdasdasdasdasdasdsd" direction="right">
-                                        <GridItem >
-                                            <Slide enter delay={(i + 1) * 100}>
-                                                <UserCard
-                                                    key={user.id}
-                                                    user={user}
-                                                    onClick={handleOpenDrawer}
-                                                />
-                                            </Slide>
-                                        </GridItem>
-                                    </Tooltip>
+                                    <GridItem key={user.id}  >
+                                        <Slide enter delay={(i + 1) * 100}>
+                                            <UserCard
+                                                key={user.id}
+                                                user={user}
+                                                onClick={handleOpenDrawer}
+                                            />
+                                        </Slide>
+                                    </GridItem>
                                 ))
                             }
                         </Grid>)

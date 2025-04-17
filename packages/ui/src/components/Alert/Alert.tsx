@@ -34,7 +34,7 @@ function Alert({
     const className = joinClass([
         'ui-alert',
         `ui-alert--${color}`,
-        `ui-alert--${color}--${variant}`,
+        `ui-alert--${color}--${theme.palette.mode === 'dark' ? 'opacity' : variant}`,
         fullWidth && 'ui-alert--fullWidth'
     ]);
 
@@ -62,7 +62,7 @@ function Alert({
             </Stack>
             {
                 !!onClose && (
-                    <ButtonIcon onClick={onClose} color={`${color}.dark`} className="ui-alert__button">
+                    <ButtonIcon onClick={onClose} color={`${color}.${themeRef}`} className="ui-alert__button">
                         <Icon name="times" />
                     </ButtonIcon>
                 )

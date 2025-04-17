@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Page from '@cda/ui/layout/Page';
 import Icon from '@cda/ui/components/Icon';
 import Button from '@cda/ui/components/Button';
+import { Menu, MenuButton, useMenu } from '@cda/ui/components/Menu';
 import { useModal } from '@cda/ui/components/Modal';
 import { useDrawer } from '@cda/ui/components/Drawer';
 
@@ -18,6 +19,7 @@ import ProductDrawer from './components/ProductDrawer';
 import FormFindProductModal from './components/FormFindProductModal';
 
 export default function Products() {
+    const [open, el, , toggle] = useMenu();
     const [openDrawer, toggleDrawer] = useDrawer();
     const [openFindModal, toggleFindModal] = useModal();
 
@@ -29,7 +31,12 @@ export default function Products() {
 
     useEffect(() => { setSelectProduct(prev => products.find(p => prev?.id === p.id)); }, [products]);
 
-    const handleSetInfoProduct = (product: Product) => {
+    const handleToggleEmptyDrawer = () => {
+        setSelectProduct(undefined);
+        toggleDrawer();
+    };
+
+    const handleToggleEditDrawer = (product: Product) => {
         setSelectProduct(product);
         toggleFindModal();
         toggleDrawer();
@@ -46,12 +53,33 @@ export default function Products() {
             subtitle="Essa é a lista de produtos disponíveis na sua loja"
             release={release}
             action={
-                <Button
-                    onClick={toggleFindModal}
-                    startIcon={<Icon name="search" />}
-                >
-                    Adicionar produto
-                </Button>
+                <div>
+                    <Button
+                        onClick={toggle}
+                        startIcon={<Icon name="search" />}
+                    >
+                        Adicionar produto
+                    </Button>
+                    <Menu
+                        autoClose
+                        open={open}
+                        anchorEl={el}
+                        onClose={toggle}
+                        direction="right"
+                        width="fit-content"
+                    >
+                        <MenuButton
+                            label="Buscar produto"
+                            icon={<Icon name="search" />}
+                            onClick={toggleFindModal}
+                        />
+                        <MenuButton
+                            label="Inserir manualmente"
+                            icon={<Icon name="keyboard" />}
+                            onClick={handleToggleEmptyDrawer}
+                        />
+                    </Menu>
+                </div>
             }
         >
             {loading && <p>carregando</p>}
@@ -71,7 +99,7 @@ export default function Products() {
             <FormFindProductModal
                 isOpen={openFindModal}
                 onToggleModal={toggleFindModal}
-                onGetProduct={handleSetInfoProduct}
+                onGetProduct={handleToggleEditDrawer}
             />
             <ProductDrawer
                 product={selectProduct}

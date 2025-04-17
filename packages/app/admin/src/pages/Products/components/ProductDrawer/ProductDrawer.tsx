@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import Icon from '@cda/ui/components/Icon';
 import Stack from '@cda/ui/components/Stack';
 import Avatar from '@cda/ui/components/Avatar';
@@ -12,7 +14,7 @@ import { Product } from '@cda/services/products';
 
 import { useProducts } from '@cda/common/Products';
 
-import ProductInfo from './ProductInfo';
+import ProductInfoForm from './ProductInfoForm';
 import useProductForm from './useProductForm';
 import DeleteProductModal from '../DeleteProductModal';
 
@@ -30,9 +32,9 @@ export default function ProductDrawer({
 
     const [formGroup] = useProductForm(product, onToggleDrawer);
 
-    const goToStore = () => {
+    useEffect(() => { if (!isOpen) { formGroup.reset(); } }, [isOpen]);
 
-    };
+    const goToStore = () => { };
 
     const toggleVisibility = () => {
         if (!product) { return; }
@@ -53,25 +55,34 @@ export default function ProductDrawer({
                         <Stack orientation="column" spacing="medium">
                             <Stack orientation="row" justifyContent="space-between" alignItems="center">
                                 <Stack orientation="row" alignItems="center">
-                                    <Avatar src={product?.images[0]} />
-                                    <Typography noMargin variant="h6" className="title">{product?.name}</Typography>
+                                    <Avatar src={formGroup.values.image} />
+                                    <Typography noMargin variant="h6" className="title">
+                                        {formGroup.values.name}
+                                    </Typography>
                                 </Stack>
-                                <ButtonIcon onClick={toggleVisibility}>
-                                    <Icon name={product?.visible ? 'eye' : 'eye-slash'} />
-                                </ButtonIcon>
-                                <ButtonIcon color="error.main" onClick={toggleModal}>
-                                    <Icon name="trash" />
-                                </ButtonIcon>
-                                <ButtonIcon onClick={goToStore}>
-                                    <Icon name="external-link-alt" />
-                                </ButtonIcon>
+                                {
+                                    product && (
+                                        <>
+                                            <ButtonIcon onClick={toggleVisibility}>
+                                                <Icon name={product.visible ? 'eye' : 'eye-slash'} />
+                                            </ButtonIcon>
+                                            <ButtonIcon color="error.main" onClick={toggleModal}>
+                                                <Icon name="trash" />
+                                            </ButtonIcon>
+                                            <ButtonIcon onClick={goToStore}>
+                                                <Icon name="external-link-alt" />
+                                            </ButtonIcon>
+                                        </>
+                                    )
+                                }
                             </Stack>
+
                             <Tabs onChange={setTab} current={current}>
                                 <Tab label="Informações" icon={<Icon name="notes" />} />
-                                <Tab label="Análise" icon={<Icon name="chart" />} />
+                                <Tab label="Análise" icon={<Icon name="chart" />} disabled={!product} />
                             </Tabs>
                             <TabContent current={current} value={0}>
-                                <ProductInfo formGroup={formGroup} />
+                                <ProductInfoForm formGroup={formGroup} />
                             </TabContent>
                             <TabContent current={current} value={1}>
                                 <p>BBBB</p>

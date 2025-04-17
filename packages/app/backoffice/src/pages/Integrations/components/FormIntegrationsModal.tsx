@@ -84,82 +84,85 @@ export default function FormIntegrationModal({
             onClose={onToggleModal}
         >
             <Form formGroup={formGroup}>
-                <Control
-                    controlName="name"
-                    field={(control) => (
-                        <Input
-                            fullWidth
-                            gutterBottom
-                            disabled={isEdit}
-                            placeholder="Nome"
-                            data-cy="name-role"
-                            value={control.value}
-                            error={control.isInvalid}
-                            helperText={control.messageError}
-                        />
-                    )}
-                />
-                <Control
-                    controlName="image"
-                    field={(control) => (
-                        <Input
-                            fullWidth
-                            gutterBottom
-                            placeholder="Url da imagem"
-                            data-cy="image-role"
-                            value={control.value}
-                            error={control.isInvalid}
-                            helperText={control.messageError}
-                        />
-                    )}
-                />
-                <Control controlName="plan"
-                    field={(control) => (
-                        <Select fullWidth placeholder="Selecione um valor" value={control.value}>
-                            {
-                                plans.map(plan => (
-                                    <Option key={plan.id} value={plan.id}>{plan.name}</Option>
-                                ))
-                            }
-                        </Select>
-                    )} />
-                <Stack orientation="row" justifyContent="space-between">
-                    <Typography noMargin variant="body1" color="text.secondary">Permissões</Typography>
-                    <Button
-                        size="small"
-                        type="button"
-                        variant="text"
-                        onClick={handleSelectAll}
-                    >
-                        Selecionar tudo
-                    </Button>
-                </Stack>
-                <div style={{ maxHeight: 400, overflow: 'auto' }}>
+                <Stack spacing="small">
                     <Control
-                        type="object"
-                        controlName="permissions"
+                        controlName="name"
                         field={(control) => (
-                            <PermissionsList value={control.value} />
+                            <Input
+                                fullWidth
+                                gutterBottom
+                                disabled={isEdit}
+                                placeholder="Nome"
+                                data-cy="name-role"
+                                value={control.value}
+                                error={control.isInvalid}
+                                helperText={control.messageError}
+                            />
                         )}
                     />
-                </div>
-                <ModalFooter>
-                    <Button
-                        type="button"
-                        variant="text"
-                        color="primary"
-                        onClick={onToggleModal}
-                    >
-                        Cancelar
-                    </Button>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        loading={loading && <Loading />}
-                    >
-                        {isEdit ? 'Salvar' : 'Criar'}
-                    </Button>
-                </ModalFooter>
+                    <Control
+                        controlName="image"
+                        field={(control) => (
+                            <Input
+                                fullWidth
+                                gutterBottom
+                                placeholder="Url da imagem"
+                                data-cy="image-role"
+                                value={control.value}
+                                error={control.isInvalid}
+                                helperText={control.messageError}
+                            />
+                        )}
+                    />
+                    <Control controlName="plan"
+                        field={(control) => (
+                            <Select fullWidth autoClose placeholder="Selecione um valor" value={control.value}>
+                                {
+                                    plans.map(plan => (
+                                        <Option key={plan.id} value={plan.id}>{plan.name}</Option>
+                                    ))
+                                }
+                            </Select>
+                        )}
+                    />
+                    <Stack orientation="row" justifyContent="space-between" sx={{ mt: 2 }}>
+                        <Typography noMargin variant="body1" color="text.secondary">Permissões</Typography>
+                        <Button
+                            size="small"
+                            type="button"
+                            variant="text"
+                            onClick={handleSelectAll}
+                        >
+                            Selecionar tudo
+                        </Button>
+                    </Stack>
+                    <div style={{ maxHeight: 400, overflow: 'auto' }}>
+                        <Control
+                            type="object"
+                            controlName="permissions"
+                            field={(control) => (
+                                <PermissionsList value={control.value} />
+                            )}
+                        />
+                    </div>
+                    <ModalFooter>
+                        <Button
+                            type="button"
+                            variant="text"
+                            color="primary"
+                            onClick={onToggleModal}
+                        >
+                            Cancelar
+                        </Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            loading={loading && <Loading />}
+                        >
+                            {isEdit ? 'Salvar' : 'Criar'}
+                        </Button>
+                    </ModalFooter>
+                </Stack>
             </Form>
         </Modal>
     );

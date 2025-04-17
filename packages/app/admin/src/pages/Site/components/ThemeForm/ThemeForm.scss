@@ -1,0 +1,25 @@
+.image-box {
+    &-container {
+        height: 250px;
+    }
+
+    &-content {
+        border: 3px dashed var(--divider);
+        border-radius: var(--radius);
+        width: 100%;
+        height: 100%;
+        position: relative;
+
+        transition: all $animation;
+
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            border: 3px dashed var(--primary);
+        }
+    }
+}

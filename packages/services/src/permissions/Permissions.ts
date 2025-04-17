@@ -11,4 +11,5 @@ export default [
     'magalu:*',
     'mercado-livre:*',
     'amazon:*',
+    'other:*'
 ] as const satisfies string[];

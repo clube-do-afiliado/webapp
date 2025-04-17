@@ -3,6 +3,7 @@ import { forwardRef, useState } from 'react';
 import Stack from '@cda/ui/components/Stack';
 import Button from '@cda/ui/components/Button';
 import Loading from '@cda/ui/components/Loading';
+import { useModal } from '@cda/ui/components/Modal';
 import Typography from '@cda/ui/components/Typography';
 import ColorPicker from '@cda/ui/components/ColorPicker';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
@@ -13,15 +14,20 @@ import { Site } from '@cda/services/sites';
 
 import { useSites } from '@cda/common/Sites';
 
+import ImageBox from './ImageBox';
+import ImageModal from './ImageModal';
+
 interface FormProps {
     site?: Site;
     defaultSite: Omit<Site, 'id'>
 }
 
 export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref) => {
-    const [loading, setLoading] = useState(false);
+    const [open, toggle] = useModal();
 
     const { updateSite } = useSites();
+
+    const [loading, setLoading] = useState(false);
 
     const [formGroup] = useForm<Partial<Site['theme']>>({
         form: {
@@ -60,6 +66,19 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
                             <Typography noMargin variant="subtitle1">Tema</Typography>
 
                             <Grid xl={6} lg={6} md={6} sm={12}>
+                                <GridItem>
+                                    <ImageBox
+                                        imageUrl="https://wallpapers.com/images/hd/bender-futurama-pictures-4ccnnakww1wfj1ik.jpg"
+                                        title="Logo"
+                                        onClick={toggle}
+                                    />
+                                </GridItem>
+                                <GridItem>
+                                    <ImageBox
+                                        title="Icone do navegador"
+                                        onClick={toggle}
+                                    />
+                                </GridItem>
                                 <GridItem>
                                     <Control
                                         controlName="primaryColor"
@@ -122,6 +141,7 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
                             </Grid>
                         </Stack>
                     </Form>
+                    <ImageModal isOpen={open} onToggleModal={toggle} />
                 </CardContent>
             </Card>
         </div>

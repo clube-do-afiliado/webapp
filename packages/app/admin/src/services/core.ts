@@ -1,9 +1,11 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator } from 'firebase/auth';
+import { getStorage, connectStorageEmulator } from 'firebase/storage';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
 import { getFunctions, httpsCallable, connectFunctionsEmulator } from 'firebase/functions';
 
 import DB from '@cda/services/db';
+import Storage from '@cda/services/storage';
 import AuthServices from '@cda/services/auth';
 import UserServices from '@cda/services/user';
 import RolesServices from '@cda/services/roles';
@@ -40,15 +42,18 @@ const app = initializeApp({
 const firebaseAuth = getAuth(app);
 const firestore = getFirestore(app);
 const functions = getFunctions(app, 'us-central1');
+const firebaseStorage = getStorage(app);
 
 export const authServices = new AuthServices({}, url.sso);
 
 export const db = new DB(firestore);
+export const storage = new Storage(firebaseStorage);
 
 if (isLocal) {
     connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
     connectAuthEmulator(firebaseAuth, 'http://127.0.0.1:9099');
     connectFunctionsEmulator(functions, '127.0.0.1', 5001);
+    connectStorageEmulator(firebaseStorage, 'localhost', 9199);
 }
 
 // ENTITY SERVICES

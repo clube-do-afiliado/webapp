@@ -23,6 +23,7 @@ export type ErrorState = 'show' | 'hide';
 interface SelectProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
     error?: boolean;
     fullWidth?: boolean;
+    autoClose?: boolean;
     label?: string;
     helperText?: string;
     gutterBottom?: boolean;
@@ -32,6 +33,7 @@ interface SelectProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'
 function Select({
     error,
     label,
+    autoClose,
     fullWidth,
     helperText,
     gutterBottom,
@@ -90,6 +92,8 @@ function Select({
         return arrayChildren.map((child) => {
             return cloneElement(child, {
                 onClick: (e) => {
+                    if (autoClose) { toggle(); }
+
                     if (onChange) { onChange(e as any); }
                 }
             });

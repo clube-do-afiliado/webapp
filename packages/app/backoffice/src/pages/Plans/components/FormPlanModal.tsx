@@ -28,7 +28,7 @@ export default function FormPlanModal({ plan, isOpen, onToggleModal }: HelperMod
             name: new FormControl({ defaultValue: plan?.name || '', required: true }),
             description: new FormControl({ defaultValue: plan?.description || '', required: true }),
             permissions: new FormControl({ defaultValue: plan?.permissions || [], required: true }),
-            color: new FormControl({ defaultValue: plan?.description || '', required: true }),
+            color: new FormControl({ defaultValue: plan?.color || '', required: true }),
             price: new FormControl({ defaultValue: plan?.price || 0, type: 'money', required: false }),
         },
         handle: {
@@ -117,6 +117,7 @@ export default function FormPlanModal({ plan, isOpen, onToggleModal }: HelperMod
                         field={(control) => (
                             <ColorPicker
                                 fullWidth
+                                value={control.value}
                                 error={control.isInvalid}
                                 helperText={control.messageError}
                             />

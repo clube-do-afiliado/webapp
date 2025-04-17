@@ -28,14 +28,17 @@ export default function PermissionssList({ value, onChange }: PermissionssListPr
     return (
         <Grid xl={6} lg={6} md={6} sm={12} gap={0}>
             {
-                permissions.map((Permissions) => (
-                    <GridItem key={Permissions}>
+                permissions.map((permission) => (
+                    <GridItem key={permission}>
                         <Stack orientation="row" alignItems="center">
                             <Switch
-                                checked={data.includes(Permissions)}
-                                onChange={() => handleSelectPermissions(Permissions)}
+                                style={{ margin: 'inherit' }}
+                                checked={data.includes(permission)}
+                                onChange={() => handleSelectPermissions(permission)}
                             />
-                            <Typography variant="body2" color="text.secondary">{Permissions}</Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {permission}
+                            </Typography>
                         </Stack>
                     </GridItem>
                 ))
