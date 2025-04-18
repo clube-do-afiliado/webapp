@@ -25,7 +25,7 @@ interface FormProps {
 export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref) => {
     const [loading, setLoading] = useState(false);
 
-    const { updateSite } = useSites();
+    const { updateUserSite } = useSites();
 
     const siteUrl = useMemo(() => `${url.store}/${site?.slug}`, [site]);
 
@@ -51,7 +51,7 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
 
                 const newSite: Site = { ...site, information: { ...site.information, ...form.values } };
 
-                updateSite(newSite)
+                updateUserSite(newSite)
                     .finally(() => setLoading(false));
             }
         }

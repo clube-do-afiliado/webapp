@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import Stack from '@cda/ui/components/Stack';
 import Button from '@cda/ui/components/Button';
@@ -6,12 +6,18 @@ import InputFile from '@cda/ui/components/InputFile';
 import Typography from '@cda/ui/components/Typography';
 import { HelperModalProps, Modal, ModalFooter } from '@cda/ui/components/Modal';
 import { Form, FormControl, useForm, Control } from '@cda/ui/components/Form';
+import Loading from '@cda/ui/components/Loading';
 
 import { generateBytesSize } from '@cda/toolkit/file';
 
 import { storage } from '@/services/core';
 
-export default function ImageModal({ isOpen, onToggleModal }: HelperModalProps) {
+export default function ImageModal({ isOpen, siteId, onSave, onToggleModal }: HelperModalProps<{
+    siteId: string;
+    onSave: (url: string) => void;
+}>) {
+    const [loading, setLoading] = useState(false);
+
     const [formGroup] = useForm<{ images: File[] }>({
         form: {
             images: new FormControl({ defaultValue: [], required: true }),
@@ -22,10 +28,14 @@ export default function ImageModal({ isOpen, onToggleModal }: HelperModalProps) 
 
                 const image = images[0];
 
+                setLoading(true);
+
                 storage.upload({
                     file: image,
-                    path: `teste/${image.name}`
-                });
+                    path: `${siteId}/${image.name}`
+                })
+                    .then(onSave)
+                    .finally(() => setLoading(false));
             }
         }
     }, []);
@@ -50,7 +60,7 @@ export default function ImageModal({ isOpen, onToggleModal }: HelperModalProps) 
                         type="object"
                         field={(control) => (
                             <InputFile
-                                maxSize={generateBytesSize(30, 'KB')}
+                                maxSize={generateBytesSize(100, 'KB')}
                                 files={control.value}
                                 error={control.isInvalid}
                                 helperText={control.error || 'Tamanho máximo 30BK'}
@@ -59,7 +69,12 @@ export default function ImageModal({ isOpen, onToggleModal }: HelperModalProps) 
                     />
                     <ModalFooter>
                         <Button variant="outlined">Cancelar</Button>
-                        <Button type="submit">Salvar</Button>
+                        <Button
+                            type="submit"
+                            loading={loading && <Loading />}
+                        >
+                            Salvar
+                        </Button>
                     </ModalFooter>
                 </Stack>
             </Form>

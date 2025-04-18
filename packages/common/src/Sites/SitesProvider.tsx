@@ -19,6 +19,7 @@ export interface SitesContextConfig {
     createSite: (data: Omit<Site, 'id'>) => Promise<void>;
 
     updateSite: (data: Site) => Promise<void>;
+    updateUserSite: (data: Site) => Promise<void>;
 }
 
 export const SitesContext = createContext<SitesContextConfig>({
@@ -35,6 +36,7 @@ export const SitesContext = createContext<SitesContextConfig>({
     createSite: () => Promise.resolve(),
 
     updateSite: () => Promise.resolve(),
+    updateUserSite: () => Promise.resolve(),
 });
 
 export default function SitesProvider({ children, sitesServices }: PropsWithChildren<{
@@ -60,6 +62,7 @@ export default function SitesProvider({ children, sitesServices }: PropsWithChil
         createSite: (data) => createSite(data),
 
         updateSite: (data) => updateSite(data),
+        updateUserSite: (data) => updateUserSite(data),
     }), [sites, userSites]);
 
     const createSite = async (data: Omit<Site, 'id'>) => {
@@ -91,6 +94,13 @@ export default function SitesProvider({ children, sitesServices }: PropsWithChil
     const updateSite = async (data: Site) => {
         return sitesServices.update(data)
             .then(() => setSites(prev => prev.map(r => r.id === data.id ? data : r)))
+            .then(() => addAlert({ color: 'success', message: `o site "${data.information.name}" foi editado` }))
+            .catch(() => addAlert({ color: 'error', message: 'Não foi possível editar o site' }));
+    };
+
+    const updateUserSite = async (data: Site) => {
+        return sitesServices.update(data)
+            .then(() => setUserSites(prev => prev.map(r => r.id === data.id ? data : r)))
             .then(() => addAlert({ color: 'success', message: `o site "${data.information.name}" foi editado` }))
             .catch(() => addAlert({ color: 'error', message: 'Não foi possível editar o site' }));
     };

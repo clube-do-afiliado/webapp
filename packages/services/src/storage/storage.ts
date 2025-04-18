@@ -1,8 +1,8 @@
 import type { FirebaseStorage, UploadTaskSnapshot } from 'firebase/storage';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL, list, listAll } from 'firebase/storage';
 
 type OnProgress = (progress: number) => void;
-interface UploadOptions { file: File; path: string; }
+interface Options { file: File; path: string; }
 
 export default class Storage {
     constructor(private storage: FirebaseStorage) { }
@@ -13,7 +13,17 @@ export default class Storage {
         if (onProgress) { onProgress(progress); };
     }
 
-    public async upload({ file, path }: UploadOptions, onProgress?: OnProgress) {
+    public async getFolder() {
+
+    }
+
+    public async getImage(path: string) {
+        const storageRef = ref(this.storage, path);
+
+        return getDownloadURL(storageRef);
+    }
+
+    public async upload({ file, path }: Options, onProgress?: OnProgress) {
         const storageRef = ref(this.storage, path);
         const uploadTask = uploadBytesResumable(storageRef, file);
 

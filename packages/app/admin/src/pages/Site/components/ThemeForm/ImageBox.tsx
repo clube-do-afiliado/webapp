@@ -13,7 +13,7 @@ export default function ImageBox({ title, imageUrl, onClick }: ImageBoxProps) {
             {
                 imageUrl && (
                     <div className="image-box-content" style={{
-                        background: `url('${imageUrl}')`,
+                        backgroundImage: `url('${imageUrl}')`,
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: 'contain',
                         backgroundPosition: 'center'

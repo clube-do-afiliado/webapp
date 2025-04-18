@@ -10,8 +10,4 @@
     justify-content: center;
 
     transition: all $animation;
-
-    &:hover {
-        background-color: var(--secondary) !important;
-    }
 }

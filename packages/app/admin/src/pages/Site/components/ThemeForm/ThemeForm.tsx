@@ -22,12 +22,15 @@ interface FormProps {
     defaultSite: Omit<Site, 'id'>
 }
 
+type Ref = 'favicon' | 'logo';
+
 export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref) => {
     const [open, toggle] = useModal();
 
-    const { updateSite } = useSites();
+    const { userSites, updateUserSite } = useSites();
 
     const [loading, setLoading] = useState(false);
+    const [reference, setReference] = useState<'logo' | 'favicon'>();
 
     const [formGroup] = useForm<Partial<Site['theme']>>({
         form: {
@@ -51,11 +54,31 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
 
                 const newSite: Site = { ...site, theme: { ...site.theme, ...form.values } };
 
-                updateSite(newSite)
+                updateUserSite(newSite)
                     .finally(() => setLoading(false));
             }
         }
     }, [site]);
+
+    const updateSiteImage = async (ref: 'favicon' | 'logo', url: string) => {
+        if (!site) { return; }
+
+        const newSite: Site = { ...site, theme: { ...site.theme, [ref]: url } };
+
+        updateUserSite(newSite);
+    };
+
+    const handleOpenModal = (ref: Ref) => {
+        toggle();
+        setReference(ref);
+    };
+
+    const handleSave = (url: string) => {
+        if (!reference) { return; }
+
+        updateSiteImage(reference, url)
+            .finally(toggle);
+    };
 
     return (
         <div ref={ref}>
@@ -68,15 +91,16 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
                             <Grid xl={6} lg={6} md={6} sm={12}>
                                 <GridItem>
                                     <ImageBox
-                                        imageUrl="https://wallpapers.com/images/hd/bender-futurama-pictures-4ccnnakww1wfj1ik.jpg"
                                         title="Logo"
-                                        onClick={toggle}
+                                        imageUrl={site?.theme.logo}
+                                        onClick={() => handleOpenModal('logo')}
                                     />
                                 </GridItem>
                                 <GridItem>
                                     <ImageBox
                                         title="Icone do navegador"
-                                        onClick={toggle}
+                                        imageUrl={site?.theme.favicon}
+                                        onClick={() => handleOpenModal('favicon')}
                                     />
                                 </GridItem>
                                 <GridItem>
@@ -113,23 +137,6 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
                                         )}
                                     />
                                 </GridItem>
-                                <GridItem>
-                                    <Control
-                                        controlName="secondaryColor"
-                                        field={(control) => (
-                                            <ColorPicker
-                                                fullWidth
-                                                gutterBottom
-                                                label="Cor do header"
-                                                placeholder="Cor do header"
-                                                data-cy="header-theme"
-                                                value={control.value}
-                                                error={control.isInvalid}
-                                                helperText={control.messageError}
-                                            />
-                                        )}
-                                    />
-                                </GridItem>
                                 <GridItem xl={12} lg={12} md={12} sm={12} textAlign="right">
                                     <Button
                                         type="submit"
@@ -141,7 +148,12 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
                             </Grid>
                         </Stack>
                     </Form>
-                    <ImageModal isOpen={open} onToggleModal={toggle} />
+                    <ImageModal
+                        isOpen={open}
+                        siteId={userSites.length ? userSites[0].id : ''}
+                        onToggleModal={toggle}
+                        onSave={handleSave}
+                    />
                 </CardContent>
             </Card>
         </div>

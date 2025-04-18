@@ -20,19 +20,31 @@ export default function Header({ site }: HeaderProps) {
                     <a href={`${url.store}/${site.slug}`}>
                         <Image
                             src={site.theme.logo}
-                            width={50}
-                            height={30}
+                            fill
                             alt={site.information.description}
+                            loading="eager"
+                            style={{ objectFit: 'contain', objectPosition: 'left' }}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                     </a>
                 </div>
                 <nav className="buttons">
                     <ul>
                         <li>
-                            <a href={`${url.store}/${site.slug}/produtos`}>Produtos</a>
+                            <a
+                                href={`${url.store}/${site.slug}/produtos`}
+                                style={{ color: getContrastColor(site.theme.primaryColor) }}
+                            >
+                                Produtos
+                            </a>
                         </li>
                         <li>
-                            <a href="reviews">Reviews</a>
+                            <a
+                                href="reviews"
+                                style={{ color: getContrastColor(site.theme.primaryColor) }}
+                            >
+                                Reviews
+                            </a>
                         </li>
                     </ul>
                 </nav>

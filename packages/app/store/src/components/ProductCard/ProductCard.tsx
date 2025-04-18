@@ -1,22 +1,33 @@
 import Image from 'next/image';
 
+import { getContrastColor } from '@cda/ui/theme/utils';
+
 import { maskCurrency, maskPercent } from '@cda/toolkit/mask';
 
+import { Site } from '@cda/services/sites';
 import type { Product } from '@cda/services/products';
 import type { Integration } from '@cda/services/integrations';
 
 import './ProductCard.scss';
 
-interface ProductCardProps { product: Product, integrations: Integration[]; }
-export default function ProductCard({ product, integrations }: ProductCardProps) {
+interface ProductCardProps { site: Site; product: Product, integrations: Integration[]; }
+export default function ProductCard({ site, product, integrations }: ProductCardProps) {
     const integration = integrations.find(i => i.id === product.integration) as Integration;
 
     return (
-        <article className="product-card">
+        <article
+            className="product-card"
+        >
             <div className="product-header">
                 {
                     Boolean(product.originalPrice) && (
-                        <span className="product-discount">
+                        <span
+                            className="product-discount"
+                            style={{
+                                background: site.theme.secondaryColor,
+                                color: getContrastColor(site.theme.secondaryColor)
+                            }}
+                        >
                             - {maskPercent(1 - (product.price / product.originalPrice))}
                         </span>
                     )
@@ -26,7 +37,7 @@ export default function ProductCard({ product, integrations }: ProductCardProps)
                 <Image
                     fill
                     loading="lazy"
-                    alt="Nome do produto"
+                    alt={product.name}
                     className="product-image"
                     src={product.images[0]}
                 />
@@ -56,6 +67,6 @@ export default function ProductCard({ product, integrations }: ProductCardProps)
                     <span className="product-price">{maskCurrency(product.price * 100)}</span>
                 </div>
             </div>
-        </article>
+        </article >
     );
 }

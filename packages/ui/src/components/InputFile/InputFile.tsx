@@ -1,4 +1,4 @@
-import { ChangeEvent, InputHTMLAttributes, useEffect, useState } from 'react';
+import { ChangeEvent, InputHTMLAttributes, useEffect, useMemo, useState } from 'react';
 
 import { wait } from '@cda/toolkit/promise';
 import { getFileSize } from '@cda/toolkit/file';
@@ -36,9 +36,11 @@ export default function InputFile({
 
     const [_error, setError] = useState('');
 
+    const isBlocked = useMemo(() => Boolean(!props.multiple) && Boolean(files.length), [files]);
+
     const classes = joinClass([
         'ui-input-file',
-        state === 'dragging' && 'ui-input-file--dragging',
+        state === 'dragging' && !isBlocked && 'ui-input-file--dragging',
         state === 'success' && 'ui-input-file--success',
         (error || state === 'error') && 'ui-input-file--error',
     ]);
@@ -91,17 +93,17 @@ export default function InputFile({
             >
                 <input type="file"
                     {...props}
+                    disabled={isBlocked}
                     onChange={handleChange}
                     onInput={() => ''}
                     onBlur={() => ''}
                 />
-
                 <Stack spacing="small" justifyContent="center" alignItems="center">
                     {
                         ['empty', 'dragging'].includes(state) && (
                             <Slide enter direction="top" style={{ textAlign: 'center' }}>
                                 <Icon
-                                    name="cloud-upload"
+                                    name={isBlocked ? 'image-check' : 'cloud-upload'}
                                     color={state === 'empty' ? 'text.secondary' : 'primary.main'}
                                     style={{ fontSize: 42 }}
                                 />
@@ -110,8 +112,9 @@ export default function InputFile({
                                     color={state === 'empty' ? 'text.secondary' : 'primary.main'}
                                     variant="body2"
                                 >
-                                    {props.multiple && 'Carrege seus arquivos aqui'}
-                                    {!props.multiple && 'Carrege seu arquivo aqui'}
+                                    {!isBlocked && props.multiple && 'Carrege seus arquivos aqui'}
+                                    {!isBlocked && !props.multiple && 'Carrege seu arquivo aqui'}
+                                    {isBlocked && 'Arquivo carregado'}
                                 </Typography>
                             </Slide>
                         )

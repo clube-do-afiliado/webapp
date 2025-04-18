@@ -24,7 +24,7 @@ interface FormProps {
 export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref) => {
     const [loading, setLoading] = useState(false);
 
-    const { updateSite } = useSites();
+    const { updateUserSite } = useSites();
 
     const [formGroup] = useForm<Partial<Site['socials']>>({
         form: {
@@ -42,7 +42,7 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
 
                 const newSite: Site = { ...site, socials: { ...site.socials, ...form.values } };
 
-                updateSite(newSite)
+                updateUserSite(newSite)
                     .finally(() => setLoading(false));
             }
         }

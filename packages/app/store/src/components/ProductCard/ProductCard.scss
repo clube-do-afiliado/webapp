@@ -2,9 +2,9 @@
     height: 100%;
     cursor: pointer;
     position: relative;
-    border-radius: var(--radius);
-    border: 1px solid var(--divider);
-    background-color: var(--background-default);
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background-color: #f9f9f9;
     transition: all $animation;
 
     display: flex;
@@ -20,8 +20,6 @@
 
         .product-discount {
             z-index: 9;
-            background-color: var(--primary);
-            color: var(--primary-contrast);
             border-radius: 4px;
             position: absolute;
             top: 15px;
@@ -89,12 +87,12 @@
             .product-original-price {
                 text-decoration: line-through;
                 font-size: $font-regular;
-                color: var(--text-secondary);
+                color: rgba(0, 0, 0, 0.6);
             }
 
             .product-price {
                 font-size: $font-large;
-                color: var(--secondary);
+                color: rgba(0, 0, 0, 0.6);
             }
         }
     }
