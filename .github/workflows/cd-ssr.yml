@@ -9,9 +9,7 @@ on:
         description: Choice a project
         required: true
         options:
-          - sso
-          - admin
-          - backoffice
+          - store
 
 jobs:
   setup:
@@ -54,7 +52,7 @@ jobs:
     with:
       ENVIRONMENT: ${{ needs.project-env.outputs.PROJECT_ENV }}
       BUILD_ENV: homolog
-      PATH: dist
+      PATH: .vercel/output/static
       PROJECT: ${{ inputs.project }}
       CF_PROJECT: stg-store
       FIREBASE_PROJECT_ID: clube-do-afiliado-homolog
