@@ -36,7 +36,7 @@ jobs:
       BUILD_ENV: homolog
       PATH: dist
       PROJECT: ${{inputs.project}}
-      COMMAND: build
+      COMMAND: cf-build
       FIREBASE_PROJECT_ID: clube-do-afiliado-homolog
       SSO_URL:  ${{ vars.STG_SSO_URL }}
       ADMIN_URL: ${{ vars.STG_ADMIN_URL }}
