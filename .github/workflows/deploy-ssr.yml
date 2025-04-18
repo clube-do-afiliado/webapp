@@ -1,0 +1,77 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: string
+      PROJECT:
+        required: true
+        type: string
+      BUILD_ENV:
+        required: true
+        type: string
+      PATH: 
+        required: true
+        type: string
+      CF_PROJECT:
+        required: true
+        type: string
+      FIREBASE_PROJECT_ID:
+        required: true
+        type: string
+    secrets:
+      CF_ACCOUNT_ID:
+        required: true
+      CF_API_TOKEN:
+        required: true
+      FIREBASE_API_KEY:
+        required: true
+      FIREBASE_MESSAGING_SENDER_ID:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.ENVIRONMENT }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: "yarn"
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-setup-${{ inputs.BUILD_ENV }}-${{ hashFiles('./yarn.lock') }}
+
+      - name: Cache ${{ inputs.PROJECT }}
+        id: cache-project
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/packages/app/${{ inputs.PROJECT }}/${{ inputs.PATH }}
+          key: ${{ runner.os }}-project-${{ inputs.PROJECT }}-${{ inputs.BUILD_ENV }}-${{ github.sha }}
+
+      - name: Install Cloudflare Pages CLI
+        run: npm install -g wrangler
+
+      - name: Deploy to Cloudflare Pages
+        run: |
+          npx @cloudflare/next-on-pages@1
+          wrangler pages deploy .vercel/output/static --project-name=${{ inputs.CF_PROJECT }}
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          PROJECT_ID: ${{ inputs.FIREBASE_PROJECT_ID }}
+          AUTH_DOMAIN: ${{ inputs.FIREBASE_PROJECT_ID }}.firebaseapp.com
+          STORAGE_BUCKET: ${{ inputs.FIREBASE_PROJECT_ID }}.firebasestorage.app
+          MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
