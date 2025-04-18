@@ -1,0 +1,19 @@
+{
+  "name": "4f666a28-37c0-454e-9204-0738979d5bc7/bender.jpg",
+  "bucket": "storage-bucket.appspot.com",
+  "metageneration": 1,
+  "generation": 1744934405303,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "668b3d49-c197-41dd-a6a5-c437d8d33e50"
+  ],
+  "etag": "XOy4z9u4jilhu8Ia1YmAD62EHVc",
+  "customMetadata": {},
+  "timeCreated": "2025-04-18T00:00:05.303Z",
+  "updated": "2025-04-18T00:00:05.303Z",
+  "size": 5878,
+  "md5Hash": "bpQNCVzsXNopE5DMgd2W9A==",
+  "crc32c": "3730023860"
+}
