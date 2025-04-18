@@ -6,6 +6,8 @@ import Content from '@/components/Content';
 import { sitesServices } from '@/services/core';
 import BaseProviders from '@/providers/BaseProviders';
 
+export const runtime = 'edge';
+
 interface NextPageProps<
     TParams extends Record<string, unknown> = Record<string, unknown>,
     TSearchParams extends Record<string, unknown> = Record<string, unknown>

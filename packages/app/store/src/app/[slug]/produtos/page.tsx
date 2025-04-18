@@ -11,6 +11,8 @@ import { sitesServices, productsServices, integrationsServices } from '@/service
 
 import './ProductsPage.scss';
 
+export const runtime = 'edge'; // Esta linha é crucial
+
 interface NextPageProps<
     TParams extends Record<string, unknown> = Record<string, unknown>,
     TSearchParams extends Record<string, unknown> = Record<string, unknown>
