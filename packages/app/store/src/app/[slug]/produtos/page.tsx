@@ -1,4 +1,4 @@
-'use server';
+export const runtime = 'edge';
 
 import { redirect } from 'next/navigation';
 
@@ -10,8 +10,6 @@ import BaseProviders from '@/providers/BaseProviders';
 import { sitesServices, productsServices, integrationsServices } from '@/services/core';
 
 import './ProductsPage.scss';
-
-export const runtime = 'edge'; // Esta linha é crucial
 
 interface NextPageProps<
     TParams extends Record<string, unknown> = Record<string, unknown>,

@@ -1,12 +1,10 @@
-'use server';
+export const runtime = 'edge';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Content from '@/components/Content';
 import { sitesServices } from '@/services/core';
 import BaseProviders from '@/providers/BaseProviders';
-
-export const runtime = 'edge';
 
 interface NextPageProps<
     TParams extends Record<string, unknown> = Record<string, unknown>,
