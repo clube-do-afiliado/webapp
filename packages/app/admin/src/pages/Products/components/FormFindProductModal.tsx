@@ -48,6 +48,7 @@ export default function FormFindProductModal({ isOpen, onToggleModal, onGetProdu
                         storeId: userSites[0].id,
                         images: [res.img],
                         visible: false,
+                        url,
                         tags: []
                     }))
                     .then(res => onGetProduct(res))

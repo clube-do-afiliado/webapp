@@ -1,5 +1,5 @@
 import type { FirebaseStorage, UploadTaskSnapshot } from 'firebase/storage';
-import { ref, uploadBytesResumable, getDownloadURL, list, listAll } from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 type OnProgress = (progress: number) => void;
 interface Options { file: File; path: string; }

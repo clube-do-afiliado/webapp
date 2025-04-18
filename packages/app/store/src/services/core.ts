@@ -9,6 +9,15 @@ import SitesServices from '@cda/services/sites';
 import ProductsServices from '@cda/services/products';
 import IntegrationsServices from '@cda/services/integrations';
 
+// Polyfill para ambiente Edge
+if (typeof navigator === 'undefined') {
+    globalThis.navigator = { userAgent: 'Cloudflare-Workers' } as any;
+}
+
+export const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3002';
+
 // VARIABLES
 export const url = {
     sso: process.env.SSO_URL,

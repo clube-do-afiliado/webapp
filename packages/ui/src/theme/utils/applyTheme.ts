@@ -9,6 +9,8 @@ function setColor(name: string, color: Color) {
 }
 
 export function applyTheme(theme: ThemeBuilded) {
+    if (typeof window === 'undefined') { return; }
+
     const { palette, shape, spacing } = theme;
 
     // COLORS

@@ -65,6 +65,13 @@ const nextConfig: NextConfig = {
             @use "@/styles/global.scss" as *;
         `,
     },
+    webpack: (config) => {
+        config.resolve.fallback = {
+            ...config.resolve.fallback,
+            navigator: false // Desativa a polyfill automática problemática
+        };
+        return config;
+    },
 };
 
 export default nextConfig;

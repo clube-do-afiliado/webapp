@@ -64,8 +64,7 @@ jobs:
         run: npm install -g wrangler
 
       - name: Deploy to Cloudflare Pages
-        run: |
-          npx @cloudflare/next-on-pages@1
+        run:
           wrangler pages deploy ${{ inputs.PATH }} --project-name=${{ inputs.CF_PROJECT }}
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}

@@ -1,13 +1,11 @@
-export const runtime = 'edge';
-
-import { redirect } from 'next/navigation';
+'use server';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Content from '@/components/Content';
 import Products from '@/components/Products';
 import BaseProviders from '@/providers/BaseProviders';
-import { sitesServices, productsServices, integrationsServices } from '@/services/core';
+import { baseUrl } from '@/services/core';
 
 import './ProductsPage.scss';
 
@@ -22,12 +20,16 @@ interface NextPageProps<
 export default async function Page({ params }: NextPageProps<{ slug: string }>) {
     const { slug } = await params;
 
-    const site = await sitesServices.getUserStoresBySlug(slug);
+    const siteRes = await fetch(`${baseUrl}/api/site/${slug}`);
+    const site = await siteRes.json();
 
-    if (!site) { return redirect('/not-found'); }
+    if (!site) { return; }
 
-    const products = await productsServices.getVisibleStoreProducts(site.id);
-    const integrations = await integrationsServices.list();
+    const productsRes = await fetch(`${baseUrl}/api/products/${site.id}`);
+    const products = await productsRes.json();
+
+    const integrationsRes = await fetch(`${baseUrl}/api/integrations`);
+    const integrations = await integrationsRes.json();
 
     return (
         <BaseProviders site={site}>
