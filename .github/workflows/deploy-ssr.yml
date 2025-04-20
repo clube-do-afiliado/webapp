@@ -64,6 +64,7 @@ jobs:
         run: npm install -g wrangler
 
       - name: Deploy to Cloudflare Pages
+        working-directory: ${{ github.workspace }}/packages/app/store
         run:
           wrangler pages deploy ${{ inputs.PATH }} --project-name=${{ inputs.CF_PROJECT }}
         env:
