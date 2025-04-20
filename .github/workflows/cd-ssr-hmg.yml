@@ -34,7 +34,7 @@ jobs:
     with:
       ENVIRONMENT: ${{ needs.project-env.outputs.PROJECT_ENV }} HMG
       BUILD_ENV: homolog
-      PATH: dist
+      PATH: .vercel/output/static
       PROJECT: ${{inputs.project}}
       COMMAND: cf-build
       FIREBASE_PROJECT_ID: clube-do-afiliado-homolog
