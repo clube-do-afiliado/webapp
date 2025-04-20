@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy SSR
 
 on:
   workflow_call:
