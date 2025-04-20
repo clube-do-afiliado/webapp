@@ -30,7 +30,7 @@ jobs:
 
   build-project:
     needs: [setup, project-env]
-    uses: ./.github/workflows/projects.yml
+    uses: ./.github/workflows/projects-ssr.yml
     with:
       ENVIRONMENT: ${{ needs.project-env.outputs.PROJECT_ENV }} HMG
       BUILD_ENV: homolog
