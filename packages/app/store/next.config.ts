@@ -2,7 +2,8 @@ import type { NextConfig } from 'next';
 
 import path from 'path';
 
-const nextConfig: NextConfig = {
+export default {
+    reactStrictMode: true,
     output: 'standalone',
     env: {
         ENV: process.env.ENV,
@@ -25,38 +26,14 @@ const nextConfig: NextConfig = {
     },
     images: {
         remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: 'cdn.awsli.com.br',
-            },
-            {
-                protocol: 'https',
-                hostname: 'a-static.mlcdn.com.br',
-            },
-            {
-                protocol: 'https',
-                hostname: 'cdn.clubedoafiliado.com',
-            },
-            {
-                protocol: 'http',
-                hostname: 'localhost',
-            },
-            {
-                protocol: 'http',
-                hostname: 'firebasestorage.googleapis.com'
-            },
-            {
-                protocol: 'https',
-                hostname: 'http2.mlstatic.com'
-            },
-            {
-                protocol: 'https',
-                hostname: 'down-br.img.susercontent.com'
-            },
-            {
-                protocol: 'https',
-                hostname: 'm.media-amazon.com'
-            }
+            { protocol: 'https', hostname: 'cdn.awsli.com.br' },
+            { protocol: 'https', hostname: 'a-static.mlcdn.com.br' },
+            { protocol: 'https', hostname: 'cdn.clubedoafiliado.com' },
+            { protocol: 'http', hostname: 'localhost' },
+            { protocol: 'http', hostname: 'firebasestorage.googleapis.com' },
+            { protocol: 'https', hostname: 'http2.mlstatic.com' },
+            { protocol: 'https', hostname: 'down-br.img.susercontent.com' },
+            { protocol: 'https', hostname: 'm.media-amazon.com' },
         ]
     },
     sassOptions: {
@@ -64,14 +41,5 @@ const nextConfig: NextConfig = {
         additionalData: `
             @use "@/styles/global.scss" as *;
         `,
-    },
-    webpack: (config) => {
-        config.resolve.fallback = {
-            ...config.resolve.fallback,
-            navigator: false // Desativa a polyfill automática problemática
-        };
-        return config;
-    },
-};
-
-export default nextConfig;
+    }
+} satisfies NextConfig;

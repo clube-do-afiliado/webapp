@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
 
 import DB from '@cda/services/db';
@@ -8,11 +8,6 @@ import PlansServices from '@cda/services/plans';
 import SitesServices from '@cda/services/sites';
 import ProductsServices from '@cda/services/products';
 import IntegrationsServices from '@cda/services/integrations';
-
-// Polyfill para ambiente Edge
-if (typeof navigator === 'undefined') {
-    globalThis.navigator = { userAgent: 'Cloudflare-Workers' } as any;
-}
 
 export const baseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
@@ -32,7 +27,7 @@ export const release = process.env.RELEASE;
 export const isLocal = process.env.ENV === 'local';
 
 // FIREBASE
-const app = initializeApp({
+const app = getApps().length === 0 ? initializeApp({
     appId: process.env.APP_ID,
     apiKey: process.env.API_KEY,
     projectId: process.env.PROJECT_ID,
@@ -40,12 +35,12 @@ const app = initializeApp({
     storageBucket: process.env.STORAGE_BUCKET,
     measurementId: process.env.MEASUREMENT_ID,
     messagingSenderId: process.env.MESSAGING_SENDER_ID,
-}, 'store');
+}, 'store') : getApps()[0];
 
 // FIREBASE SERVICES
 const firestore = getFirestore(app);
 
-export const db = new DB(firestore);
+const db = new DB(firestore);
 
 if (isLocal) {
     connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
