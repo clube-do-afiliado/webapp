@@ -43,6 +43,14 @@ export default class ProductsServices {
         });
     }
 
+    async detailsBySlug(slug: string) {
+        return this.db.getItem<Product>({
+            path: ProductsServices.PATH,
+            pathSegments: [],
+            filters: [{ field: 'slug', operator: '==', value: slug }],
+        });
+    }
+
     async create(product: Omit<Product, 'id'>) {
         const id = uuid();
 

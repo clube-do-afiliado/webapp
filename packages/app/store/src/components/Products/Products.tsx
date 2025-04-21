@@ -2,6 +2,7 @@ import type { Site } from '@cda/services/sites';
 import type { Product } from '@cda/services/products';
 import type { Integration } from '@cda/services/integrations';
 
+import { url } from '@/services/core';
 import ProductCard from '@/components/ProductCard';
 
 import './Products.scss';
@@ -13,9 +14,9 @@ export default function Products({ site, products, integrations }: ProductsProps
         <div className="grid">
             {
                 Boolean(products.length) && products.map(p => (
-                    <div key={p.id} className="grid__item">
+                    <a key={p.id} className="grid__item" href={`${url.store}/${site.slug}/produtos/${p.slug}`}>
                         <ProductCard site={site} product={p} integrations={integrations} />
-                    </div>
+                    </a>
                 ))
             }
         </div>

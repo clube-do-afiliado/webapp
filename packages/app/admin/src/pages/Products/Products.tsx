@@ -11,6 +11,7 @@ import type { Product } from '@cda/services/products';
 
 import { EmptyContent } from '@cda/common/EmptyContent';
 import { useProducts } from '@cda/common/Products';
+import { useSites } from '@cda/common/Sites';
 
 import { release } from '@/services/core';
 
@@ -23,11 +24,16 @@ export default function Products() {
     const [openDrawer, toggleDrawer] = useDrawer();
     const [openFindModal, toggleFindModal] = useModal();
 
-    const { getProducts, products, loading } = useProducts();
+    const { userSites } = useSites();
+    const { getStoreProducts, products, loading } = useProducts();
 
     const [selectProduct, setSelectProduct] = useState<Product>();
 
-    useEffect(() => { getProducts(); }, []);
+    useEffect(() => {
+        if (userSites.length) {
+            getStoreProducts(userSites[0].id);
+        }
+    }, [userSites]);
 
     useEffect(() => { setSelectProduct(prev => products.find(p => prev?.id === p.id)); }, [products]);
 

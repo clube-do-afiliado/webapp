@@ -15,19 +15,15 @@ interface NextPageProps<
     searchParams: Promise<TSearchParams>;
 }
 
-export default async function Page({ params }: NextPageProps<{ slug: string }>) {
-    const { slug } = await params;
+export default async function Page({ params }: NextPageProps<{ siteSlug: string }>) {
+    const { siteSlug } = await params;
 
-    const siteRes = await fetch(`${baseUrl}/api/site/${slug}`);
-    const site = await siteRes.json();
-
-    if (!site) { return; }
-
-    const productsRes = await fetch(`${baseUrl}/api/products/${site.id}`);
-    const products = await productsRes.json();
-
-    const integrationsRes = await fetch(`${baseUrl}/api/integrations`);
-    const integrations = await integrationsRes.json();
+    const res = await fetch(`${baseUrl}/api/rp/${siteSlug}`);
+    const {
+        site,
+        integrations,
+        products
+    } = await res.json();
 
     return (
         <BaseProviders site={site}>

@@ -12,6 +12,8 @@ import './ProductCard.scss';
 
 interface ProductCardProps { site: Site; product: Product, integrations: Integration[]; }
 export default function ProductCard({ site, product, integrations }: ProductCardProps) {
+    const { primaryColor, secondaryColor } = site.theme;
+
     const integration = integrations.find(i => i.id === product.integration) as Integration;
 
     return (
@@ -24,8 +26,8 @@ export default function ProductCard({ site, product, integrations }: ProductCard
                         <span
                             className="product-discount"
                             style={{
-                                background: site.theme.secondaryColor,
-                                color: getContrastColor(site.theme.secondaryColor)
+                                background: secondaryColor,
+                                color: getContrastColor(secondaryColor)
                             }}
                         >
                             - {maskPercent(1 - (product.price / product.originalPrice))}
@@ -64,7 +66,12 @@ export default function ProductCard({ site, product, integrations }: ProductCard
                             </span>
                         )
                     }
-                    <span className="product-price">{maskCurrency(product.price * 100)}</span>
+                    <span
+                        className="product-price"
+                        style={{ color: secondaryColor }}
+                    >
+                        {maskCurrency(product.price * 100)}
+                    </span>
                 </div>
             </div>
         </article >
