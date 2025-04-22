@@ -11,8 +11,6 @@ interface NextPageProps<
 export default async function Page({ params }: NextPageProps<{ siteSlug: string; productSlug: string }>) {
     const { siteSlug, productSlug } = await params;
 
-    console.log('SLUG', productSlug);
-
     const res = await fetch(`${baseUrl}/api/ldp/${siteSlug}/${productSlug}`);
     const {
         // site,
