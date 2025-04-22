@@ -12,14 +12,10 @@ export async function GET(_: NextRequest, context: RequestContext) {
     const params = await context.params;
     const siteSlug = params.siteSlug as string;
 
-    console.log('>>>>>>>> siteSlug', siteSlug);
-
     const [site, integrations] = await Promise.all([
         sitesServices.getUserStoresBySlug(siteSlug),
         integrationsServices.list()
     ]);
-
-    console.log('>>>>>>>> site', site);
 
     if (!site) { return; }
 

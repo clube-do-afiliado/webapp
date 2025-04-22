@@ -106,7 +106,6 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
                                         field={(control) => (
                                             <Input
                                                 fullWidth
-                                                readOnly
                                                 gutterBottom
                                                 label="Título"
                                                 data-cy="title-information"

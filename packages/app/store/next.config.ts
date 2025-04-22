@@ -28,7 +28,6 @@ export default {
     },
     images: {
         remotePatterns: [
-            { protocol: 'https', hostname: 'cdn.awsli.com.br' },
             { protocol: 'https', hostname: 'a-static.mlcdn.com.br' },
             { protocol: 'https', hostname: 'cdn.clubedoafiliado.com' },
             { protocol: 'https', hostname: 'firebasestorage.googleapis.com' },

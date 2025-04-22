@@ -1,7 +1,7 @@
 import type { Theme } from '../Theme';
 
 export const defaultSpacing: Theme['spacing'] = 8;
-export const defaultShape: Theme['shape'] = { radius: 4 };
+export const defaultShape: Theme['shape'] = { radius: 8 };
 
 export const themeDefaultLight: Theme = {
     palette: {
@@ -10,8 +10,8 @@ export const themeDefaultLight: Theme = {
         error: '#f83a54',
         warning: '#ff9800',
         success: '#2ECC71',
-        primary: '#174F62',
-        secondary: '#F87315',
+        primary: '#FF6F0F',
+        secondary: '#000',
         grey: '#F4F4F4',
         text: {
             primary: 'rgba(0, 0, 0, 0.87)',
@@ -19,8 +19,8 @@ export const themeDefaultLight: Theme = {
             disabled: 'rgba(0, 0, 0, 0.38)'
         },
         background: {
-            paper: '#f1f1f1',
-            default: '#f9f9f9',
+            paper: '#F5F0F3',
+            default: '#FFF',
         },
         divider: 'rgba(0, 0, 0, 0.12)'
     },
@@ -35,8 +35,8 @@ export const themeDefaultDark: Theme = {
         error: '#FF5C72',
         warning: '#FFA726',
         success: '#48C78E',
-        primary: '#F87315',
-        secondary: '#2D9CC1',
+        primary: '#FF6F0F',
+        secondary: '#333',
         grey: '#2A2A2A',
         text: {
             primary: 'rgba(255, 255, 255, 0.87)',

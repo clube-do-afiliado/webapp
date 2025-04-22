@@ -8,6 +8,7 @@ import Slide from '@cda/ui/animations/Slide';
 import Stack from '@cda/ui/components/Stack';
 import Content from '@cda/ui/layout/Content';
 import Loading from '@cda/ui/components/Loading';
+import useResize from '@cda/ui/hooks/useResize';
 import { Sidebar, SidebarButton } from '@cda/ui/layout/Sidebar';
 import { createTheme, useTheme, themeDefaultLight, themeDefaultDark } from '@cda/ui/theme';
 
@@ -26,6 +27,15 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
     const { user, logout } = useAuth();
 
     const [loading, setLoading] = useState(true);
+    const [compact, setCompact] = useState(false);
+
+    useResize({
+        onXs: () => { setCompact(true); },
+        onSm: () => { setCompact(true); },
+        onMd: () => { setCompact(false); },
+        onLg: () => { setCompact(false); },
+        onXl: () => { setCompact(false); },
+    });
 
     useEffect(() => { if (user) { setLoading(false); } }, [user]);
 
@@ -53,6 +63,7 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
             <Stack orientation="row" nogap>
                 <Slide enter direction="left" timeout={.3}>
                     <Sidebar
+                        compact={compact}
                         upButtons={
                             <div>
                                 <SidebarButton

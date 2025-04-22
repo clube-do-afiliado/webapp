@@ -47,7 +47,7 @@ export default function Footer({ site }: FooterProps) {
                 <ul className="security">
                     <li>
                         <Image
-                            src="https://cdn.awsli.com.br/1879/1879961/arquivos/site-protegido.png"
+                            src="https://cdn.clubedoafiliado.com/assets/images/site-protegido.webp"
                             width={124}
                             height={51}
                             loading="lazy"
