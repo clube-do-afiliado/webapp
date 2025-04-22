@@ -23,6 +23,8 @@ export default {
         STORE_URL: process.env.STORE_URL,
         BACKOFFICE_URL: process.env.BACKOFFICE_URL,
         SITE_URL: process.env.SITE_URL,
+
+        BASE_URL: process.env.BASE_URL
     },
     images: {
         remotePatterns: [

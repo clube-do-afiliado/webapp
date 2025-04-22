@@ -9,9 +9,7 @@ import SitesServices from '@cda/services/sites';
 import ProductsServices from '@cda/services/products';
 import IntegrationsServices from '@cda/services/integrations';
 
-export const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : 'http://localhost:3002';
+export const baseUrl = process.env.BASE_URL;
 
 // VARIABLES
 export const url = {

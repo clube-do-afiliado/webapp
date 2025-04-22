@@ -18,5 +18,8 @@ declare namespace NodeJS {
         ADMIN_URL: string;
         STORE_URL: string;
         BACKOFFICE_URL: string;
+
+        // URLS
+        BASE_URL: string;
     }
 }
