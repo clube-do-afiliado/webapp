@@ -6,7 +6,8 @@
     "dev": "rm -rf .next && env-cmd -f .env.dev next dev -p 3002",
     "hmg": "rm -rf .next && env-cmd -f .env.hmg next dev -p 3002",
     "build": "next build",
-    "start": "next start",
+    "postbuild": "cp -r .next/static .next/standalone/packages/app/store/.next/static",
+    "start": "node .next/standalone/packages/app/store/server.js",
     "lint": "next lint"
   },
   "dependencies": {

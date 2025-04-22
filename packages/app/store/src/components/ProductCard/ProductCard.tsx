@@ -12,7 +12,7 @@ import './ProductCard.scss';
 
 interface ProductCardProps { site: Site; product: Product, integrations: Integration[]; }
 export default function ProductCard({ site, product, integrations }: ProductCardProps) {
-    const { primaryColor, secondaryColor } = site.theme;
+    const { secondaryColor } = site.theme;
 
     const integration = integrations.find(i => i.id === product.integration) as Integration;
 
