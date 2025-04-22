@@ -31,11 +31,13 @@ export default {
             { protocol: 'https', hostname: 'cdn.awsli.com.br' },
             { protocol: 'https', hostname: 'a-static.mlcdn.com.br' },
             { protocol: 'https', hostname: 'cdn.clubedoafiliado.com' },
-            { protocol: 'http', hostname: 'localhost' },
-            { protocol: 'http', hostname: 'firebasestorage.googleapis.com' },
+            { protocol: 'https', hostname: 'firebasestorage.googleapis.com' },
             { protocol: 'https', hostname: 'http2.mlstatic.com' },
             { protocol: 'https', hostname: 'down-br.img.susercontent.com' },
             { protocol: 'https', hostname: 'm.media-amazon.com' },
+            // LOCAL
+            { protocol: 'http', hostname: 'localhost' },
+            { protocol: 'http', hostname: 'firebasestorage.googleapis.com' },
         ]
     },
     sassOptions: {
