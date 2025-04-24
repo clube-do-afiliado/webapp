@@ -8,7 +8,6 @@ import Slide from '@cda/ui/animations/Slide';
 import Input from '@cda/ui/components/Input';
 import Stack from '@cda/ui/components/Stack';
 import Button from '@cda/ui/components/Button';
-import Divider from '@cda/ui/components/Divider';
 import Loading from '@cda/ui/components/Loading';
 import Container from '@cda/ui/components/Container';
 import ButtonIcon from '@cda/ui/components/ButtonIcon';

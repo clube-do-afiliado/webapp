@@ -17,8 +17,8 @@ import { url } from '@/services/core';
 import Color from './Color';
 
 export default function StoreDrawer({ isOpen, site, onToggleDrawer }: HelperDrawerProps<{ site?: Site }>) {
-    const [open, toggleModal] = useModal();
-    const [openEdit, toggleEditModal] = useModal();;
+    const [, toggleModal] = useModal();
+    const [, toggleEditModal] = useModal();;
 
     const goToStore = useCallback(() => {
         window.open(`${url.store}/${site?.slug}/produtos`, '_blank');
