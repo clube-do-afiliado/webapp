@@ -13,13 +13,14 @@ interface AvatarProps extends HTMLAttributes<HTMLElement> {
     alt?: string;
     src?: string;
     name?: string;
+    icon?: React.JSX.Element;
 }
-function Avatar({ src, alt, name, ...props }: AvatarProps) {
+function Avatar({ src, alt, name, icon, ...props }: AvatarProps) {
     const className = joinClass([
         'ui-avatar',
         src && 'ui-avatar--image',
         name && 'ui-avatar--name',
-        !src && !name && 'ui-avatar--icon',
+        (!src && !name) || icon && 'ui-avatar--icon',
         props.onClick && 'ui-avatar--clickable',
         props.className
     ]);
@@ -27,6 +28,7 @@ function Avatar({ src, alt, name, ...props }: AvatarProps) {
     const content = () => {
         if (src) { return <img loading="lazy" style={{ width: '100%' }} src={src} alt={alt} />; }
         if (name) { return <span>{getInitials(name)}</span>; }
+        if (icon) { return icon; }
 
         return (
             <Icon name="user" className="ui-avatar__icon" />

@@ -124,7 +124,7 @@ export default function FormUserModal({
                 <ModalFooter>
                     <Button
                         type="button"
-                        variant="text"
+                        variant="outlined"
                         color="primary"
                         onClick={onToggleModal}
                     >

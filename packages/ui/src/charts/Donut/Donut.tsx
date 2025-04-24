@@ -1,7 +1,6 @@
 import { CSSProperties, useEffect, useMemo, useState } from 'react';
 
 import { slug } from '@cda/toolkit/string';
-import { maskCurrency } from '@cda/toolkit/mask';
 
 import { joinClass } from '../../utils';
 import Icon from '../../components/Icon';
@@ -23,8 +22,20 @@ type Slice = {
     end: number;
 }
 
-interface DonutProps { data: ChartData[]; tooltipPosition?: 'left' | 'right'; colors?: string[] }
-export default function Donut({ data, colors = CHART_COLORS, tooltipPosition = 'right' }: DonutProps) {
+interface DonutProps {
+    data: ChartData[];
+    tooltipPosition?: 'left' | 'right';
+    colors?: string[];
+    width?: number;
+    renderLabel: (data: Slice) => React.JSX.Element;
+}
+export default function Donut({
+    data,
+    renderLabel,
+    colors = CHART_COLORS,
+    tooltipPosition = 'right',
+    width = 200,
+}: DonutProps) {
     const [slices, setSlices] = useState<Slice[]>([]);
     const [mappedData, setMappedData] = useState<ChartItem[]>([]);
     const [tooltipVisibility, setTooltipVisibility] = useState(false);
@@ -44,7 +55,9 @@ export default function Donut({ data, colors = CHART_COLORS, tooltipPosition = '
             .join(', ');
 
         return {
-            background: `conic-gradient(${conicGradient})`
+            width,
+            height: width,
+            background: `conic-gradient(${conicGradient})`,
         };
     }, [slices]);
 
@@ -101,77 +114,96 @@ export default function Donut({ data, colors = CHART_COLORS, tooltipPosition = '
     const toggleTooltipVisibility = () => { setTooltipVisibility(prev => !prev); };
 
     return (
-        <Stack className="ui-donut" justifyContent="center" alignItems="center">
-            {!mappedData.length && (
-                <Stack spacing="small" justifyContent="center" alignItems="center" style={{ minHeight: 100 }}>
-                    <Icon name="chart-pie" color="text.secondary" size="medium" />
-                    <Typography noMargin variant="body2" color="text.secondary">
-                        Nenhum dado encontrado
-                    </Typography>
-                </Stack>
-            )}
-            {
-                Boolean(mappedData.length) && (
-                    <>
-                        <div
-                            className="ui-donut__chart"
-                            style={gradient}
-                            onMouseEnter={toggleTooltipVisibility}
-                            onMouseLeave={toggleTooltipVisibility}
-                        >
-                            <div className="ui-donut__chart__label"></div>
-                            <Card className={className}>
-                                <CardContent>
-                                    <Stack spacing="small">
-                                        {
-                                            slices.map(data => (
-                                                <Stack
-                                                    key={data.slug}
-                                                    orientation="row"
-                                                    alignItems="center"
-                                                    spacing="small"
-                                                >
-                                                    <div
-                                                        className="ui-donut__chart__tooltip__identifier"
-                                                        style={{ background: data.color }}
-                                                    />
-                                                    <Typography noMargin>
-                                                        {maskCurrency(data.total * 100)}
-                                                        <span style={{ margin: '0 5px' }}>~</span>
-                                                        {Math.floor(data.percentage)}%
-                                                    </Typography>
-                                                </Stack>
-                                            ))
-                                        }
-                                    </Stack>
-                                </CardContent>
-                            </Card>
-                        </div>
-                        <Stack orientation="row" justifyContent="center" spacing="small" style={{ flexWrap: 'wrap' }}>
-                            {
-                                mappedData
-                                    .sort((a, b) => b.value - a.value)
-                                    .map((item, i) =>
-                                        <div
-                                            key={i}
-                                            className="ui-donut__legend"
-                                            onClick={() => toggleVisibility(item)}
-                                        >
-                                            <div className="ui-donut__legend__square" style={{
-                                                backgroundColor: item.visible ? item.color : palette.text.disabled,
-                                            }} />
-                                            <Typography noMargin color={
-                                                item.visible ? 'text.secondary' : 'text.disabled'
-                                            }>
-                                                {item.label}
-                                            </Typography>
-                                        </div>
-                                    )
-                            }
-                        </Stack>
-                    </>
-                )
-            }
-        </Stack>
+        <>
+            <style>
+                {
+                    `.ui-donut__chart::after {
+                        content: '';
+                        width: ${width / 2}px;
+                        height: ${width / 2}px;
+                        background: var(--background-default);
+                        border-radius: 50%;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+                `}
+            </style>
+            <Stack className="ui-donut" justifyContent="center" alignItems="center">
+                {!mappedData.length && (
+                    <Stack spacing="small" justifyContent="center" alignItems="center" style={{ minHeight: 100 }}>
+                        <Icon name="chart-pie" color="text.secondary" size="medium" />
+                        <Typography noMargin variant="body2" color="text.secondary">
+                            Nenhum dado encontrado
+                        </Typography>
+                    </Stack>
+                )}
+                {
+                    Boolean(mappedData.length) && (
+                        <>
+                            <div
+                                className="ui-donut__chart"
+                                style={gradient}
+                                onMouseEnter={toggleTooltipVisibility}
+                                onMouseLeave={toggleTooltipVisibility}
+                            >
+                                <div className="ui-donut__chart__label"></div>
+                                <Card className={className}>
+                                    <CardContent>
+                                        <Stack spacing="small">
+                                            {
+                                                slices.map(data => (
+                                                    <Stack
+                                                        key={data.slug}
+                                                        orientation="row"
+                                                        alignItems="center"
+                                                        spacing="small"
+                                                    >
+                                                        <div
+                                                            className="ui-donut__chart__tooltip__identifier"
+                                                            style={{ background: data.color }}
+                                                        />
+                                                        {renderLabel(data)}
+
+                                                    </Stack>
+                                                ))
+                                            }
+                                        </Stack>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                            <Stack
+                                orientation="row"
+                                justifyContent="center"
+                                spacing="small"
+                                style={{ flexWrap: 'wrap' }}
+                            >
+                                {
+                                    mappedData
+                                        .sort((a, b) => b.value - a.value)
+                                        .map((item, i) =>
+                                            <div
+                                                key={i}
+                                                className="ui-donut__legend"
+                                                onClick={() => toggleVisibility(item)}
+                                            >
+                                                <div className="ui-donut__legend__square" style={{
+                                                    backgroundColor: item.visible ? item.color : palette.text.disabled,
+                                                }} />
+                                                <Typography noMargin color={
+                                                    item.visible ? 'text.secondary' : 'text.disabled'
+                                                }>
+                                                    {item.label}
+                                                </Typography>
+                                            </div>
+                                        )
+                                }
+                            </Stack>
+                        </>
+                    )
+                }
+            </Stack>
+        </>
     );
 }

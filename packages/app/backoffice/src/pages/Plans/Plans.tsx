@@ -37,6 +37,7 @@ export default function Plans() {
     const { filter, filtered, reset } = useFilter(plans);
 
     const [selectedPlanId, setSelectedPlanId] = useState<string>();
+    const [currentSearch, setCurrentSearch] = useState('');
     const [loadingList, setLoadingList] = useState(false);
 
     const selectedPlan = useMemo(() => {
@@ -51,6 +52,8 @@ export default function Plans() {
             change: (form) => {
                 const { name } = form.values;
 
+                if (currentSearch === name) { return; }
+
                 debounce.delay(() => {
                     setLoadingList(true);
 
@@ -59,6 +62,8 @@ export default function Plans() {
                     } else {
                         filter((user) => slug(user.name).includes(slug(name)));
                     }
+
+                    setCurrentSearch(name);
 
                     setTimeout(() => { setLoadingList(false); }, 1000);
                 }, 500);
@@ -90,7 +95,7 @@ export default function Plans() {
         >
 
             <Stack>
-                <Grid xl={2} lg={3} md={8} sm={12}>
+                <Grid xl={3} lg={4} md={6} sm={12}>
                     <GridItem>
                         <Form formGroup={formGroup}>
                             <Control
@@ -139,7 +144,7 @@ export default function Plans() {
                 }
                 {
                     !loadingList && Boolean(filtered.length) && (
-                        <Grid xl={2} lg={3} md={4} sm={12}>
+                        <Grid xl={3} lg={4} md={6} sm={12}>
                             {
                                 orderByIndex(filtered, 'id', planPriorityOrder)
                                     .map((plan, i) => (

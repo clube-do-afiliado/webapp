@@ -35,7 +35,7 @@
 
         height: 100vh;
 
-        @include for-md {
+        @include for-sm {
             width: 100%;
         }
 

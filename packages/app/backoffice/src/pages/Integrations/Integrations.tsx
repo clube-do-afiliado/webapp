@@ -36,7 +36,7 @@ export default function Plans() {
     const { filter, filtered, reset } = useFilter(integrations);
 
     const [loadingList, setLoadingList] = useState(false);
-
+    const [currentSearch, setCurrentSearch] = useState('');
     const [selectedIntegrationId, setSelectedIntegrationId] = useState<string>();
 
     const selectedIntegration = useMemo(() => {
@@ -51,6 +51,8 @@ export default function Plans() {
             change: (form) => {
                 const { name } = form.values;
 
+                if (currentSearch === name) { return; }
+
                 debounce.delay(() => {
                     setLoadingList(true);
 
@@ -59,6 +61,8 @@ export default function Plans() {
                     } else {
                         filter((user) => slug(user.name).includes(slug(name)));
                     }
+
+                    setCurrentSearch(name);
 
                     setTimeout(() => { setLoadingList(false); }, 500);
                 }, 500);

@@ -56,6 +56,7 @@ function Drawer({
                     <div className="close-button">
                         <ButtonIcon
                             onClick={onClose}
+                            color="text.primary"
                             aria-label="Fechar"
                             data-testid="drawer-close-button"
                         >

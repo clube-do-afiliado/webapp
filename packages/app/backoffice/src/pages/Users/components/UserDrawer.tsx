@@ -9,13 +9,17 @@ import Divider from '@cda/ui/components/Divider';
 import { useModal } from '@cda/ui/components/Modal';
 import Typography from '@cda/ui/components/Typography';
 import ButtonIcon from '@cda/ui/components/ButtonIcon';
+import { Card, CardContent } from '@cda/ui/components/Card';
 import { Drawer, DrawerContent, DrawerFooter, HelperDrawerProps } from '@cda/ui/components/Drawer';
 
 import type { Plan } from '@cda/services/plans';
 import type { UserData } from '@cda/services/user';
 
 import { useAuth } from '@cda/common/Auth';
+import { useSites } from '@cda/common/Sites';
 import { PlanChip, usePlans } from '@cda/common/Plans';
+
+import { url } from '@/services/core';
 
 import FormUserModal from './FormUserModal';
 import DeleteUserModal from './StatusUserModal';
@@ -40,12 +44,23 @@ export default function UserDrawer({ isOpen, user, onToggleDrawer }: HelperDrawe
     const [openStatusModal, toggleStatusModal] = useModal();
 
     const { sendMailToResetPassword } = useAuth();
+    const { getUserSites, userSites } = useSites();
 
     const isActive = useMemo(() => user?.status === 'active', [user]);
+
+    useEffect(() => {
+        if (!user) { return; }
+
+        getUserSites(user.id);
+    }, [user]);
 
     const handleResetPassword = () => {
         sendMailToResetPassword(user?.email as string)
             .then(onToggleDrawer);
+    };
+
+    const goToStore = (siteSlug: string) => {
+        window.open(`${url.store}/${siteSlug}/produtos`, '_blank');
     };
 
     return (
@@ -75,13 +90,13 @@ export default function UserDrawer({ isOpen, user, onToggleDrawer }: HelperDrawe
                                         alignItems="center"
                                         justifyContent="flex-end"
                                     >
-                                        <ButtonIcon onClick={handleResetPassword}>
+                                        <ButtonIcon color="text.secondary" onClick={handleResetPassword}>
                                             <Icon name="envelope-shield" />
                                         </ButtonIcon>
-                                        <ButtonIcon onClick={toggleEditModal}>
+                                        <ButtonIcon color="text.secondary" onClick={toggleEditModal}>
                                             <Icon name="edit" />
                                         </ButtonIcon>
-                                        <ButtonIcon>
+                                        <ButtonIcon color="text.secondary">
                                             <Icon name="cog" />
                                         </ButtonIcon>
                                     </Stack>
@@ -127,9 +142,38 @@ export default function UserDrawer({ isOpen, user, onToggleDrawer }: HelperDrawe
                                 }
                             </Stack>
                             <Divider />
-                            <div>
-                                store list
-                            </div>
+                            <Stack spacing="small">
+                                <Typography noMargin variant="body1">
+                                    Sites:
+                                </Typography>
+                                {
+                                    userSites.map(site => (
+                                        <Card key={site.id}>
+                                            <CardContent>
+                                                <Stack orientation="row" justifyContent="space-between">
+                                                    <Stack
+                                                        orientation="row"
+                                                        alignItems="center"
+                                                        style={{ width: '80%' }}
+                                                    >
+                                                        <Avatar icon={<Icon name="store" />} />
+                                                        <Typography noMargin variant="body1">
+                                                            {site.information.name}
+                                                        </Typography>
+                                                    </Stack>
+                                                    <Button
+                                                        size="small"
+                                                        variant="text"
+                                                        onClick={() => goToStore(site.slug)}
+                                                    >
+                                                        Ver loja
+                                                    </Button>
+                                                </Stack>
+                                            </CardContent>
+                                        </Card>
+                                    ))
+                                }
+                            </Stack>
                         </Stack>
                     </DrawerContent>
                 }

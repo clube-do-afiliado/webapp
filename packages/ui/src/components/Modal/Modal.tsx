@@ -71,7 +71,7 @@ function Modal({ children, title, subtitle, isOpen, onClose, ...props }: ModalPr
                                     {title}
                                     {subtitle}
                                 </div>
-                                <ButtonIcon onClick={onClose}>
+                                <ButtonIcon color="text.primary" onClick={onClose}>
                                     <Icon name="times" color="text.secondary" />
                                 </ButtonIcon>
                             </Stack>

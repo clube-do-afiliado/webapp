@@ -6,6 +6,7 @@ import Stack from '@/components/Stack';
 import Typography from '@/components/Typography';
 
 import Avatar from './Avatar';
+import Icon from '../Icon';
 
 const meta: Meta<typeof Avatar> = {
     title: 'components/Avatar',
@@ -21,6 +22,7 @@ export const Variants: StoryObj<typeof Avatar> = {
                 />
                 <Avatar name="Saul Goodman" />
                 <Avatar />
+                <Avatar icon={<Icon name="anchor" />} />
             </Stack>
         );
     }

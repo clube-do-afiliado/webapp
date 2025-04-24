@@ -1,4 +1,6 @@
-import { Metadata } from 'next';
+'use server';
+
+import type { Metadata } from 'next';
 
 import type { Site } from '@cda/services/sites';
 import type { Product } from '@cda/services/products';
@@ -35,8 +37,6 @@ export async function generateMetadata({ params }: NextPageProps<{ siteSlug: str
 
     const { site } = await getData(siteSlug);
 
-    console.log('SITE', site);
-
     return {
         title: site.information.title,
         description: site.information.description,
@@ -58,7 +58,7 @@ export default async function Page({ params }: NextPageProps<{ siteSlug: string 
 
     return (
         <BaseProviders site={site}>
-            <div className="product-page">
+            <div className="products-page">
                 <Header site={site} />
                 <Content title="Produtos">
                     <Products

@@ -1,15 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import Page from '@cda/ui/layout/Page';
 import { debounce } from '@cda/ui/utils';
-import { useFilter } from '@cda/ui/hooks';
 import Icon from '@cda/ui/components/Icon';
 import Slide from '@cda/ui/animations/Slide';
-import Input from '@cda/ui/components/Input';
 import Stack from '@cda/ui/components/Stack';
-import Button from '@cda/ui/components/Button';
+import Input from '@cda/ui/components/Input';
+import useFilter from '@cda/ui/hooks/useFilter';
 import Loading from '@cda/ui/components/Loading';
-import { useModal } from '@cda/ui/components/Modal';
 import { useDrawer } from '@cda/ui/components/Drawer';
 import ButtonIcon from '@cda/ui/components/ButtonIcon';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
@@ -17,30 +15,27 @@ import { Form, Control, FormControl, useForm } from '@cda/ui/components/Form';
 
 import { slug } from '@cda/toolkit/string';
 
-import type { UserData } from '@cda/services/user';
+import { Site } from '@cda/services/sites';
 
+import { useSites } from '@cda/common/Sites';
 import { EmptyContent } from '@cda/common/EmptyContent';
 
 import { release } from '@/services/core';
 
-import useUsers from './useUsers';
-import UserCard from './components/UserCard';
-import UserDrawer from './components/UserDrawer';
-import CreateUserModal from './components/FormUserModal';
+import StoreCard from './components/StoreCard';
+import StoreDrawer from './components/StoreDrawer';
 
-export default function Users() {
-    const [open, toggle] = useModal();
-    const [openUserDrawer, toggleUserDrawer] = useDrawer();
+export default function Stores() {
+    const [openDrawer, toggleDrawer] = useDrawer();
 
-    const { users, getUsers } = useUsers();
+    const { sites } = useSites();
+    const { filter, filtered, reset } = useFilter(sites);
 
-    const { filter, filtered, reset } = useFilter(users);
-
-    const [selectedUserId, setSelectedUserId] = useState<string>();
+    const [loadingList, setLoadingList] = useState(false);
     const [currentSearch, setCurrentSearch] = useState('');
-    const [loadingList, setLoadingList] = useState(true);
+    const [selectedStoreId, setSelectedStoreId] = useState<string>();
 
-    const selectedUser = useMemo(() => users.find(u => u.id === selectedUserId), [users, selectedUserId]);
+    const selectedStore = useMemo(() => sites.find(r => r.id === selectedStoreId), [sites, selectedStoreId]);
 
     const [formGroup] = useForm<{ name: string; }>({
         form: {
@@ -50,6 +45,8 @@ export default function Users() {
             change: (form) => {
                 const { name } = form.values;
 
+                console.log({ currentSearch, name });
+
                 if (currentSearch === name) { return; }
 
                 debounce.delay(() => {
@@ -58,7 +55,7 @@ export default function Users() {
                     if (name.length < 4) {
                         reset();
                     } else {
-                        filter((user) => slug(user.name).includes(slug(name)));
+                        filter((site) => slug(site.information.name).includes(slug(name)));
                     }
 
                     setCurrentSearch(name);
@@ -69,29 +66,19 @@ export default function Users() {
         }
     }, []);
 
-    useEffect(() => { getUsers().then(() => setLoadingList(false)); }, []);
-
     const resetForm = () => { formGroup.setValues({ name: '' }); };
 
-    const handleOpenDrawer = (user: UserData) => {
-        setSelectedUserId(user.id);
-        toggleUserDrawer();
+    const handleSelectStore = (site: Site) => {
+        console.log(site);
+        setSelectedStoreId(site.id);
+        toggleDrawer();
     };
 
     return (
         <Page
-            title="Usuários"
-            subtitle="Aqui você pode visualizar e gerenciar todos os usuários"
+            title="Sites"
+            subtitle="Aqui você pode visualizar e gerenciar todas os sites"
             release={release}
-            action={
-                <Button
-                    variant="contained"
-                    startIcon={<Icon name="plus" />}
-                    onClick={toggle}
-                >
-                    Adicionar usuário
-                </Button>
-            }
         >
             <Stack>
                 <Grid xl={3} lg={4} md={6} sm={12}>
@@ -104,7 +91,7 @@ export default function Users() {
                                     <Input
                                         fullWidth
                                         type="text"
-                                        placeholder="Nome do usuário"
+                                        placeholder="Nome da loja"
                                         startIcon={<Icon name="search" />}
                                         endIcon={
                                             control.value && (
@@ -138,38 +125,31 @@ export default function Users() {
                     !loadingList && Boolean(filtered.length) && (
                         <Grid xl={3} lg={4} md={6} sm={12}>
                             {
-                                filtered.map((user, i) => (
-                                    <GridItem key={user.id}  >
+                                filtered.map((site, i) => (
+                                    <GridItem key={site.id}>
                                         <Slide enter delay={(i + 1) * 100}>
-                                            <UserCard
-                                                key={user.id}
-                                                user={user}
-                                                onClick={handleOpenDrawer}
-                                            />
+                                            <StoreCard site={site} onClick={handleSelectStore} />
                                         </Slide>
                                     </GridItem>
                                 ))
                             }
-                        </Grid>)
+                        </Grid>
+                    )
                 }
+                {
+                    !loadingList && !filtered.length && (
+                        <EmptyContent
+                            icon="constructor"
+                            message="Nenhuma role foi encontrada"
+                        />
+                    )
+                }
+                <StoreDrawer
+                    site={selectedStore}
+                    isOpen={openDrawer}
+                    onToggleDrawer={toggleDrawer}
+                />
             </Stack>
-            {
-                !loadingList && !filtered.length && (
-                    <EmptyContent
-                        message="Nenhum usuário encontrado"
-                        icon="user-exclamation"
-                    />
-                )
-            }
-            <UserDrawer
-                user={selectedUser}
-                isOpen={openUserDrawer}
-                onToggleDrawer={toggleUserDrawer}
-            />
-            <CreateUserModal
-                isOpen={open}
-                onToggleModal={toggle}
-            />
-        </Page>
+        </Page >
     );
 }

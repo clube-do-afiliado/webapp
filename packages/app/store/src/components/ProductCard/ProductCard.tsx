@@ -17,9 +17,7 @@ export default function ProductCard({ site, product, integrations }: ProductCard
     const integration = integrations.find(i => i.id === product.integration) as Integration;
 
     return (
-        <article
-            className="product-card"
-        >
+        <article className="product-card">
             <div className="product-header">
                 {
                     Boolean(product.originalPrice) && (

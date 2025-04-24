@@ -57,7 +57,7 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
         }
     }, [site]);
 
-    const handleGoToSite = () => { window.open(siteUrl, '_blank'); };
+    const handleGoToSite = () => { window.open(`${siteUrl}/produtos`, '_blank'); };
 
     return (
         <div ref={ref}>

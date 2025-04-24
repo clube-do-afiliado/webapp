@@ -16,6 +16,7 @@ import Typography from '@cda/ui/components/Typography';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
 import { Card, CardContent } from '@cda/ui/components/Card';
 import { Form, Control, FormControl, useForm } from '@cda/ui/components/Form';
+import Avatar from '@cda/ui/components/Avatar';
 
 import { slug } from '@cda/toolkit/string';
 
@@ -37,6 +38,7 @@ export default function Roles() {
     const { filter, filtered, reset } = useFilter(roles);
 
     const [loadingList, setLoadingList] = useState(false);
+    const [currentSearch, setCurrentSearch] = useState('');
     const [selectedRoleId, setSelectedRoleId] = useState<string>();
 
     const selectedRole = useMemo(() => roles.find(r => r.id === selectedRoleId), [roles, selectedRoleId]);
@@ -49,6 +51,8 @@ export default function Roles() {
             change: (form) => {
                 const { name } = form.values;
 
+                if (currentSearch === name) { return; }
+
                 debounce.delay(() => {
                     setLoadingList(true);
 
@@ -57,6 +61,8 @@ export default function Roles() {
                     } else {
                         filter((user) => slug(user.name).includes(slug(name)));
                     }
+
+                    setCurrentSearch(name);
 
                     setTimeout(() => { setLoadingList(false); }, 1000);
                 }, 500);
@@ -87,7 +93,7 @@ export default function Roles() {
             }
         >
             <Stack>
-                <Grid xl={2} lg={3} md={4} sm={12}>
+                <Grid xl={3} lg={4} md={6} sm={12}>
                     <GridItem>
                         <Form formGroup={formGroup}>
                             <Control
@@ -129,16 +135,19 @@ export default function Roles() {
                 }
                 {
                     !loadingList && Boolean(filtered.length) && (
-                        <Grid xl={2} lg={3} md={4} sm={12}>
+                        <Grid xl={3} lg={4} md={6} sm={12}>
                             {
                                 filtered.map((role, i) => (
                                     <GridItem key={role.id}>
                                         <Slide enter delay={(i + 1) * 100}>
                                             <Card onClick={() => handleSelectRole(role)}>
                                                 <CardContent>
-                                                    <Typography noMargin variant="body2" color="text.secondary">
-                                                        {role.name}
-                                                    </Typography>
+                                                    <Stack orientation="row" alignItems="center">
+                                                        <Avatar icon={<Icon name="shield" />} />
+                                                        <Typography noMargin variant="body1" color="text.secondary">
+                                                            {role.name}
+                                                        </Typography>
+                                                    </Stack>
                                                 </CardContent>
                                             </Card>
                                         </Slide>

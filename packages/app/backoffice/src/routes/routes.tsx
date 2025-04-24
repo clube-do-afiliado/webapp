@@ -4,6 +4,7 @@ import App from '@/App';
 import { RolesPage } from '@/pages/Roles';
 import { PlansPage } from '@/pages/Plans';
 import { UsersPage } from '@/pages/Users';
+import { StoresPage } from '@/pages/Stores';
 import { IntegrationsPage } from '@/pages/Integrations';
 
 export const router = createBrowserRouter([
@@ -43,6 +44,13 @@ export const router = createBrowserRouter([
                 loader: () => document.title = 'Clube do afiliado - Integrações',
                 element: (
                     <IntegrationsPage />
+                ),
+            },
+            {
+                path: '/stores',
+                loader: () => document.title = 'Clube do afiliado - Lojas',
+                element: (
+                    <StoresPage />
                 ),
             },
             {

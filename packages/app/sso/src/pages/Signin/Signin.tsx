@@ -96,7 +96,31 @@ function EmailAndPasswordForm() {
                 >
                     Entrar
                 </Button>
-                <Divider />
+                <Typography
+                    noMargin
+                    color="text.secondary"
+                    textAlign="center"
+                >
+                    ou
+                </Typography>
+                <Button
+                    variant="outlined"
+                    type="button"
+                    startIcon={
+                        <img
+                            src="https://cdn.clubedoafiliado.com/assets/icons/google.svg"
+                            width={15}
+                        />
+                    }
+                    sx={{ color: ({ text }) => text.secondary }}
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                >
+                    Entrar com o Google
+                </Button>
                 <Stack orientation="row" justifyContent="center">
                     <Typography variant="body2" style={{ textAlign: 'center' }}>Não possui conta?</Typography>
                     <Button

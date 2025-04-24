@@ -79,8 +79,6 @@ export default function UsersProvider({ children }: PropsWithChildren) {
     };
 
     const updateUser = async (data: UserData) => {
-        console.log('DATA', data);
-
         return userServices.update(data)
             .then(() => setUsers(prev => prev.map(r => r.id === data.id ? data : r)))
             .then(() => addAlert({ color: 'success', message: `O usuário "${data.name}" foi editado` }))

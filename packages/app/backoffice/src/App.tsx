@@ -6,14 +6,23 @@ import { createTheme, ThemeProvider, useTheme } from '@cda/ui/theme';
 
 import logger from '@cda/toolkit/logger';
 
+import { SitesProvider, useSites } from '@cda/common/Sites';
 import { AuthProvider, useAuth } from '@cda/common/Auth';
-import { AccessControlProvider } from '@cda/common/AccessControl';
 import { PlansProvider, usePlans } from '@cda/common/Plans';
-import { IntegrationsProvider, useIntegrations } from '@cda/common/Integrations';
 import { RolesProvider, useRoles } from '@cda/common/Roles';
+import { AccessControlProvider } from '@cda/common/AccessControl';
+import { IntegrationsProvider, useIntegrations } from '@cda/common/Integrations';
 
 import Layout from '@/layout';
-import { url, authServices, userServices, rolesServices, plansServices, integrationsServices } from '@/services/core';
+import {
+    url,
+    authServices,
+    userServices,
+    rolesServices,
+    plansServices,
+    sitesServices,
+    integrationsServices
+} from '@/services/core';
 
 import { UsersProvider } from './pages/Users';
 
@@ -44,12 +53,13 @@ function Content() {
 
     const { getPlans } = usePlans();
     const { getRoles } = useRoles();
+    const { getSites } = useSites();
     const { getIntegrations } = useIntegrations();
 
     useEffect(() => {
         setFavicon(palette.primary.main);
 
-        Promise.all([getIntegrations(), getPlans(), getRoles()])
+        Promise.all([getIntegrations(), getPlans(), getRoles(), getSites()])
             .then(() => logger.log('Informações base carregadas'));
     }, []);
 
@@ -72,7 +82,9 @@ function Providers({ children }: PropsWithChildren) {
             <PlansProvider plansServices={plansServices}>
                 <IntegrationsProvider integrationsServices={integrationsServices}>
                     <UsersProvider>
-                        {children}
+                        <SitesProvider sitesServices={sitesServices}>
+                            {children}
+                        </SitesProvider>
                     </UsersProvider>
                 </IntegrationsProvider>
             </PlansProvider>

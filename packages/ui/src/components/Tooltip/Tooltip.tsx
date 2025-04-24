@@ -1,4 +1,4 @@
-import { cloneElement, HtmlHTMLAttributes, useMemo, useState } from 'react';
+import { cloneElement, CSSProperties, HtmlHTMLAttributes, useMemo, useState } from 'react';
 
 import { uuid } from '@cda/toolkit/uuid';
 
@@ -10,8 +10,18 @@ import './Tooltip.scss';
 type TooltipCoordinate = { top?: number; left?: number; };
 type Direction = 'top' | 'right' | 'bottom' | 'left';
 
-interface TooltipProps { children: React.JSX.Element; direction?: Direction; label: string | React.JSX.Element; }
-export default function Tooltip({ children, label, direction = 'bottom' }: TooltipProps) {
+interface TooltipProps {
+    direction?: Direction;
+    width?: CSSProperties['width'];
+    children: React.JSX.Element;
+    label: string | React.JSX.Element;
+}
+export default function Tooltip({
+    children,
+    label,
+    width = 'max-content',
+    direction = 'bottom'
+}: TooltipProps) {
     const { theme: { spacing } } = useTheme();
     const [open, setOpen] = useState(false);
     const [animate, setAnimate] = useState(false);
@@ -90,6 +100,7 @@ export default function Tooltip({ children, label, direction = 'bottom' }: Toolt
             {renderChildren()}
             <span id={id} className={className} style={{
                 ...coordinate,
+                maxWidth: width,
                 display: open ? 'block' : 'none',
             }}>
                 {label}

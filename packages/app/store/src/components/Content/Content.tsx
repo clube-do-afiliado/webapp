@@ -2,11 +2,11 @@ import type { PropsWithChildren } from 'react';
 
 import './Content.scss';
 
-export default function Content({ children, title }: PropsWithChildren<{ title: string; }>) {
+export default function Content({ children, title }: PropsWithChildren<{ title?: string; }>) {
     return (
         <main className="main">
             <div className="container">
-                <h1>{title}</h1>
+                {title && <h1>{title}</h1>}
                 {children}
             </div>
         </main>
