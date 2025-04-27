@@ -25,6 +25,7 @@ export interface AuthContextConfig {
     createByAuth: (data: BasicUser) => Promise<void>;
     createByBackoffice: (data: Pick<UserData, 'name' | 'email' | 'roles'>) => Promise<UserData>;
 
+    loginWithGoogle: () => Promise<void>;
     loginWithPassword: (data: Pick<BasicUser, 'email' | 'password'>) => Promise<void>;
 
     confirmPassword: (password: string) => Promise<void>;
@@ -49,6 +50,7 @@ export const AuthContext = createContext<AuthContextConfig>({
     createByBackoffice: async () => Promise.resolve({} as UserData),
 
     loginWithPassword: async () => Promise.resolve(),
+    loginWithGoogle: async () => Promise.resolve(),
 
     confirmPassword: async () => Promise.resolve(),
 
@@ -81,6 +83,7 @@ export default function AuthProvider({
         logout: async () => logout(),
 
         loginWithPassword: async (data) => loginWithPassword(data),
+        loginWithGoogle: async () => loginWithGoogle(),
 
         createByAuth: async (data) => createByAuth(data),
         createByBackoffice: async (data) => createByBackoffice(data),
@@ -140,6 +143,58 @@ export default function AuthProvider({
             .then(user => { redirect(user as UserData); })
             .catch((e) => {
                 const { code } = e;
+
+                addAlert({
+                    color: 'error',
+                    message: FIREBASE[code] || 'Erro ao fazer login',
+                    icon: <Icon name="error" />,
+                });
+
+                logger.info('Error on login:', { e });
+            });
+    };
+
+    const loginWithGoogle = async () => {
+        if (!sitesServices) { throw new Error('sitesServices is not defined'); }
+
+        return authServices.loginWithGoogle()
+            .then(user => {
+                logger.info('usuário criado no autenticador!', user);
+                return user;
+            })
+            .then(async user => {
+                if (!user) { throw new Error('Erro ao autenticar'); }
+
+                const userByEmail = await usersServices.getByEmail(user.email);
+
+                if (userByEmail) {
+                    redirect(userByEmail as UserData);
+
+                    Promise.reject({ interrupted: true });
+                }
+
+                return user;
+            })
+            .then(user => usersServices.createByAuth({
+                id: user?.user_id as string,
+                email: user?.email || '',
+                name: ''
+            }))
+            .then(user => {
+                logger.info('usuario criado!', user);
+                return user;
+            })
+            .then(async user => {
+                await sitesServices.create(generateDefaultSite(`Loja ${user.name || user.email}`, user.id))
+                    .then(() => logger.log('loja criada!'));
+
+                return user;
+            })
+            .then(user => { redirect(user as UserData); })
+            .catch((e) => {
+                const { code, interrupted } = e;
+
+                if (!interrupted) { return; }
 
                 addAlert({
                     color: 'error',

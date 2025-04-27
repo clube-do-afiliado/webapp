@@ -85,22 +85,22 @@ export default function PlansProvider({ children, plansServices }: PropsWithChil
     const deletePlan = async (id: string) => {
         return plansServices.delete(id)
             .then(() => setPlans(prev => prev.filter(r => r.id !== id)))
-            .then(() => addAlert({ color: 'success', message: 'Integração deletada com sucesso' }))
-            .catch(() => addAlert({ color: 'error', message: 'Não foi possível deletar a integração' }));
+            .then(() => addAlert({ color: 'success', message: 'Plano deletado com sucesso' }))
+            .catch(() => addAlert({ color: 'error', message: 'Não foi possível deletar o plano' }));
     };
 
     const createPlan = async (data: Omit<Plan, 'id'>) => {
         return plansServices.create(data)
             .then(res => setPlans((prev) => ([...prev, res])))
-            .then(() => addAlert({ color: 'success', message: `"${data.name}" foi adicionada` }))
-            .catch(() => addAlert({ color: 'error', message: 'Não foi possível criar a role' }));
+            .then(() => addAlert({ color: 'success', message: `"${data.name}" foi adicionado` }))
+            .catch(() => addAlert({ color: 'error', message: 'Não foi possível criar o plano' }));
     };
 
     const updatePlan = async (data: Plan) => {
         return plansServices.update(data)
             .then(() => setPlans(prev => prev.map(r => r.id === data.id ? data : r)))
-            .then(() => addAlert({ color: 'success', message: `A role "${data.name}" foi editada` }))
-            .then(() => addAlert({ color: 'success', message: 'Não foi possível editar a role' }));
+            .then(() => addAlert({ color: 'success', message: `O plano "${data.name}" foi editado` }))
+            .catch(() => addAlert({ color: 'error', message: 'Não foi possível editar o plano' }));
     };
 
     return (

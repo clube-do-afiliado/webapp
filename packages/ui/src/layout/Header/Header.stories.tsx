@@ -33,7 +33,6 @@ export const Template: StoryObj<typeof Header> = {
                     picture: 'https://robohash.org/john-doe'
                 }}
                 onUpdateMode={toggleTheme}
-                onProfile={() => console.log('Profile')}
                 onStartGuide={() => console.log('Start guide')}
             />
         );

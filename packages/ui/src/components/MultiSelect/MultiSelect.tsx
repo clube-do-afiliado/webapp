@@ -57,7 +57,7 @@ export default function MultiSelect<T extends Record<string, any>>({
     renderOption,
 }: MultiSelectProps<T>) {
     const id = ++ID_SELECT;
-    const [open, el, ref, toggle] = useMenu();
+    const [open, el, toggle] = useMenu();
 
     const [_selecteds, setSelecteds] = useState<T[]>(selecteds);
 
@@ -137,7 +137,7 @@ export default function MultiSelect<T extends Record<string, any>>({
     };
 
     return (
-        <div ref={ref} className={containerClss}>
+        <div className={containerClss}>
             {label && <label className={labelClss}>{label} {required && '*'}</label>}
             <div className={className} onClick={(e) => toggle(e as any)}>
                 <div className="ui-multiselect__chips">

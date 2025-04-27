@@ -22,12 +22,14 @@ export default class AuthServices {
     get access_token() { return this.cookies.get('access_token'); }
     set access_token(token: string) { this.cookies.set('access_token', token); }
 
-    public async login() {
+    public async loginWithGoogle() {
         if (!this.methods.googleAuth) { return; }
 
         return this.methods.googleAuth()
             .then(r => {
                 this.access_token = r.user.accessToken;
+
+                return decode<FirebaseUser>(r._tokenResponse.idToken);
             });
     }
 

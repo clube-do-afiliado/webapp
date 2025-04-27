@@ -71,7 +71,7 @@ export default function ProductRow({ product, onToggleDrawer }: ProductRowProps)
                 />
             </TableCell>
             <TableCell align="center">
-                <ButtonIcon onClick={() => onToggleDrawer(product)}>
+                <ButtonIcon color="text.secondary" onClick={() => onToggleDrawer(product)}>
                     <Icon name="pen" />
                 </ButtonIcon>
             </TableCell>

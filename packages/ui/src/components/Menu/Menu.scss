@@ -50,5 +50,15 @@
         &:hover {
             background-color: var(--divider);
         }
+
+        @each $color in $colors {
+            &--#{$color} {
+                color: var(--#{$color});
+
+                &:hover {
+                    background-color: var(--#{$color}-opacity);
+                }
+            }
+        }
     }
 }

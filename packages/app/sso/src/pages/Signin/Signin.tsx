@@ -25,7 +25,7 @@ function EmailAndPasswordForm() {
     const { email } = getParams<{ email: string }>();
 
     const navigate = useNavigate();
-    const { loginWithPassword } = useAuth();
+    const { loginWithPassword, loginWithGoogle } = useAuth();
 
     const [loading, setLoading] = useState(false);
     const [type, setType] = useState<'text' | 'password'>('password');
@@ -51,6 +51,10 @@ function EmailAndPasswordForm() {
     const toggleType = () => { setType(prev => prev === 'text' ? 'password' : 'text'); };
 
     const goToSignup = () => { navigate('/signup'); };
+
+    const handleLoginWithGoogle = async () => {
+        loginWithGoogle();
+    };
 
     return (
         <Form formGroup={formGroup}>
@@ -117,6 +121,7 @@ function EmailAndPasswordForm() {
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}
+                    onClick={handleLoginWithGoogle}
                 >
                     Entrar com o Google
                 </Button>

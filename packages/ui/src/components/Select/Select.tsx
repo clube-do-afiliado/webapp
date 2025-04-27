@@ -50,7 +50,7 @@ function Select({
             child.props.value === props.value)?.props.children || '';
     }, [props.value]);
 
-    const [open, el, ref, toggle] = useMenu();
+    const [open, el, toggle] = useMenu();
 
     const containerClss = joinClass([
         'ui-input-container',
@@ -108,13 +108,11 @@ function Select({
                     {startIcon && renderIcon(startIcon as React.JSX.Element)}
                 </div>
                 <input {...props} readOnly type="text" value={newValue} disabled={disabled} />
-                <div ref={ref}>
-                    <Icon
-                        name="angle-down"
-                        color="text.secondary"
-                        className="ui-input__icon ui-input__icon--margin-left"
-                    />
-                </div>
+                <Icon
+                    name="angle-down"
+                    color="text.secondary"
+                    className="ui-input__icon ui-input__icon--margin-left"
+                />
             </button>
             <Menu
                 direction="center"

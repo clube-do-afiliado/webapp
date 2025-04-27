@@ -55,8 +55,6 @@ export default class UserServices {
     }
 
     async createByAuth(user: Pick<UserData, 'email' | 'name' | 'id'>) {
-        console.log('createByAuth', user);
-
         const { email } = user;
 
         const newUser: UserData = {

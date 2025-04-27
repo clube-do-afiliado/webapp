@@ -8,15 +8,18 @@ import Slide from '@cda/ui/animations/Slide';
 import Stack from '@cda/ui/components/Stack';
 import Content from '@cda/ui/layout/Content';
 import Loading from '@cda/ui/components/Loading';
-import { Sidebar, SidebarButton } from '@cda/ui/layout/Sidebar';
-import { createTheme, useTheme, themeDefaultLight, themeDefaultDark } from '@cda/ui/theme';
 import Tooltip from '@cda/ui/components/Tooltip';
+import { Sidebar, SidebarButton } from '@cda/ui/layout/Sidebar';
+import { Menu, MenuButton, useMenu } from '@cda/ui/components';
+import { createTheme, useTheme, themeDefaultLight, themeDefaultDark } from '@cda/ui/theme';
 
 import { useAuth } from '@cda/common/Auth';
 
 interface LayoutProps { children: React.JSX.Element; }
 export default function Layout({ children }: React.PropsWithChildren<LayoutProps>) {
     const navigate = useNavigate();
+
+    const [open, el, toggle] = useMenu();
     const { theme, updateTheme } = useTheme();
 
     const { user, logout } = useAuth();
@@ -49,8 +52,27 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                         picture: user?.picture || '',
                     }}
                     onUpdateMode={toggleTheme}
-                    onProfile={() => console.log('Profile')}
+                    onProfile={toggle}
                 />
+                <Menu
+                    open={open}
+                    anchorEl={el}
+                    onClose={toggle}
+                    direction="right"
+                    width="fit-content"
+                >
+                    <MenuButton
+                        justifyContent="flex-start"
+                        label="Minha conta"
+                        icon={<Icon name="user" />}
+                    />
+                    <MenuButton
+                        label="Sair"
+                        justifyContent="flex-start"
+                        color="error"
+                        icon={<Icon color="error.main" name="signout" />}
+                    />
+                </Menu>
             </Slide>
             <Stack orientation="row" nogap>
                 <Slide enter direction="left" timeout={.3}>

@@ -20,7 +20,7 @@ import ProductDrawer from './components/ProductDrawer';
 import FormFindProductModal from './components/FormFindProductModal';
 
 export default function Products() {
-    const [open, el, , toggle] = useMenu();
+    const [open, el, toggle] = useMenu();
     const [openDrawer, toggleDrawer] = useDrawer();
     const [openFindModal, toggleFindModal] = useModal();
 
@@ -97,8 +97,8 @@ export default function Products() {
             {
                 !loading && !products.length && (
                     <EmptyContent
-                        icon="channel"
-                        message="Nenhuma integração foi encontrada"
+                        icon="box"
+                        message="Nenhum produto foi encontrado"
                     />
                 )
             }

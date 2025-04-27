@@ -14,8 +14,8 @@ import { Product } from '@cda/services/products';
 
 import { useProducts } from '@cda/common/Products';
 
-import ProductInfoForm from './ProductInfoForm';
 import useProductForm from './useProductForm';
+import ProductInfoForm from './ProductInfoForm';
 import DeleteProductModal from '../DeleteProductModal';
 
 import './ProductDrawer.scss';
@@ -55,7 +55,10 @@ export default function ProductDrawer({
                         <Stack orientation="column" spacing="medium">
                             <Stack orientation="row" justifyContent="space-between" alignItems="center">
                                 <Stack orientation="row" alignItems="center">
-                                    <Avatar src={formGroup.values.image} />
+                                    <Avatar
+                                        src={formGroup.values.image}
+                                        icon={<Icon name="shopping-basket" color="text.secondary" />}
+                                    />
                                     <Typography noMargin variant="h6" className="title">
                                         {formGroup.values.name}
                                     </Typography>

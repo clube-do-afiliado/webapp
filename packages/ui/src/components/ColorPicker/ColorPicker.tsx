@@ -32,7 +32,7 @@ export default function ColorPicker({
     const { theme: { palette } } = useTheme();
     const [color, setColor] = useState<string>(value as string);
 
-    const [open, el, ref, toggle] = useMenu();
+    const [open, el, toggle] = useMenu();
 
     const id = useMemo(() => uuid(), []);
 
@@ -90,7 +90,7 @@ export default function ColorPicker({
     };
 
     return (
-        <div ref={ref} className={containerClassName}>
+        <div className={containerClassName}>
             {label && <label className={labelClss}>{label} {props.required && '*'}</label>}
             <button type="button" onClick={toggle} className={colorPickerClassName}>
                 <div className="ui-color-picker__preview">

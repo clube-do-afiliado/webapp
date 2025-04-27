@@ -14,13 +14,11 @@ const meta: Meta<typeof Menu> = {
 
 export const Left: StoryObj<typeof Menu> = {
     render: () => {
-        const [open, el, ref, toggle] = useMenu();
+        const [open, el, toggle] = useMenu();
 
         return (
             <Stack alignItems="center">
-                <div ref={ref}>
-                    <Button onClick={toggle}>Toggle</Button>
-                </div>
+                <Button onClick={toggle}>Toggle</Button>
                 <Menu direction="left" anchorEl={el} open={open} onClose={toggle} width="fit-content">
                     <MenuButton label="Option 1" />
                     <MenuButton label="Option 2" />
@@ -33,13 +31,11 @@ export const Left: StoryObj<typeof Menu> = {
 
 export const Right: StoryObj<typeof Menu> = {
     render: () => {
-        const [open, el, ref, toggle] = useMenu();
+        const [open, el, toggle] = useMenu();
 
         return (
             <Stack alignItems="center">
-                <div ref={ref}>
-                    <Button onClick={toggle}>Toggle</Button>
-                </div>
+                <Button onClick={toggle}>Toggle</Button>
                 <Menu direction="right" anchorEl={el} open={open} onClose={toggle} width="fit-content">
                     <MenuButton label="Option 1" />
                     <MenuButton label="Option 2" />
@@ -52,13 +48,11 @@ export const Right: StoryObj<typeof Menu> = {
 
 export const Center: StoryObj<typeof Menu> = {
     render: () => {
-        const [open, el, ref, toggle] = useMenu();
+        const [open, el, toggle] = useMenu();
 
         return (
             <Stack alignItems="center">
-                <div ref={ref}>
-                    <Button onClick={toggle}>Toggle</Button>
-                </div>
+                <Button onClick={toggle}>Toggle</Button>
                 <Menu direction="center" anchorEl={el} open={open} onClose={toggle} width="fit-content">
                     <MenuButton label="Option 1" />
                     <MenuButton label="Option 2" />
@@ -71,13 +65,11 @@ export const Center: StoryObj<typeof Menu> = {
 
 export const SameWidthTheTarget: StoryObj<typeof Menu> = {
     render: () => {
-        const [open, el, ref, toggle] = useMenu();
+        const [open, el, toggle] = useMenu();
 
         return (
             <Stack alignItems="center">
-                <div ref={ref}>
-                    <Button onClick={toggle}>Toggle Menu</Button>
-                </div>
+                <Button onClick={toggle}>Toggle Menu</Button>
                 <Menu direction="center" anchorEl={el} open={open} onClose={toggle}>
                     <MenuButton label="Option 1" />
                     <MenuButton label="Option 2" />

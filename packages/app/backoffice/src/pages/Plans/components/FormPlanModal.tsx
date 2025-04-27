@@ -37,7 +37,7 @@ export default function FormPlanModal({ plan, isOpen, onToggleModal }: HelperMod
 
                 let promise!: Promise<void>;
 
-                if (plan) { promise = updatePlan({ ...plan, name, description, permissions }); }
+                if (plan) { promise = updatePlan({ ...plan, name, description, permissions, price, color }); }
                 if (!plan) { promise = createPlan({ name, description, permissions, price, color }); }
 
                 promise
