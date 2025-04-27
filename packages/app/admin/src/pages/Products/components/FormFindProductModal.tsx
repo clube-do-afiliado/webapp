@@ -39,18 +39,22 @@ export default function FormFindProductModal({ isOpen, onToggleModal, onGetProdu
                 const { url } = form.values;
 
                 serverFunctions.getFunction('getInfo', { url })
-                    .then(res => createProduct({
-                        name: res.title,
-                        price: res.price,
-                        slug: slug(res.title),
-                        integration: res.integration,
-                        originalPrice: res.originalPrice,
-                        storeId: userSites[0].id,
-                        images: [res.img],
-                        visible: false,
-                        url,
-                        tags: []
-                    }))
+                    .then(res => {
+                        console.log('res', res);
+
+                        return createProduct({
+                            name: res.title,
+                            price: res.price,
+                            slug: slug(res.title),
+                            integration: res.integration,
+                            originalPrice: res.originalPrice,
+                            storeId: userSites[0].id,
+                            images: [res.img],
+                            visible: false,
+                            url,
+                            tags: []
+                        });
+                    })
                     .then(res => onGetProduct(res))
                     .finally(() => setLoading(false));
             }

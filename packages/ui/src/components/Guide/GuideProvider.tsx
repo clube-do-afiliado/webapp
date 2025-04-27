@@ -1,3 +1,4 @@
+import React from 'react';
 import { useMemo, useState } from 'react';
 
 import GuideContext, { GuideContextData } from './GuideContext';
@@ -5,7 +6,7 @@ import type { StepData, StepLocalData } from './interface';
 
 import './Guide.scss';
 
-interface GuideProviderProps { children: JSX.Element; }
+interface GuideProviderProps { children: React.JSX.Element; }
 export default function GuideProvider({ children }: GuideProviderProps) {
     const [start, setStart] = useState(false);
     const [localSteps, setLocalSteps] = useState<StepLocalData[]>([]);

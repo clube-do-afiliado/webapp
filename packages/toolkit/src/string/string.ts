@@ -21,6 +21,8 @@ export function getInitials(name: string) {
 };
 
 export function slug(str: string) {
+    if (!str) { return ''; }
+
     return str.normalize('NFD')
         .trim().toLowerCase()
         .replace(/a-zA-Z0-9_.-+/g, '')
