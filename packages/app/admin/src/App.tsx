@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider, useTheme } from '@cda/ui/theme';
 
 import logger from '@cda/toolkit/logger';
 
+import { UserProvider } from '@cda/common/User';
 import { ProductsProvider } from '@cda/common/Products';
 import { AuthProvider, useAuth } from '@cda/common/Auth';
 import { SitesProvider, useSites } from '@cda/common/Sites';
@@ -34,7 +35,7 @@ function setFavicon(color: string) {
         document.getElementsByTagName('head')[0].appendChild(link);
     }
 
-    fetch('https://cdn.clubedoafiliado.com/assets/favicon/favicon.svg')
+    fetch('https://cdn.clubedoafiliado.com/assets/favicon/favicon-reversed.svg')
         .then((response) => response.text())
         .then((svgText) => {
             const updatedSVG = svgText.replace(/fill="[^"]*"/, `color="${color}"`);
@@ -78,15 +79,17 @@ function Content() {
 
 function Providers({ children }: PropsWithChildren) {
     return (
-        <PlansProvider plansServices={plansServices}>
-            <IntegrationsProvider integrationsServices={integrationsServices}>
-                <SitesProvider sitesServices={sitesServices}>
-                    <ProductsProvider productsServices={productsServices}>
-                        {children}
-                    </ProductsProvider>
-                </SitesProvider>
-            </IntegrationsProvider>
-        </PlansProvider>
+        <UserProvider userServices={userServices}>
+            <PlansProvider plansServices={plansServices}>
+                <IntegrationsProvider integrationsServices={integrationsServices}>
+                    <SitesProvider sitesServices={sitesServices}>
+                        <ProductsProvider productsServices={productsServices}>
+                            {children}
+                        </ProductsProvider>
+                    </SitesProvider>
+                </IntegrationsProvider>
+            </PlansProvider>
+        </UserProvider>
     );
 }
 

@@ -3,8 +3,9 @@ import { InputHTMLAttributes, useEffect, useMemo, useState } from 'react';
 import { uuid } from '@cda/toolkit/uuid';
 
 import { joinClass } from '../../utils';
-import createComponent from '../../core/createComponent';
 import type { Colors } from '../../theme';
+import createComponent from '../../core/createComponent';
+
 import './Switch.scss';
 
 interface SwitchProps extends InputHTMLAttributes<HTMLInputElement> {

@@ -140,7 +140,7 @@ export default function Users() {
                             {
                                 filtered.map((user, i) => (
                                     <GridItem key={user.id}  >
-                                        <Slide enter delay={(i + 1) * 100}>
+                                        <Slide enter delay={(i + 1) * 100} style={{ height: '100%' }}>
                                             <UserCard
                                                 key={user.id}
                                                 user={user}

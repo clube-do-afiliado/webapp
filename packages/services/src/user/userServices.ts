@@ -2,14 +2,14 @@ import { uuid } from '@cda/toolkit/uuid';
 import { decode } from '@cda/toolkit/jwt';
 import { Cookies, local } from '@cda/toolkit/dom';
 
-import db from '../db';
+import DB from '../db';
 import type { UserData, FirebaseUser } from './interface';
 
 export default class UserServices {
     private static PATH = 'users';
     private cookies = new Cookies();
 
-    constructor(private db: db, private urlToRedirect: string) { }
+    constructor(private db: DB, private urlToRedirect: string) { }
 
     get currentByToken(): { email: string } {
         try {

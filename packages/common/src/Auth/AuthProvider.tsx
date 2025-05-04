@@ -31,6 +31,8 @@ export interface AuthContextConfig {
     confirmPassword: (password: string) => Promise<void>;
 
     sendMailToResetPassword: (email: string) => Promise<void>;
+
+    updateAuthenticatedUser: (user: UserData) => Promise<void>;
 }
 
 const FIREBASE = {
@@ -55,6 +57,8 @@ export const AuthContext = createContext<AuthContextConfig>({
     confirmPassword: async () => Promise.resolve(),
 
     sendMailToResetPassword: async () => Promise.resolve(),
+
+    updateAuthenticatedUser: async () => Promise.resolve(),
 });
 
 interface AuthProviderProps {
@@ -91,6 +95,8 @@ export default function AuthProvider({
         confirmPassword: async (password) => confirmPassword(password),
 
         sendMailToResetPassword: async (email) => sendMailToResetPassword(email),
+
+        updateAuthenticatedUser: async (user) => setUser(user)
     }), [user]);
 
     useEffect(() => {
@@ -170,31 +176,41 @@ export default function AuthProvider({
                 if (userByEmail) {
                     redirect(userByEmail as UserData);
 
-                    Promise.reject({ interrupted: true });
+                    return;
                 }
 
                 return user;
             })
-            .then(user => usersServices.createByAuth({
-                id: user?.user_id as string,
-                email: user?.email || '',
-                name: ''
-            }))
             .then(user => {
+                if (!user) { return; }
+
+                return usersServices.createByAuth({
+                    id: user?.user_id as string,
+                    email: user?.email || '',
+                    name: ''
+                });
+            })
+            .then(user => {
+                if (!user) { return; }
+
                 logger.info('usuario criado!', user);
                 return user;
             })
             .then(async user => {
+                if (!user) { return; }
+
                 await sitesServices.create(generateDefaultSite(`Loja ${user.name || user.email}`, user.id))
                     .then(() => logger.log('loja criada!'));
 
                 return user;
             })
-            .then(user => { redirect(user as UserData); })
-            .catch((e) => {
-                const { code, interrupted } = e;
+            .then(user => {
+                if (!user) { return; }
 
-                if (!interrupted) { return; }
+                redirect(user as UserData);
+            })
+            .catch((e) => {
+                const { code } = e;
 
                 addAlert({
                     color: 'error',

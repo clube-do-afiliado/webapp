@@ -22,8 +22,8 @@ export default function UserCard({ user, onClick }: UserCardProps) {
     const handleClick = () => { onClick(user); };
 
     return (
-        <Card onClick={handleClick}>
-            <CardContent>
+        <Card onClick={handleClick} style={{ height: '100%' }}>
+            <CardContent display="flex" justifyContent="center" alignItems="center" style={{ height: '100%' }}>
                 <Stack orientation="row" alignItems="center" justifyContent="flex-start">
                     <Stack spacing="medium" orientation="row" alignItems="center">
                         <Avatar

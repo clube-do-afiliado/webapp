@@ -1,11 +1,13 @@
 import { CSSProperties } from 'react';
 
-import type { Color } from './defineColors';
+import type { ColorOptions } from './defineColors';
 import type { SpacingOptions } from './defineSpacing';
+import type { ShapeOptions } from './defineShape';
 
 export type CustomOptions = Partial<
     & SpacingOptions
-    & Color
+    & ColorOptions
+    & ShapeOptions
 >
 
 export type Sx<T> = T & {

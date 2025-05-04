@@ -17,7 +17,7 @@ function setFavicon(color: string) {
         document.getElementsByTagName('head')[0].appendChild(link);
     }
 
-    fetch('https://cdn-web-80894.web.app/assets/favicon/favicon.svg')
+    fetch('https://cdn.clubedoafiliado.com/assets/favicon/favicon-reversed.svg')
         .then((response) => response.text())
         .then((svgText) => {
             const updatedSVG = svgText.replace(/fill="[^"]*"/, `color="${color}"`);
@@ -31,7 +31,7 @@ function setFavicon(color: string) {
 function Content() {
     const { theme: { palette } } = useTheme();
 
-    useEffect(() => { setFavicon(palette.primary.main); }, []);
+    useEffect(() => { setFavicon(palette.primary.contrastText); }, []);
 
     return (
         <Outlet />

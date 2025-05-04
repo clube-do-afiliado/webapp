@@ -42,6 +42,11 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
         ));
     };
 
+    const goToByMenu = () => {
+        navigate('/profile');
+        toggle();
+    };
+
     return (
         <Box sx={{ backgroundColor: ({ background }) => background.default }}>
             <Slide enter direction="top" timeout={.3}>
@@ -65,12 +70,14 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                         justifyContent="flex-start"
                         label="Minha conta"
                         icon={<Icon name="user" />}
+                        onClick={goToByMenu}
                     />
                     <MenuButton
                         label="Sair"
                         justifyContent="flex-start"
                         color="error"
                         icon={<Icon color="error.main" name="signout" />}
+                        onClick={logout}
                     />
                 </Menu>
             </Slide>

@@ -4,9 +4,20 @@ import { Plugin } from './plugin';
 import type { CustomOptions } from './customOptions';
 import { useTheme, type PaletteBuilded } from '../theme';
 
-export type Color = {
+export type ColorOptions = {
     color: (palette: PaletteBuilded) => string;
+    background: (palette: PaletteBuilded) => string;
     backgroundColor: (palette: PaletteBuilded) => string;
+};
+
+function defineBackground(options: CustomOptions): CSSProperties {
+    const { theme: { palette } } = useTheme();
+
+    if (!options.background) { return {}; }
+
+    return {
+        background: options.background(palette)
+    };
 };
 
 function defineBackgroundColor(options: CustomOptions): CSSProperties {
@@ -32,6 +43,7 @@ function defineColor(options: CustomOptions): CSSProperties {
 export default function defineColors(): Plugin[] {
     return [
         defineColor,
-        defineBackgroundColor
+        defineBackground,
+        defineBackgroundColor,
     ];
 }

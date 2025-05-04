@@ -66,13 +66,13 @@ export default function ProductDrawer({
                                 {
                                     product && (
                                         <>
-                                            <ButtonIcon onClick={toggleVisibility}>
-                                                <Icon name={product.visible ? 'eye' : 'eye-slash'} />
-                                            </ButtonIcon>
                                             <ButtonIcon color="error.main" onClick={toggleModal}>
                                                 <Icon name="trash" />
                                             </ButtonIcon>
-                                            <ButtonIcon onClick={goToStore}>
+                                            <ButtonIcon onClick={toggleVisibility} color="text.secondary">
+                                                <Icon name={product.visible ? 'eye' : 'eye-slash'} />
+                                            </ButtonIcon>
+                                            <ButtonIcon onClick={goToStore} color="text.secondary">
                                                 <Icon name="external-link-alt" />
                                             </ButtonIcon>
                                         </>

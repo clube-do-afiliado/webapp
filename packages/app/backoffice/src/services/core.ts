@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { getStorage, connectStorageEmulator } from 'firebase/storage';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
 import {
     getAuth,
@@ -12,12 +13,13 @@ import {
 } from 'firebase/auth';
 
 import DB from '@cda/services/db';
+import Storage from '@cda/services/storage';
 import AuthServices from '@cda/services/auth';
 import UserServices from '@cda/services/user';
 import RolesServices from '@cda/services/roles';
 import PlansServices from '@cda/services/plans';
-import IntegrationsServices from '@cda/services/integrations';
 import SitesServices from '@cda/services/sites';
+import IntegrationsServices from '@cda/services/integrations';
 
 // VARIABLES
 export const url = {
@@ -46,6 +48,7 @@ const app = initializeApp({
 const firebaseAuth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 const firestore = getFirestore(app);
+const firebaseStorage = getStorage(app);
 
 export const authServices = new AuthServices({
     signOut: () => signOut(firebaseAuth),
@@ -60,10 +63,12 @@ export const authServices = new AuthServices({
 }, url.sso);
 
 export const db = new DB(firestore);
+export const storage = new Storage(firebaseStorage);
 
 if (isLocal) {
     connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
     connectAuthEmulator(firebaseAuth, 'http://127.0.0.1:9099');
+    connectStorageEmulator(firebaseStorage, 'localhost', 9199);
 }
 
 // ENTITY SERVICES

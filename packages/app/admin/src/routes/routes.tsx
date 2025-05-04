@@ -1,5 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
+import ProfilePage from '@cda/common/Profile';
+
 import App from '@/App';
 import { BioPage } from '@/pages/Bio';
 import { HomePage } from '@/pages/Home';
@@ -7,6 +9,7 @@ import { StoresPage } from '@/pages/Stores';
 import { ProductsPage } from '@/pages/Products';
 import { TemplatePage } from '@/pages/Templates';
 import { SitePage, SiteDetailsPage } from '@/pages/Site';
+import { storage, userServices } from '@/services/core';
 
 export const router = createBrowserRouter([
     {
@@ -68,6 +71,16 @@ export const router = createBrowserRouter([
                 loader: () => document.title = 'Clube do afiliado - Bio',
                 element: (
                     <BioPage />
+                ),
+            },
+            {
+                path: '/profile',
+                loader: () => document.title = 'Clube do afiliado - Meu perfil',
+                element: (
+                    <ProfilePage
+                        storage={storage}
+                        onUpdateUser={(user) => userServices.update(user)}
+                    />
                 ),
             },
             {

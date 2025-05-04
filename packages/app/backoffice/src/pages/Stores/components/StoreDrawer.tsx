@@ -116,7 +116,7 @@ export default function StoreDrawer({ isOpen, site, onToggleDrawer }: HelperDraw
                                 onClick={toggleModal}
                                 startIcon={<Icon name="trash" />}
                             >
-                                deletar role
+                                deletar loja
                             </Button>
                         </Stack>
                     </DrawerFooter>

@@ -1,6 +1,9 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
+import ProfilePage from '@cda/common/Profile';
+
 import App from '@/App';
+import { storage, userServices } from '@/services/core';
 import { RolesPage } from '@/pages/Roles';
 import { PlansPage } from '@/pages/Plans';
 import { UsersPage } from '@/pages/Users';
@@ -51,6 +54,16 @@ export const router = createBrowserRouter([
                 loader: () => document.title = 'Clube do afiliado - Lojas',
                 element: (
                     <StoresPage />
+                ),
+            },
+            {
+                path: '/profile',
+                loader: () => document.title = 'Clube do afiliado - Meu perfil',
+                element: (
+                    <ProfilePage
+                        storage={storage}
+                        onUpdateUser={(user) => userServices.update(user)}
+                    />
                 ),
             },
             {

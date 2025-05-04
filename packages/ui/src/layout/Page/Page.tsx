@@ -10,7 +10,7 @@ import Stack, { type Orientation } from '../../components/Stack';
 import './Page.scss';
 
 export interface BaseProps extends PropsWithChildren {
-    title: string;
+    title?: string;
     release?: string;
     loading?: boolean;
     subtitle?: string;
@@ -62,7 +62,11 @@ export default function BasePage({
                     >
                         <Stack orientation="row" alignItems="center" style={{ width: 'auto' }}>
                             <div>
-                                <Typography variant="h5" noMargin>{title}</Typography>
+                                {
+                                    title && (
+                                        <Typography variant="h5" noMargin>{title}</Typography>
+                                    )
+                                }
                                 {
                                     subtitle && (
                                         <Typography

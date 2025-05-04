@@ -4,7 +4,7 @@ import Chip from '@cda/ui/components/Chip';
 import Icon from '@cda/ui/components/Icon';
 import Stack from '@cda/ui/components/Stack';
 import Button from '@cda/ui/components/Button';
-import { getOpacityColor } from '@cda/ui/theme';
+import { generateSupportColors, getOpacityColor } from '@cda/ui/theme';
 import Divider from '@cda/ui/components/Divider';
 import { useModal } from '@cda/ui/components/Modal';
 import Typography from '@cda/ui/components/Typography';
@@ -51,14 +51,18 @@ export default function UserDrawer({
                                     Plano:
                                 </Typography>
                                 <div style={{ width: 'fit-content' }}>
-                                    <Chip
-                                        label={plan?.name || ''}
-                                        style={{
-                                            border: 'none',
-                                            color: plan?.color,
-                                            background: getOpacityColor(plan?.color || '#ffffff', 0.2)
-                                        }}
-                                    />
+                                    {
+                                        plan && (
+                                            <Chip
+                                                label={plan.name}
+                                                style={{
+                                                    border: 'none',
+                                                    color: generateSupportColors(plan.color).dark,
+                                                    background: getOpacityColor(plan.color || '#ffffff', 0.2)
+                                                }}
+                                            />
+                                        )
+                                    }
                                 </div>
                             </Stack>
                             <Divider />

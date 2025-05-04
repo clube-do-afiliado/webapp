@@ -36,7 +36,7 @@ export default function Header({
         <div className="ui-header">
             <div className="ui-header__logo">
                 <button>
-                    <Logo width={150} />
+                    <Logo width={75} />
                 </button>
             </div>
 
@@ -53,14 +53,19 @@ export default function Header({
                         </Button>
                     )
                 }
-                <ButtonIcon onClick={onUpdateMode}>
+                <ButtonIcon onClick={onUpdateMode} color="text.secondary">
                     <Icon name={modeIcon} />
                 </ButtonIcon>
                 <Avatar
                     alt={name}
                     name={name}
                     src={picture}
-                    sx={{ backgroundColor: ({ secondary }) => secondary.main }}
+                    sx={{
+                        backgroundColor: ({ secondary }) =>
+                            picture
+                                ? 'transparent'
+                                : secondary.main
+                    }}
                     onClick={onProfile}
                 />
             </Stack>

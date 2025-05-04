@@ -108,6 +108,7 @@ function EmailAndPasswordForm() {
                 </Typography>
                 <Button
                     variant="outlined"
+                    size="large"
                     type="button"
                     startIcon={
                         <img
@@ -154,7 +155,7 @@ export default function Signin() {
                 <Container sm="100%" md={500} lg={500}>
                     <Box sx={{ mb: 2 }} textAlign="center">
                         <Logo
-                            width={200}
+                            width={150}
                             color="primary.main"
                             style={{ margin: 'auto' }}
                         />

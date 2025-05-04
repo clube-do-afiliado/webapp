@@ -48,6 +48,8 @@ export default function UserDrawer({ isOpen, user, onToggleDrawer }: HelperDrawe
 
     const isActive = useMemo(() => user?.status === 'active', [user]);
 
+    console.log(JSON.stringify(user, null, 2));
+
     useEffect(() => {
         if (!user) { return; }
 
