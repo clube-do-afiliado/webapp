@@ -47,7 +47,7 @@ export default function Bars({
             <Stack orientation="row" alignItems="flex-end" spacing="small" className="ui-bars">
                 {
                     mappedData.map(bar => (
-                        <Tooltip key={bar.label} label={bar.label} direction="bottom" style={{
+                        <Tooltip key={bar.label} label={bar.label} direction={tooltipPosition} style={{
                             height: '100%',
 
                         }}>

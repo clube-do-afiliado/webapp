@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import Icon from '@cda/ui/components/Icon';
 import Input from '@cda/ui/components/Input';
 import Stack from '@cda/ui/components/Stack';
 import Button from '@cda/ui/components/Button';
@@ -16,7 +15,6 @@ import Storage from '@cda/services/storage';
 import type { UserData } from '@cda/services/user';
 
 import { useAuth } from '../../Auth';
-import { useUser } from '../../User';
 
 interface Form {
     name: string;
