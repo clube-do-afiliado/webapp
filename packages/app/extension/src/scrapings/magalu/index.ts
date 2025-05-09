@@ -1,0 +1,1 @@
+export { getMagaluInfo } from './getMagaluInfo';

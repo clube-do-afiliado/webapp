@@ -4,6 +4,7 @@ import Icon from '@cda/ui/components/Icon';
 import Stack from '@cda/ui/components/Stack';
 import Switch from '@cda/ui/components/Switch';
 import Avatar from '@cda/ui/components/Avatar';
+import { useAlert } from '@cda/ui/components/Alert';
 import { TableCell } from '@cda/ui/components/Table';
 import ButtonIcon from '@cda/ui/components/ButtonIcon';
 
@@ -19,6 +20,8 @@ import './ProductTable.scss';
 
 interface ProductRowProps { product: Product; onToggleDrawer: (product: Product) => void; }
 export default function ProductRow({ product, onToggleDrawer }: ProductRowProps) {
+    const { addAlert } = useAlert();
+
     const { userSites } = useSites();
     const { updateProduct } = useProducts();
     const { integrations } = useIntegrations();
@@ -29,6 +32,15 @@ export default function ProductRow({ product, onToggleDrawer }: ProductRowProps)
     }), []);
 
     const handleProductVisibility = () => {
+        if (!product.url) {
+            addAlert({
+                color: 'warning',
+                icon: <Icon name="exclamation-triangle" />,
+                message: 'É preciso adicionar uma url para disponibilizar o produto'
+            });
+            return;
+        }
+
         updateProduct({ ...product, visible: !product.visible });
     };
 

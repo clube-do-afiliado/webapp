@@ -1,4 +1,13 @@
-import { cloneElement, HtmlHTMLAttributes, MouseEvent, ReactElement, useEffect, useMemo, useState } from 'react';
+import {
+    cloneElement,
+    HTMLAttributes,
+    HtmlHTMLAttributes,
+    MouseEvent,
+    ReactElement,
+    useEffect,
+    useMemo,
+    useState
+} from 'react';
 
 import { uuid } from '@cda/toolkit/uuid';
 
@@ -13,7 +22,7 @@ import './MultiSelect.scss';
 
 let ID_SELECT = 0;
 
-type MultiSelectProps<K extends Record<string, any>> = {
+interface MultiSelectProps<K extends Record<string, any>> extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
     data: K[];
     selecteds: K[];
     identifier: keyof K;
@@ -55,6 +64,7 @@ export default function MultiSelect<T extends Record<string, any>>({
     onChange,
     renderValue,
     renderOption,
+    ...props
 }: MultiSelectProps<T>) {
     const id = ++ID_SELECT;
     const [open, el, toggle] = useMenu();
@@ -71,7 +81,8 @@ export default function MultiSelect<T extends Record<string, any>>({
     const containerClss = joinClass([
         'ui-multiselect-container',
         fullWidth && 'ui-multiselect-container--full-width',
-        gutterBottom && 'ui-multiselect-container--gutter-bottom'
+        gutterBottom && 'ui-multiselect-container--gutter-bottom',
+        props.className
     ]);
 
     const labelClss = joinClass([
@@ -137,7 +148,7 @@ export default function MultiSelect<T extends Record<string, any>>({
     };
 
     return (
-        <div className={containerClss}>
+        <div className={containerClss} {...props} onInput={() => ''} onBlur={() => ''}>
             {label && <label className={labelClss}>{label} {required && '*'}</label>}
             <div className={className} onClick={(e) => toggle(e as any)}>
                 <div className="ui-multiselect__chips">

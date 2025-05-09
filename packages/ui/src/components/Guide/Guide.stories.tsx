@@ -42,7 +42,7 @@ function Content() {
                 vertical: 'top'
             },
             callback: {
-                start: () => { console.log('callback 1'); }
+                start: () => { console.debug('callback 1'); }
             }
         },
         {
@@ -58,7 +58,7 @@ function Content() {
                 vertical: 'top'
             },
             callback: {
-                start: () => { console.log('callback 2'); }
+                start: () => { console.debug('callback 2'); }
             }
         },
         {
@@ -73,7 +73,7 @@ function Content() {
                 vertical: 'center'
             },
             callback: {
-                start: () => { console.log('callback 3'); }
+                start: () => { console.debug('callback 3'); }
             }
         },
         {
@@ -88,7 +88,7 @@ function Content() {
                 vertical: 'top'
             },
             callback: {
-                start: () => { console.log('callback 4'); }
+                start: () => { console.debug('callback 4'); }
             }
         }
     ]);

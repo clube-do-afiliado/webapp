@@ -34,7 +34,7 @@ export default function Users() {
 
     const { users, getUsers } = useUsers();
 
-    const { filter, filtered, reset } = useFilter(users);
+    const { filter, filtered, reset } = useFilter(users, []);
 
     const [selectedUserId, setSelectedUserId] = useState<string>();
     const [currentSearch, setCurrentSearch] = useState('');

@@ -13,7 +13,7 @@ const meta: Meta<typeof Checkbox> = {
 export const Default: StoryObj<typeof Checkbox> = {
     render: () => {
         return (
-            <CheckboxGroup onChange={console.log}>
+            <CheckboxGroup onChange={console.debug}>
                 <Checkbox name="A" label="some label here 1" value={10} />
                 <Checkbox name="B" label="some label here 2" value={20} />
                 <Checkbox name="C" label="some label here 3" value={30} />

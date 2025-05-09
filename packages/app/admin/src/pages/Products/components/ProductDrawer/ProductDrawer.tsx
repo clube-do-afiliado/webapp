@@ -12,8 +12,6 @@ import { Drawer, DrawerContent, DrawerFooter, HelperDrawerProps } from '@cda/ui/
 
 import { Product } from '@cda/services/products';
 
-import { useProducts } from '@cda/common/Products';
-
 import useProductForm from './useProductForm';
 import ProductInfoForm from './ProductInfoForm';
 import DeleteProductModal from '../DeleteProductModal';
@@ -28,19 +26,11 @@ export default function ProductDrawer({
     const { current, setTab } = useTabs(0);
     const [open, toggleModal] = useModal();
 
-    const { updateProduct } = useProducts();
-
     const [formGroup] = useProductForm(product, onToggleDrawer);
 
     useEffect(() => { if (!isOpen) { formGroup.reset(); } }, [isOpen]);
 
     const goToStore = () => { };
-
-    const toggleVisibility = () => {
-        if (!product) { return; }
-
-        updateProduct({ ...product, visible: !product?.visible });
-    };
 
     const handleSubmit = () => { formGroup.submit(); };
 
@@ -58,6 +48,7 @@ export default function ProductDrawer({
                                     <Avatar
                                         src={formGroup.values.image}
                                         icon={<Icon name="shopping-basket" color="text.secondary" />}
+                                        style={{ backgroundColor: 'transparent' }}
                                     />
                                     <Typography noMargin variant="h6" className="title">
                                         {formGroup.values.name}
@@ -68,9 +59,6 @@ export default function ProductDrawer({
                                         <>
                                             <ButtonIcon color="error.main" onClick={toggleModal}>
                                                 <Icon name="trash" />
-                                            </ButtonIcon>
-                                            <ButtonIcon onClick={toggleVisibility} color="text.secondary">
-                                                <Icon name={product.visible ? 'eye' : 'eye-slash'} />
                                             </ButtonIcon>
                                             <ButtonIcon onClick={goToStore} color="text.secondary">
                                                 <Icon name="external-link-alt" />

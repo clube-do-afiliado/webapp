@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Box from '@cda/ui/components/Box';
-import Header from '@cda/ui/layout/Header';
 import Icon from '@cda/ui/components/Icon';
 import Slide from '@cda/ui/animations/Slide';
 import Stack from '@cda/ui/components/Stack';
@@ -11,6 +10,7 @@ import useResize from '@cda/ui/hooks/useResize';
 import Loading from '@cda/ui/components/Loading';
 import { Sidebar, SidebarButton } from '@cda/ui/layout/Sidebar';
 import { Menu, MenuButton, useMenu } from '@cda/ui/components/Menu';
+import { Header, ButtonMode, ButtonProfile, ButtonGuide } from '@cda/ui/layout/Header';
 import { createTheme, useTheme, themeDefaultLight, themeDefaultDark } from '@cda/ui/theme';
 
 import { useAuth } from '@cda/common/Auth';
@@ -58,14 +58,20 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
         <Box sx={{ backgroundColor: ({ background }) => background.default }}>
             <Slide enter direction="top" timeout={.3}>
                 <Header
-                    user={{
-                        name: user?.name || '',
-                        email: user?.email || '',
-                        picture: user?.picture || '',
-                    }}
-                    onUpdateMode={toggleTheme}
-                    onStartGuide={() => console.log('Start guide')}
-                    onProfile={toggle}
+                    buttonMode={<ButtonMode onUpdateMode={toggleTheme} />}
+                    buttonProfile={
+                        <ButtonProfile
+                            user={{
+                                name: user?.name || '',
+                                email: user?.email || '',
+                                picture: user?.picture || '',
+                            }}
+                            onProfile={toggle}
+                        />
+                    }
+                    buttonGuide={
+                        <ButtonGuide onStartGuide={console.log} />
+                    }
                 />
                 <Menu
                     open={open}

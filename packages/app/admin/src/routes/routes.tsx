@@ -35,15 +35,6 @@ export const router = createBrowserRouter([
                 element: (
                     <SitePage />
                 ),
-                children: [
-                    {
-                        path: ':slug',
-                        loader: () => document.title = 'Clube do afiliado - Site',
-                        element: (
-                            <SiteDetailsPage />
-                        ),
-                    },
-                ]
             },
             {
                 path: 'stores',

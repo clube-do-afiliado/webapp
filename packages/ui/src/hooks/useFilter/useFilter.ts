@@ -1,15 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 
-export default function useFilter<T>(data: T[], initialFilter?: (data: T[]) => T[]) {
+export default function useFilter<T>(data: T[], deps: any[]) {
     const [filtered, setFiltered] = useState(data);
 
-    useEffect(() => {
-        if (initialFilter) {
-            setFiltered(prev => initialFilter(prev));
-        } else {
-            setFiltered(data);
-        }
-    }, [data]);
+    useEffect(() => { setFiltered(data); }, [data, ...deps]);
 
     function filter(fn: (data: T) => boolean) { setFiltered(prev => prev.filter(fn)); }
 

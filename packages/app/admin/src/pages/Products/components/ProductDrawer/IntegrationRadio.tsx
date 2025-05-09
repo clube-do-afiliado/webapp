@@ -9,9 +9,10 @@ import { useControl } from '@cda/ui/components/Form';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
 
 import { useIntegrations } from '@cda/common/Integrations';
-import './ProductDrawer.scss';
 
 import type { ProductForm } from './interface';
+
+import './ProductDrawer.scss';
 
 export default function IntegrationRadio() {
     const { control, update } = useControl<ProductForm, 'integration'>('integration');
@@ -21,7 +22,6 @@ export default function IntegrationRadio() {
     const [value, setValue] = useState<string>(control.value);
 
     const handleSelect = (integration: string) => {
-        console.log(integration);
         setValue(integration);
         update(integration);
     };

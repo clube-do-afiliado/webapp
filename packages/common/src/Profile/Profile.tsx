@@ -31,10 +31,7 @@ export default function Profile({ storage, onUpdateUser }: ProfileProps) {
                 sx={{
                     p: 2,
                     background: ({ primary }) => getLinearGradient(primary.main),
-                    borderRadius: ({ radius }) => {
-                        console.log('RADIUS', radius);
-                        return radius;
-                    }
+                    borderRadius: ({ radius }) => radius
                 }}
             />
             <Stack justifyContent="center" alignItems="center">

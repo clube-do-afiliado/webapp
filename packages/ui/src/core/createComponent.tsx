@@ -1,8 +1,8 @@
 import React, { ComponentType } from 'react';
 
 import type { Sx } from './customOptions';
-import defineColors from './defineColors';
 import defineShape from './defineShape';
+import defineColors from './defineColors';
 import defineOptions from './defineOptions';
 import defineSpacing from './defineSpacing';
 

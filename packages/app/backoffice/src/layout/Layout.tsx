@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Box from '@cda/ui/components/Box';
-import Header from '@cda/ui/layout/Header';
 import Icon from '@cda/ui/components/Icon';
 import Slide from '@cda/ui/animations/Slide';
 import Stack from '@cda/ui/components/Stack';
 import Content from '@cda/ui/layout/Content';
 import Loading from '@cda/ui/components/Loading';
 import Tooltip from '@cda/ui/components/Tooltip';
-import { Sidebar, SidebarButton } from '@cda/ui/layout/Sidebar';
 import { Menu, MenuButton, useMenu } from '@cda/ui/components';
+import { Sidebar, SidebarButton } from '@cda/ui/layout/Sidebar';
+import { Header, ButtonMode, ButtonProfile } from '@cda/ui/layout/Header';
 import { createTheme, useTheme, themeDefaultLight, themeDefaultDark } from '@cda/ui/theme';
 
 import { useAuth } from '@cda/common/Auth';
@@ -51,13 +51,17 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
         <Box sx={{ backgroundColor: ({ background }) => background.default }}>
             <Slide enter direction="top" timeout={.3}>
                 <Header
-                    user={{
-                        name: user?.name || '',
-                        email: user?.email || '',
-                        picture: user?.picture || '',
-                    }}
-                    onUpdateMode={toggleTheme}
-                    onProfile={toggle}
+                    buttonMode={<ButtonMode onUpdateMode={toggleTheme} />}
+                    buttonProfile={
+                        <ButtonProfile
+                            user={{
+                                name: user?.name || '',
+                                email: user?.email || '',
+                                picture: user?.picture || '',
+                            }}
+                            onProfile={toggle}
+                        />
+                    }
                 />
                 <Menu
                     open={open}

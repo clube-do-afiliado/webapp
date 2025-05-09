@@ -81,7 +81,7 @@ export const Template: StoryObj<typeof Table> = {
                                     <TableCell align="right">{row.name || '-'}</TableCell>
                                     <TableCell align="right">{row.level || '-'}</TableCell>
                                     <TableCell align="center">
-                                        <Button size="small" onClick={() => console.log(row)}>
+                                        <Button size="small" onClick={() => console.debug(row)}>
                                             Deletar
                                         </Button>
                                     </TableCell>

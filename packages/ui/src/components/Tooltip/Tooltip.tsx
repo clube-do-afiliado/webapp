@@ -1,4 +1,4 @@
-import { cloneElement, CSSProperties, HtmlHTMLAttributes, useMemo, useState } from 'react';
+import { cloneElement, CSSProperties, HTMLAttributes, HtmlHTMLAttributes, useMemo, useState } from 'react';
 
 import { uuid } from '@cda/toolkit/uuid';
 
@@ -10,7 +10,7 @@ import './Tooltip.scss';
 type TooltipCoordinate = { top?: number; left?: number; };
 type Direction = 'top' | 'right' | 'bottom' | 'left';
 
-interface TooltipProps {
+interface TooltipProps extends HTMLAttributes<HTMLElement> {
     direction?: Direction;
     width?: CSSProperties['width'];
     children: React.JSX.Element;
@@ -20,7 +20,8 @@ export default function Tooltip({
     children,
     label,
     width = 'max-content',
-    direction = 'bottom'
+    direction = 'bottom',
+    ...props
 }: TooltipProps) {
     const { theme: { spacing } } = useTheme();
     const [open, setOpen] = useState(false);
@@ -96,7 +97,7 @@ export default function Tooltip({
     };
 
     return (
-        <div style={{ position: 'relative' }} onMouseLeave={handleLeave}>
+        <div {...props} style={{ position: 'relative', ...props.style }} onMouseLeave={handleLeave}>
             {renderChildren()}
             <span id={id} className={className} style={{
                 ...coordinate,

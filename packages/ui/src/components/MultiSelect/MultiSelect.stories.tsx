@@ -39,7 +39,7 @@ export const Template: StoryObj<typeof MultiSelect> = {
                 identifier="label"
                 data={items}
                 selecteds={[]}
-                onChange={console.log}
+                onChange={console.debug}
                 renderOption={(data) => (
                     <Checkbox name={data.label} label={data.label} value={data.label} />
                 )}
@@ -57,9 +57,6 @@ export const Template: StoryObj<typeof MultiSelect> = {
 
 export const WithIcon: StoryObj<typeof MultiSelect> = {
     render: () => {
-        const handleClick = () => {
-            console.log('aqui');
-        };
         return (
             <MultiSelect
                 fullWidth
@@ -67,7 +64,7 @@ export const WithIcon: StoryObj<typeof MultiSelect> = {
                 identifier="label"
                 data={items}
                 selecteds={[]}
-                onChange={console.log}
+                onChange={console.debug}
                 renderOption={(data) => (
                     <Checkbox name={data.label} label={data.label} value={data.label} />
                 )}
@@ -79,7 +76,7 @@ export const WithIcon: StoryObj<typeof MultiSelect> = {
                     />
                 )}
                 endIcon={
-                    <ButtonIcon onClick={handleClick}>
+                    <ButtonIcon onClick={console.debug}>
                         <Icon name="times" />
                     </ButtonIcon>
                 }
@@ -99,7 +96,7 @@ export const Validation: StoryObj<typeof MultiSelect> = {
                 helperText="This field is required"
                 data={items}
                 selecteds={[]}
-                onChange={console.log}
+                onChange={console.debug}
                 renderOption={(data) => (
                     <Checkbox name={data.label} label={data.label} value={data.label} />
                 )}

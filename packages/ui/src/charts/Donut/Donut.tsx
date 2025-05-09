@@ -165,7 +165,6 @@ export default function Donut({
                                                             style={{ background: data.color }}
                                                         />
                                                         {renderLabel(data)}
-
                                                     </Stack>
                                                 ))
                                             }

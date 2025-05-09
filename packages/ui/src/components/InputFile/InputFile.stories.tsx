@@ -37,9 +37,7 @@ export const InputFileControlled: StoryObj<typeof InputFile> = {
                 files: new FormControl({ defaultValue: [] })
             },
             handle: {
-                change: (form) => {
-                    console.log('change', form.values);
-                }
+                change: (form) => { console.debug('change', form.values); }
             }
         }, []);
 

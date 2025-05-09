@@ -39,11 +39,9 @@ function Switch({ label, error, helperText, auto = false, color = 'primary', ...
     useEffect(() => { setChecked(Boolean(props.checked)); }, [props.checked]);
 
     const handleToggle = () => {
-        if (props.onChange) {
-            props.onChange({ target: { checked: !checked } } as React.ChangeEvent<HTMLInputElement>);
-        }
+        if (!props.onChange) { return; }
 
-        setChecked(!checked);
+        props.onChange({ target: { checked: !checked } } as React.ChangeEvent<HTMLInputElement>);
     };
 
     return (

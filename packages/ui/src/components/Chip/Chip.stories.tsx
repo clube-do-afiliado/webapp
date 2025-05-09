@@ -98,7 +98,7 @@ export const clickabel: StoryObj<typeof Chip> = {
 
 export const WithClose: StoryObj<typeof Chip> = {
     render: () => {
-        const handleLog = () => console.log('close');
+        const handleLog = () => console.debug('close');
         return (
             <Stack orientation="row" spacing="small">
                 <Stack orientation="row" spacing="small">

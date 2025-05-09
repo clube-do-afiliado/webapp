@@ -11,6 +11,8 @@ import { Grid, GridItem } from '@cda/ui/components/Grid';
 import { Card, CardContent } from '@cda/ui/components/Card';
 import { Form, FormControl, Control, useForm } from '@cda/ui/components/Form';
 
+import { slug } from '@cda/toolkit/string';
+
 import { Site } from '@cda/services/sites';
 
 import { useSites } from '@cda/common/Sites';
@@ -49,7 +51,14 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
                 if (!site) { return; }
                 setLoading(true);
 
-                const newSite: Site = { ...site, information: { ...site.information, ...form.values } };
+                const newSite: Site = {
+                    ...site,
+                    information: {
+                        ...site.information,
+                        ...form.values
+                    },
+                    slug: slug(form.values.name),
+                };
 
                 updateUserSite(newSite)
                     .finally(() => setLoading(false));

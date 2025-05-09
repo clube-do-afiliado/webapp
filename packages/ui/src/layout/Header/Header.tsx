@@ -1,74 +1,40 @@
-import { useTheme } from '../../theme';
-import Icon from '../../components/Icon';
+import type { HTMLAttributes } from 'react';
+
+import { joinClass } from '../../utils';
 import Logo from '../../components/Logo';
 import Stack from '../../components/Stack';
-import Avatar from '../../components/Avatar';
-import Button from '../../components/Button';
-import ButtonIcon from '../../components/ButtonIcon';
 
 import './Header.scss';
 
-interface User {
-    name: string;
-    email: string;
-    picture: string;
-}
-
-interface HeaderProps {
-    user: User;
-    onProfile: () => void;
-    onUpdateMode: () => void;
-    onStartGuide?: () => void;
+interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
+    buttonMode?: React.JSX.Element;
+    buttonGuide?: React.JSX.Element;
+    buttonProfile?: React.JSX.Element;
 }
 export default function Header({
-    user,
-    onProfile,
-    onStartGuide,
-    onUpdateMode,
+    buttonMode,
+    buttonGuide,
+    buttonProfile,
+    ...props
 }: HeaderProps) {
-    const { theme } = useTheme();
-
-    const { name, picture } = user;
-
-    const modeIcon = theme.palette.mode === 'dark' ? 'moon' : 'sun';
-
     return (
-        <div className="ui-header">
+        <div className={joinClass(['ui-header', props.className])} {...props}>
             <div className="ui-header__logo">
                 <button>
                     <Logo width={75} />
                 </button>
             </div>
 
-            <Stack orientation="row" justifyContent="flex-end" alignItems="center">
-                {
-                    onStartGuide && (
-                        <Button
-                            size="small"
-                            variant="text"
-                            startIcon={<Icon name="question-circle" />}
-                            onClick={onStartGuide}
-                        >
-                            Ajuda
-                        </Button>
-                    )
-                }
-                <ButtonIcon onClick={onUpdateMode} color="text.secondary">
-                    <Icon name={modeIcon} />
-                </ButtonIcon>
-                <Avatar
-                    alt={name}
-                    name={name}
-                    src={picture}
-                    sx={{
-                        backgroundColor: ({ secondary }) =>
-                            picture
-                                ? 'transparent'
-                                : secondary.main
-                    }}
-                    onClick={onProfile}
-                />
-            </Stack>
+            {
+                (
+                    buttonGuide || buttonMode || buttonProfile) && (
+                    <Stack orientation="row" justifyContent="flex-end" alignItems="center">
+                        {buttonGuide}
+                        {buttonMode}
+                        {buttonProfile}
+                    </Stack>
+                )
+            }
         </div>
     );
 }

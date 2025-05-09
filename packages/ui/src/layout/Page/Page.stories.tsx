@@ -23,7 +23,7 @@ export const Default: StoryObj<typeof Page> = {
                         color="primary"
                         variant="contained"
                         startIcon={<Icon name="plus" />}
-                        onClick={() => console.log('foo bar')}
+                        onClick={() => console.debug('foo bar')}
                     >
                         Action
                     </Button>
@@ -35,7 +35,7 @@ export const Default: StoryObj<typeof Page> = {
                         variant="text"
                         sx={{ p: 0 }}
                         startIcon={<Icon name="arrow-left" color="text.secondary" />}
-                        onClick={() => console.log('go back')}
+                        onClick={() => console.debug('go back')}
                     >
                         Voltar
                     </Button>
@@ -61,7 +61,7 @@ export const Loading: StoryObj<typeof Page> = {
                         color="primary"
                         variant="contained"
                         startIcon={<Icon name="plus" />}
-                        onClick={() => console.log('foo bar')}
+                        onClick={() => console.debug('foo bar')}
                     >
                         Action
                     </Button>
@@ -73,7 +73,7 @@ export const Loading: StoryObj<typeof Page> = {
                         variant="text"
                         sx={{ p: 0 }}
                         startIcon={<Icon name="arrow-left" color="text.secondary" />}
-                        onClick={() => console.log('go back')}
+                        onClick={() => console.debug('go back')}
                     >
                         Voltar
                     </Button>

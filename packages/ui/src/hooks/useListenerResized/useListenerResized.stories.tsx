@@ -8,7 +8,7 @@ const meta: Meta<typeof useListenerResize> = {
 
 export const Template: StoryObj<typeof useListenerResize> = {
     render: () => {
-        useListenerResize(() => console.log('resize', window.innerWidth, window.innerHeight), []);
+        useListenerResize(() => console.debug('resize', window.innerWidth, window.innerHeight), []);
 
         return (
             <div>

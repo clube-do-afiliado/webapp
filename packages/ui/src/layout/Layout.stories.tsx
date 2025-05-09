@@ -10,7 +10,7 @@ import Typography from '@/components/Typography';
 import { createTheme, useTheme, themeDefaultLight, themeDefaultDark } from '@/theme';
 
 import Page from './Page';
-import Header from './Header';
+import { ButtonGuide, ButtonMode, ButtonProfile, Header } from './Header';
 import { Sidebar, SidebarButton } from './Sidebar';
 
 const meta: Meta = {
@@ -37,14 +37,20 @@ export const template: StoryObj = {
             <Box sx={{ backgroundColor: ({ background }) => background.default }}>
                 <Slide enter direction="top" timeout={.3}>
                     <Header
-                        user={{
-                            name: 'John Doe',
-                            email: 'john.doe@email.com',
-                            picture: 'https://robohash.org/john-doe'
-                        }}
-                        onUpdateMode={toggleTheme}
-                        onProfile={() => console.log('Profile')}
-                        onStartGuide={() => console.log('Start guide')}
+                        buttonMode={<ButtonMode onUpdateMode={toggleTheme} />}
+                        buttonProfile={
+                            <ButtonProfile
+                                user={{
+                                    name: 'John Doe',
+                                    email: 'john.doe@email.com',
+                                    picture: 'https://robohash.org/john-doe'
+                                }}
+                                onProfile={console.debug}
+                            />
+                        }
+                        buttonGuide={
+                            <ButtonGuide onStartGuide={console.debug} />
+                        }
                     />
                 </Slide>
                 <Stack orientation="row" nogap>
@@ -76,7 +82,7 @@ export const template: StoryObj = {
                                     color="primary"
                                     variant="contained"
                                     startIcon={<Icon name="plus" />}
-                                    onClick={() => console.log('foo bar')}
+                                    onClick={() => console.debug('foo bar')}
                                 >
                                     Action
                                 </Button>
@@ -88,7 +94,7 @@ export const template: StoryObj = {
                                     variant="text"
                                     sx={{ p: 0 }}
                                     startIcon={<Icon name="arrow-left" color="text.secondary" />}
-                                    onClick={() => console.log('go back')}
+                                    onClick={() => console.debug('go back')}
                                 >
                                     Voltar
                                 </Button>

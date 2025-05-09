@@ -1,4 +1,5 @@
 import Slide from '@cda/ui/animations/Slide';
+import Typography from '@cda/ui/components/Typography';
 import { Table, TableBody, TableCell, TableHeader } from '@cda/ui/components/Table';
 
 import type { Product } from '@cda/services/products';
@@ -20,19 +21,32 @@ export default function ProductTable({ products, onToggleDrawer }: ProductTableP
             </TableHeader>
             <TableBody>
                 {
-                    products.map((product, i) => (
-                        <Slide
-                            enter
-                            key={product.id}
-                            tag="tr"
-                            direction="left"
-                            delay={(i + 1) * 100}
-                            style={{ position: 'relative' }}
-                            className="product-table-row"
-                        >
-                            <ProductRow product={product} onToggleDrawer={onToggleDrawer} />
+                    products
+                        .sort((a, b) => a.integration.localeCompare(b.integration))
+                        .map((product, i) => (
+                            <Slide
+                                enter
+                                key={product.id}
+                                tag="tr"
+                                direction="left"
+                                delay={(i + 1) * 100}
+                                style={{ position: 'relative' }}
+                                className="product-table-row"
+                            >
+                                <ProductRow product={product} onToggleDrawer={onToggleDrawer} />
+                            </Slide>
+                        ))
+                }
+                {
+                    !products.length && (
+                        <Slide enter tag="tr" direction="top">
+                            <TableCell colSpan={5}>
+                                <Typography textAlign="center" color="text.secondary">
+                                    Nenhum produto encontrado
+                                </Typography>
+                            </TableCell>
                         </Slide>
-                    ))
+                    )
                 }
             </TableBody>
         </Table>

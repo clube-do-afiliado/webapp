@@ -16,4 +16,5 @@ export type Sx<T> = T & {
     alignItems?: CSSProperties['alignItems'];
     justifyContent?: CSSProperties['justifyContent'];
     textAlign?: CSSProperties['textAlign'];
+    fullWidth?: boolean;
 };

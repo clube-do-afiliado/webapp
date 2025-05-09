@@ -1,15 +1,21 @@
-import { createContext, PropsWithChildren, useMemo } from 'react';
+import { createContext, PropsWithChildren, useMemo, useState } from 'react';
 
 import { useAlert } from '@cda/ui/components/Alert';
 
-import type { UserData } from '@cda/services/user';
 import UserServices from '@cda/services/user';
+import type { UserData } from '@cda/services/user';
 
 export interface UserProviderConfig {
+    user?: UserData,
+
+    getUser: (email: string) => Promise<void>;
     updateUser: (user: UserData) => Promise<void>;
 }
 
 export const UserContext = createContext<UserProviderConfig>({
+    user: undefined,
+
+    getUser: () => Promise.resolve(),
     updateUser: () => Promise.resolve(),
 });
 
@@ -18,9 +24,23 @@ export default function UserProvider({ userServices, children }: PropsWithChildr
 }>) {
     const { addAlert } = useAlert();
 
+    const [user, setUser] = useState<UserData>();
+
     const context = useMemo<UserProviderConfig>(() => ({
+        user,
+
+        getUser: (email) => getUser(email),
         updateUser: (user) => updateUser(user)
-    }), []);
+    }), [user]);
+
+    const getUser = async (email: string) => {
+        return userServices.getByEmail(email)
+            .then(user => {
+                if (!user) { return; }
+
+                setUser(user);
+            });
+    };
 
     const updateUser = async (user: UserData) => {
         return userServices.update(user)

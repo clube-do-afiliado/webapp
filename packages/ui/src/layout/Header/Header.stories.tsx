@@ -3,6 +3,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { createTheme, useTheme, themeDefaultLight, themeDefaultDark } from '@/theme';
 
 import Header from './Header';
+import ButtonGuide from './ButtonGuide';
+import ButtonMode from './ButtonMode';
+import ButtonProfile from './ButtonProfile';
 
 const meta: Meta<typeof Header> = {
     title: 'layout/Header',
@@ -27,13 +30,20 @@ export const Template: StoryObj<typeof Header> = {
 
         return (
             <Header
-                user={{
-                    name: 'John Doe',
-                    email: 'john.doe@email.com',
-                    picture: 'https://robohash.org/john-doe'
-                }}
-                onUpdateMode={toggleTheme}
-                onStartGuide={() => console.log('Start guide')}
+                buttonMode={<ButtonMode onUpdateMode={toggleTheme} />}
+                buttonProfile={
+                    <ButtonProfile
+                        user={{
+                            name: 'John Doe',
+                            email: 'john.doe@email.com',
+                            picture: 'https://robohash.org/john-doe'
+                        }}
+                        onProfile={console.debug}
+                    />
+                }
+                buttonGuide={
+                    <ButtonGuide onStartGuide={console.debug} />
+                }
             />
         );
     }

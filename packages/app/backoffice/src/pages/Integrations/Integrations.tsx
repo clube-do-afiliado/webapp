@@ -33,7 +33,7 @@ export default function Plans() {
     const [openDrawer, toggleDrawer] = useDrawer();
 
     const { integrations } = useIntegrations();
-    const { filter, filtered, reset } = useFilter(integrations);
+    const { filter, filtered, reset } = useFilter(integrations, []);
 
     const [loadingList, setLoadingList] = useState(false);
     const [currentSearch, setCurrentSearch] = useState('');

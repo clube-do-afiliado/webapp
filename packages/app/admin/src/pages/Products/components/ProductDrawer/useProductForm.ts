@@ -60,6 +60,18 @@ export default function useProductForm(product: Product | undefined, onToggleDra
                     }).then(onToggleDrawer);
                 }
             },
+        },
+        validator: {
+            url: (form) => {
+                const { url } = form.values;
+
+                // eslint-disable-next-line
+                const regex = /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/g;
+
+                if (!regex.test(url)) { return 'Deve ser uma url válida'; }
+
+                return '';
+            }
         }
     }, [product, userSites]);
 

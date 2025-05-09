@@ -81,7 +81,7 @@ export default function ProductsProvider({ children, productsServices }: PropsWi
         return productsServices.create(data)
             .then(res => {
                 setProducts((prev) => ([...prev, res]));
-                addAlert({ color: 'success', message: `O produto "${data.name}" foi adicionada` });
+                addAlert({ color: 'success', message: 'O produto foi adicionado' });
 
                 return res;
             })
@@ -94,7 +94,7 @@ export default function ProductsProvider({ children, productsServices }: PropsWi
     const updateProduct = async (data: Product) => {
         return productsServices.update(data)
             .then(() => setProducts(prev => prev.map(r => r.id === data.id ? data : r)))
-            .then(() => addAlert({ color: 'success', message: `O produto "${data.name}" foi editada` }))
+            .then(() => addAlert({ color: 'success', message: 'O produto foi editado' }))
             .catch(() => addAlert({ color: 'error', message: 'Não foi possível editar o produto' }));
     };
 

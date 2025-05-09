@@ -40,8 +40,6 @@ export default function FormFindProductModal({ isOpen, onToggleModal, onGetProdu
 
                 serverFunctions.getFunction('getInfo', { url })
                     .then(res => {
-                        console.log('res', res);
-
                         return createProduct({
                             name: res.title,
                             price: res.price,

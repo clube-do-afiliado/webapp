@@ -65,8 +65,6 @@ export default class UserServices {
             picture: `https://robohash.org/${email}`
         };
 
-        console.log({ newUser });
-
         return this.db.setItem<UserData>({
             data: newUser,
             path: UserServices.PATH,

@@ -135,7 +135,9 @@ export default function AuthProvider({
         const email = params.email || usersServices.currentByToken.email;
 
         return usersServices.getByEmail(email)
-            .then((user) => { setUser(user as UserData); })
+            .then((user) => {
+                setUser(user as UserData);
+            })
             .catch(() => {
                 authServices.logout()
                     .then(() => window.open(authServices.url, '_self'))

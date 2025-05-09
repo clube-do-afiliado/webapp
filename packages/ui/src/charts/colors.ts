@@ -73,3 +73,4 @@ export const CHART_COLD_COLORS = [
     '#AFB42B',
     '#536DFE',
 ];
+

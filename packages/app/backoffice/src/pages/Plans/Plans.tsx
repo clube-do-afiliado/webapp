@@ -34,7 +34,7 @@ export default function Plans() {
     const [openDrawer, toggleDrawer] = useDrawer();
 
     const { plans } = usePlans();
-    const { filter, filtered, reset } = useFilter(plans);
+    const { filter, filtered, reset } = useFilter(plans, []);
 
     const [selectedPlanId, setSelectedPlanId] = useState<string>();
     const [currentSearch, setCurrentSearch] = useState('');

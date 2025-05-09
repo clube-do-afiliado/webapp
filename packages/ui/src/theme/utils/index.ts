@@ -14,4 +14,5 @@ export * from './hexToHsl';
 export * from './getGradient';
 export * from './getOpacityColor';
 export * from './getContrastColor';
+export * from './getPriorityColor';
 export * from './generateSupportColors';

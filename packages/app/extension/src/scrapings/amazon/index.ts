@@ -1,0 +1,1 @@
+export { getAmazonInfo } from './getAmazonInfo';

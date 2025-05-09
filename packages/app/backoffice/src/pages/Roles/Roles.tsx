@@ -35,7 +35,7 @@ export default function Roles() {
     const [openDrawer, toggleDrawer] = useDrawer();
 
     const { roles } = useRoles();
-    const { filter, filtered, reset } = useFilter(roles);
+    const { filter, filtered, reset } = useFilter(roles, []);
 
     const [loadingList, setLoadingList] = useState(false);
     const [currentSearch, setCurrentSearch] = useState('');

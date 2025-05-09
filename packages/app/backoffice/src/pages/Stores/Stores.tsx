@@ -29,7 +29,7 @@ export default function Stores() {
     const [openDrawer, toggleDrawer] = useDrawer();
 
     const { sites } = useSites();
-    const { filter, filtered, reset } = useFilter(sites);
+    const { filter, filtered, reset } = useFilter(sites, []);
 
     const [loadingList, setLoadingList] = useState(false);
     const [currentSearch, setCurrentSearch] = useState('');
@@ -44,8 +44,6 @@ export default function Stores() {
         handle: {
             change: (form) => {
                 const { name } = form.values;
-
-                console.log({ currentSearch, name });
 
                 if (currentSearch === name) { return; }
 
@@ -69,7 +67,6 @@ export default function Stores() {
     const resetForm = () => { formGroup.setValues({ name: '' }); };
 
     const handleSelectStore = (site: Site) => {
-        console.log(site);
         setSelectedStoreId(site.id);
         toggleDrawer();
     };

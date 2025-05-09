@@ -63,7 +63,7 @@ function Typography({
     const c = convertPathToColor(color, palette);
 
     return (
-        <CustomTag className={cls} style={{ ...props.style, color: c }}>
+        <CustomTag className={cls} style={{ color: c, ...props.style, }}>
             {children}
         </CustomTag>
     );
