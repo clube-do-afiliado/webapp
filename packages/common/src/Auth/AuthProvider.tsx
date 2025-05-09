@@ -163,65 +163,42 @@ export default function AuthProvider({
     };
 
     const loginWithGoogle = async () => {
-        if (!sitesServices) { throw new Error('sitesServices is not defined'); }
+        try {
+            if (!sitesServices) { throw new Error('sitesServices is not defined'); }
 
-        return authServices.loginWithGoogle()
-            .then(user => {
-                logger.info('usuário criado no autenticador!', user);
-                return user;
-            })
-            .then(async user => {
-                if (!user) { throw new Error('Erro ao autenticar'); }
+            const googleUser = await authServices.loginWithGoogle();
 
-                const userByEmail = await usersServices.getByEmail(user.email);
+            if (!googleUser) { throw new Error('Erro ao autenticar'); }
 
-                if (userByEmail) {
-                    redirect(userByEmail as UserData);
+            logger.info('usuário criado no autenticador!', user);
 
-                    return;
-                }
+            const userByEmail = await usersServices.getByEmail(googleUser.email);
 
-                return user;
-            })
-            .then(user => {
-                if (!user) { return; }
+            if (userByEmail) {
+                redirect(userByEmail as UserData);
 
-                return usersServices.createByAuth({
-                    id: user?.user_id as string,
-                    email: user?.email || '',
-                    name: ''
-                });
-            })
-            .then(user => {
-                if (!user) { return; }
+                return;
+            }
 
-                logger.info('usuario criado!', user);
-                return user;
-            })
-            .then(async user => {
-                if (!user) { return; }
+            const createdUser = await usersServices.createByAuth({
+                id: googleUser?.user_id as string,
+                email: googleUser?.email || '',
+                name: ''
+            }).then(() => logger.info('usuario criado!', createdUser));
 
-                await sitesServices.create(generateDefaultSite(`Loja ${user.name || user.email}`, user.id))
-                    .then(() => logger.log('loja criada!'));
+            sitesServices.create(generateDefaultSite(`Loja ${createdUser.name || createdUser.email}`, createdUser.id))
+                .then(() => logger.log('loja criada!'));
 
-                return user;
-            })
-            .then(user => {
-                if (!user) { return; }
-
-                redirect(user as UserData);
-            })
-            .catch((e) => {
-                const { code } = e;
-
-                addAlert({
-                    color: 'error',
-                    message: FIREBASE[code] || 'Erro ao fazer login',
-                    icon: <Icon name="error" />,
-                });
-
-                logger.info('Error on login:', { e });
+            redirect(user as UserData);
+        } catch (error: any) {
+            addAlert({
+                color: 'error',
+                message: FIREBASE[error?.code] || 'Erro ao fazer login',
+                icon: <Icon name="error" />,
             });
+
+            logger.info('Error on login:', { error });
+        }
     };
 
     const createByAuth = async ({ email, name, password }: BasicUser) => {
