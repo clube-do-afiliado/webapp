@@ -7,6 +7,7 @@ import { useTheme, type PaletteBuilded } from '../theme';
 export type ColorOptions = {
     color: (palette: PaletteBuilded) => string;
     background: (palette: PaletteBuilded) => string;
+    borderColor: (palette: PaletteBuilded) => string;
     backgroundColor: (palette: PaletteBuilded) => string;
 };
 
@@ -40,9 +41,20 @@ function defineColor(options: CustomOptions): CSSProperties {
     };
 };
 
+function defineBorderColor(options: CustomOptions): CSSProperties {
+    const { theme: { palette } } = useTheme();
+
+    if (!options.color) { return {}; }
+
+    return {
+        borderColor: options.color(palette)
+    };
+};
+
 export default function defineColors(): Plugin[] {
     return [
         defineColor,
+        defineBorderColor,
         defineBackground,
         defineBackgroundColor,
     ];

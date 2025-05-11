@@ -1,0 +1,19 @@
+import type { Timestamp } from 'firebase/firestore';
+
+export type EventName = 'rp_view' | 'ldp_view' | 'ldp_cta';
+export type EventSource = 'whatsapp' | 'telegram' | 'instagram' | 'others' | 'facebook' | 'youtube' | 'others';
+
+export interface EventData {
+    storeId: string;
+    productId?: string;
+
+    name: EventName;
+    createdAt: Timestamp;
+
+    utmCampaign?: string;
+    utmSource: EventSource;
+}
+
+export interface EventConfig extends Omit<EventData, 'createdAt'> {
+    createdAt: Date;
+}

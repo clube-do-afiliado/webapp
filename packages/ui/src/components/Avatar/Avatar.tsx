@@ -36,7 +36,7 @@ function Avatar({ src, alt, name, icon, ...props }: AvatarProps) {
     };
 
     return (
-        <div {...props} className={className} style={{ ...props.style }}>
+        <div {...props} className={className}>
             {content()}
             {props.onClick && <Ripple />}
         </div>

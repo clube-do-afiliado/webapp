@@ -9,13 +9,16 @@ import { maskCurrency } from '@cda/toolkit/mask';
 
 import type { Site } from '@cda/services/sites';
 import type { Product } from '@cda/services/products';
+import type { EventSource } from '@cda/services/events';
 import type { Integration } from '@cda/services/integrations';
 
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import { baseUrl } from '@/services/core';
 import Content from '@/components/Content';
+import Backdoor from '@/components/Backdoor';
 import BaseProviders from '@/providers/BaseProviders';
+import { baseUrl } from '@/services/core';
+import { trackLDP, TrackParams } from '@/services/trackService';
 
 import './ProductPage.scss';
 
@@ -54,8 +57,12 @@ export async function generateMetadata({ params, }: NextPageProps<{
     };
 }
 
-export default async function Page({ params }: NextPageProps<{ siteSlug: string; productSlug: string }>) {
+export default async function Page({ params, searchParams }: NextPageProps<{ siteSlug: string; productSlug: string }>) {
     const { siteSlug, productSlug } = await params;
+    const queryParams = await searchParams ?? {};
+
+    const utmSource = queryParams.utm_source as EventSource;
+    const utmCampaign = queryParams.utm_campaign as string;
 
     const {
         site,
@@ -67,8 +74,23 @@ export default async function Page({ params }: NextPageProps<{ siteSlug: string;
 
     const { primaryColor, secondaryColor } = site.theme;
 
+    const trackParams: TrackParams = {
+        storeId: site.id,
+        productId: product.id,
+        utmSource,
+        utmCampaign
+    };
+
+    await trackLDP(site.slug, product.id, trackParams);
+
     return (
         <BaseProviders site={site}>
+            <Backdoor
+                url={product.url}
+                siteSlug={site.slug}
+                productSlug={product.slug}
+                params={trackParams}
+            />
             <div className="product-page">
                 <Header site={site} />
                 <Content>

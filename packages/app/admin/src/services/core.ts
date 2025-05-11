@@ -11,9 +11,10 @@ import UserServices from '@cda/services/user';
 import RolesServices from '@cda/services/roles';
 import PlansServices from '@cda/services/plans';
 import SitesServices from '@cda/services/sites';
+import EventsServices from '@cda/services/events';
 import ServerFunctions from '@cda/services/serverFunctions';
 import IntegrationsServices from '@cda/services/integrations';
-import ProductsServices, { ProductInfo } from '@cda/services/products';
+import ProductsServices, { type ProductInfo } from '@cda/services/products';
 
 // VARIABLES
 export const url = {
@@ -61,10 +62,10 @@ export const userServices = new UserServices(db, url.sso);
 export const rolesServices = new RolesServices(db);
 export const plansServices = new PlansServices(db);
 export const sitesServices = new SitesServices(db);
+export const eventsServices = new EventsServices(db);
 export const productsServices = new ProductsServices(db);
 export const integrationsServices = new IntegrationsServices(db);
 
 export const serverFunctions = new ServerFunctions({
     'getInfo': httpsCallable<{ url: string }, ProductInfo>(functions, 'getInfo'),
 });
-

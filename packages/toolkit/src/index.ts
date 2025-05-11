@@ -1,6 +1,7 @@
 export * from './dom';
 export * from './jwt';
 export * from './url';
+export * from './date';
 export * from './mask';
 export * from './file';
 export * from './uuid';

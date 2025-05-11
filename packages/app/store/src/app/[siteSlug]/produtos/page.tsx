@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import type { Site } from '@cda/services/sites';
 import type { Product } from '@cda/services/products';
 import type { Integration } from '@cda/services/integrations';
+import type { EventSource } from '@cda/services/events';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -12,15 +13,16 @@ import Content from '@/components/Content';
 import Products from '@/components/Products';
 import BaseProviders from '@/providers/BaseProviders';
 import { baseUrl } from '@/services/core';
+import { trackRP } from '@/services/trackService';
 
 import './ProductsPage.scss';
 
 interface NextPageProps<
-    TParams extends Record<string, unknown> = Record<string, unknown>,
-    TSearchParams extends Record<string, unknown> = Record<string, unknown>
+    Params extends Record<string, unknown> = Record<string, unknown>,
+    SearchParams extends Record<string, unknown> = Record<string, unknown>
 > {
-    params: Promise<TParams>;
-    searchParams: Promise<TSearchParams>;
+    params: Promise<Params>;
+    searchParams: Promise<SearchParams>;
 }
 
 async function getData(siteSlug: string): Promise<{
@@ -47,14 +49,20 @@ export async function generateMetadata({ params }: NextPageProps<{ siteSlug: str
     };
 }
 
-export default async function Page({ params }: NextPageProps<{ siteSlug: string }>) {
+export default async function Page({ params, searchParams }: NextPageProps<{ siteSlug: string; }>) {
     const { siteSlug } = await params;
+    const queryParams = await searchParams ?? {};
+
+    const utmSource = queryParams.utm_source as EventSource;
+    const utmCampaign = queryParams.utm_campaign as string;
 
     const {
         site,
         integrations,
         products
     } = await getData(siteSlug);
+
+    await trackRP(siteSlug, { storeId: site.id, utmSource, utmCampaign });
 
     return (
         <BaseProviders site={site}>

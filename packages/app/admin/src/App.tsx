@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider, useTheme } from '@cda/ui/theme';
 import logger from '@cda/toolkit/logger';
 
 import { UserProvider } from '@cda/common/User';
+import { EventProvider } from '@cda/common/Event';
 import { ProductsProvider } from '@cda/common/Products';
 import { AuthProvider, useAuth } from '@cda/common/Auth';
 import { SitesProvider, useSites } from '@cda/common/Sites';
@@ -24,6 +25,7 @@ import {
     sitesServices,
     productsServices,
     integrationsServices,
+    eventsServices,
 } from '@/services/core';
 
 function setFavicon(color: string) {
@@ -84,7 +86,9 @@ function Providers({ children }: PropsWithChildren) {
                 <IntegrationsProvider integrationsServices={integrationsServices}>
                     <SitesProvider sitesServices={sitesServices}>
                         <ProductsProvider productsServices={productsServices}>
-                            {children}
+                            <EventProvider eventsServices={eventsServices}>
+                                {children}
+                            </EventProvider>
                         </ProductsProvider>
                     </SitesProvider>
                 </IntegrationsProvider>

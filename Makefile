@@ -83,5 +83,5 @@ db-write:
 	@cd packages/db && firebase emulators:start --import ./mock --export-on-exit ./mock
 
 db:
-	@printf "${WARN_TEXT} Starting Firestore emulator... ${RESET_TEXT}"
+	@printf "${WARN_TEXT} Starting Firestore emulator...${RESET_TEXT}"
 	@cd packages/db && firebase emulators:start --import ./mock
