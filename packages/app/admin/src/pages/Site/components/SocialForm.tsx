@@ -49,13 +49,12 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
     }, [site]);
 
     return (
-        <div ref={ref}>
+        <Stack spacing="small">
+            <Typography noMargin variant="subtitle1">Redes sociais</Typography>
             <Card>
                 <CardContent>
                     <Form formGroup={formGroup}>
                         <Stack>
-                            <Typography noMargin variant="subtitle1">Redes sociais</Typography>
-
                             <Grid xl={6} lg={6} md={6} sm={12}>
                                 {
                                     Object.keys(defaultSite.socials)
@@ -95,6 +94,6 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
                     </Form>
                 </CardContent>
             </Card>
-        </div>
+        </Stack>
     );
 });

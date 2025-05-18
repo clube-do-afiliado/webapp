@@ -1,10 +1,10 @@
 import { createContext, PropsWithChildren, useMemo, useState } from 'react';
 
-import { subDays } from '@cda/toolkit/date';
+import { groupBy } from '@cda/toolkit/array';
 
-import EventsServices, { type EventData } from '@cda/services/events';
+import EventsServices, { type EventFilter, EventData } from '@cda/services/events';
 
-type Events = {
+export type Events = {
     impressions: EventData[];
     visualizations: EventData[];
 }
@@ -12,7 +12,8 @@ type Events = {
 export interface EventContextConfig {
     events: Events;
 
-    getEvents: (storeId: string) => Promise<void>;
+    getEvents: (storeId: string, dates: EventFilter) => Promise<void>;
+    getProductEvents: (storeId: string, productId: string, options: EventFilter) => Promise<void>;
 }
 
 const EVENT_DEFAULT: Events = { impressions: [], visualizations: [] };
@@ -21,6 +22,7 @@ export const EventContext = createContext<EventContextConfig>({
     events: EVENT_DEFAULT,
 
     getEvents: () => Promise.resolve(),
+    getProductEvents: () => Promise.resolve(),
 });
 
 type EventProviderProps = PropsWithChildren<{
@@ -33,32 +35,61 @@ export default function EventProvider({ eventsServices, children }: EventProvide
     const context = useMemo<EventContextConfig>(() => ({
         events,
 
-        getEvents: (storeId) => getEvents(storeId),
+        getEvents: (storeId, dates) => getEvents(storeId, dates),
+
+        getProductEvents: (storeId, productId, options) => getProductEvents(storeId, productId, options)
     }), [events]);
 
-    const getEvents = async (storeId: string) => {
+    const getEvents = async (storeId: string, options: EventFilter) => {
+        console.log('getEvents', options);
+
         const [impressions, visualizations] = await Promise.all([
-            getImpressions(storeId),
-            getVisualizations(storeId),
+            getImpressions(storeId, options),
+            getVisualizations(storeId, options),
         ]);
+
+        if (options.unique) {
+            setEvents({
+                impressions: groupBy(impressions, ['anonymousId', 'utmSource', 'utmCampaign']),
+                visualizations: groupBy(visualizations, ['anonymousId', 'utmSource', 'utmCampaign']),
+            });
+            return;
+        }
 
         setEvents({ impressions, visualizations });
     };
 
-    const getImpressions = async (storeId: string) => {
-        return eventsServices.getImpressions({
-            storeId: storeId,
-            startDate: subDays(new Date(), 10),
-            endDate: new Date()
-        });
+    const getImpressions = async (storeId: string, dates: EventFilter) => {
+        return eventsServices.getImpressions({ storeId, ...dates });
     };
 
-    const getVisualizations = async (storeId: string) => {
-        return eventsServices.getVisualizations({
-            storeId: storeId,
-            startDate: subDays(new Date(), 10),
-            endDate: new Date()
-        });
+    const getVisualizations = async (storeId: string, dates: EventFilter) => {
+        return eventsServices.getVisualizations({ storeId, ...dates });
+    };
+
+    const getProductEvents = async (storeId: string, productId: string, options: EventFilter) => {
+        const [impressions, visualizations] = await Promise.all([
+            getProductImpressions(storeId, productId, options),
+            getProductVisualizations(storeId, productId, options),
+        ]);
+
+        if (options.unique) {
+            setEvents({
+                impressions: groupBy(impressions, ['anonymousId', 'utmSource', 'utmCampaign']),
+                visualizations: groupBy(visualizations, ['anonymousId', 'utmSource', 'utmCampaign']),
+            });
+            return;
+        }
+
+        setEvents({ impressions, visualizations });
+    };
+
+    const getProductImpressions = async (storeId: string, productId: string, dates: EventFilter) => {
+        return eventsServices.getProductImpressions({ storeId, productId, ...dates });
+    };
+
+    const getProductVisualizations = async (storeId: string, productId: string, dates: EventFilter) => {
+        return eventsServices.getProductVisualizations({ storeId, productId, ...dates });
     };
 
     return (

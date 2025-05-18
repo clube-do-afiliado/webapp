@@ -31,3 +31,10 @@ export function getDomain() {
 
     return match ? ['.', match[1]].join('') : hostname;
 }
+
+export function serialize(data: Record<string, any>) {
+    if (Object.keys(data).some((key) => key)) {
+        const url = new URLSearchParams(data).toString();
+        return url;
+    }
+}

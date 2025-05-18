@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 
 import Stack from '@cda/ui/components/Stack';
 import Button from '@cda/ui/components/Button';
+import Loading from '@cda/ui/components/Loading';
 import InputFile from '@cda/ui/components/InputFile';
 import Typography from '@cda/ui/components/Typography';
-import { HelperModalProps, Modal, ModalFooter } from '@cda/ui/components/Modal';
 import { Form, FormControl, useForm, Control } from '@cda/ui/components/Form';
-import Loading from '@cda/ui/components/Loading';
+import { HelperModalProps, Modal, ModalFooter } from '@cda/ui/components/Modal';
 
 import { generateBytesSize } from '@cda/toolkit/file';
 
@@ -78,7 +78,6 @@ export default function ImageModal({ isOpen, siteId, onSave, onToggleModal }: He
                     </ModalFooter>
                 </Stack>
             </Form>
-
         </Modal>
     );
 }

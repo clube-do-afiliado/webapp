@@ -20,7 +20,7 @@ type FormValues = {
 };
 
 const meta: Meta<typeof MultiSelect> = {
-    title: 'components/MultiSelect',
+    title: 'components/Fields/MultiSelect',
     component: MultiSelect,
 };
 

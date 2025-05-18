@@ -4,18 +4,11 @@ import type { Metadata } from 'next';
 
 import type { Site } from '@cda/services/sites';
 import type { Product } from '@cda/services/products';
-import type { Integration } from '@cda/services/integrations';
 import type { EventSource } from '@cda/services/events';
+import type { Integration } from '@cda/services/integrations';
 
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import Content from '@/components/Content';
-import Products from '@/components/Products';
-import BaseProviders from '@/providers/BaseProviders';
+import RP from '@/template/RP';
 import { baseUrl } from '@/services/core';
-import { trackRP } from '@/services/trackService';
-
-import './ProductsPage.scss';
 
 interface NextPageProps<
     Params extends Record<string, unknown> = Record<string, unknown>,
@@ -62,21 +55,16 @@ export default async function Page({ params, searchParams }: NextPageProps<{ sit
         products
     } = await getData(siteSlug);
 
-    await trackRP(siteSlug, { storeId: site.id, utmSource, utmCampaign });
-
     return (
-        <BaseProviders site={site}>
-            <div className="products-page">
-                <Header site={site} />
-                <Content title="Produtos">
-                    <Products
-                        site={site}
-                        products={products}
-                        integrations={integrations}
-                    />
-                </Content>
-                <Footer site={site} />
-            </div>
-        </BaseProviders>
+        <RP
+            site={site}
+            products={products}
+            integrations={integrations}
+            params={{
+                utmSource,
+                utmCampaign,
+                storeId: site.id
+            }}
+        />
     );
 }

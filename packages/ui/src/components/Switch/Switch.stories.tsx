@@ -6,7 +6,7 @@ import { Form, Control, FormControl, useForm } from '@/components/Form';
 import Switch from './Switch';
 
 const meta: Meta<typeof Switch> = {
-    title: 'components/Switch',
+    title: 'components/Fields/Switch',
     component: Switch,
 };
 

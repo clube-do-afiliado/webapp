@@ -70,11 +70,11 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
 
     return (
         <div ref={ref}>
+            <Typography noMargin variant="subtitle1" sx={{ mb: 1 }}>Informações</Typography>
             <Card>
                 <CardContent>
                     <Form formGroup={formGroup}>
                         <Stack>
-                            <Typography noMargin variant="subtitle1">Informações</Typography>
 
                             <Grid xl={6} lg={6} md={6} sm={12}>
                                 <GridItem>

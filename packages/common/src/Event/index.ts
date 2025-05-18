@@ -1,2 +1,2 @@
 export { default as useEvent } from './useEvent';
-export { default as EventProvider } from './EventProvider';
+export { default as EventProvider, type Events } from './EventProvider';

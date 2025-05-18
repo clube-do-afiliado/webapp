@@ -38,7 +38,7 @@ export default function PlanDrawer({
                                     <Typography variant="h6" noMargin>{plan?.name}</Typography>
                                     <Dot color={plan?.color || ''} />
                                 </Stack>
-                                <ButtonIcon onClick={toggleEditModal}>
+                                <ButtonIcon color="text.secondary" onClick={toggleEditModal}>
                                     <Icon name="edit" />
                                 </ButtonIcon>
                             </Stack>

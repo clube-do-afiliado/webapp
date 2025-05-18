@@ -51,7 +51,7 @@ export default function ProductRow({ product, onToggleDrawer }: ProductRowProps)
                     <div className="image-container">
                         <Avatar src={product.images[0]} style={{ width: 45, height: 45 }} />
                     </div>
-                    <div className="text-contaier">
+                    <div className="text-container">
                         <span>{product.name}</span>
                     </div>
                     <div className="image-integration-container">

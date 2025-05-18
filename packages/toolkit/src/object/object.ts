@@ -12,3 +12,35 @@ export function deepCopy<T extends Array<any> | Record<string, any>>(obj: T) {
 
     return copy as T;
 }
+
+export function isEmptyObject(obj: any) {
+    if (!obj || typeof obj !== 'object') { return false; }
+    return !Object.keys(obj).length;
+}
+
+export function removeEmptyProperties<T>(obj: T, onlyNullishValues = false): T {
+    return _removeEmptyProperties(obj, onlyNullishValues);
+}
+
+function _removeEmptyProperties<T>(obj: T, onlyNullishValues = false, recursion = false): T {
+    const data = recursion ? obj : deepCopy(obj);
+
+    for (const key in data) {
+        const isPropertyObject = data[key] !== null && typeof data[key] === 'object';
+        if (isPropertyObject) {
+            _removeEmptyProperties(data[key], onlyNullishValues, true);
+        }
+
+        let shouldDelete = !data[key] || isEmptyObject(data[key]);
+
+        if (onlyNullishValues) {
+            shouldDelete = data[key] === null || data[key] === undefined;
+        }
+
+        if (shouldDelete) {
+            delete data[key];
+        }
+    }
+
+    return data || {} as T;
+}

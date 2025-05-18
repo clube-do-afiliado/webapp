@@ -66,8 +66,7 @@ export default class AuthServices {
     public async sendMailToResetPassword(email: string) {
         if (!this.methods.sendPasswordResetEmail) { return; }
 
-        return this.methods?.sendPasswordResetEmail(email)
-            .then(console.log);
+        return this.methods?.sendPasswordResetEmail(email);
     }
 
     public async confirmPasswordReset(password: string) {
@@ -81,7 +80,6 @@ export default class AuthServices {
             return;
         }
 
-        return this.methods?.confirmPasswordReset(oobCode, password)
-            .then(console.log);
+        return this.methods?.confirmPasswordReset(oobCode, password);
     }
 }

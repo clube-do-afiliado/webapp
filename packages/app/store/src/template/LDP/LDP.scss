@@ -1,13 +1,6 @@
 .product-page {
     height: 100%;
 
-    h3,
-    h2,
-    h1 {
-        margin-block-start: 0px;
-        margin-block-end: 0px;
-    }
-
     &__content {
         width: 100%;
         margin-top: 30px;
@@ -47,6 +40,11 @@
 
                 .product-image {
                     height: max-content !important;
+
+
+                    @include for-sm {
+                        width: 100%;
+                    }
                 }
             }
         }

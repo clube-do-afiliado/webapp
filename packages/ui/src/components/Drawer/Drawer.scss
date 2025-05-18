@@ -1,5 +1,3 @@
-// @use "../../styles/main.scss" as *
-
 .ui-drawer {
     top: 0;
     left: 0;
@@ -8,7 +6,7 @@
     position: fixed;
     overflow: hidden;
     transition: all ease-in-out 0.3s;
-    z-index: 80;
+    z-index: 50;
 
     &-overlay {
         position: fixed;
@@ -19,7 +17,7 @@
         opacity: 0;
         background-color: rgba(0, 0, 0, 0.64);
         transition: all ease-in-out 0.3s;
-        z-index: 80;
+        z-index: 50;
 
         &.show {
             opacity: 1;
@@ -44,7 +42,8 @@
             padding: 1rem;
             max-height: calc(100vh - (70px + 70px));
 
-            overflow: auto;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .close-button {
@@ -88,7 +87,7 @@
             border-radius: var(--radius) var(--radius) 0 0;
             padding: 0 0 40px 0;
             transform: translateY(100%);
-            height: 85vh;
+            height: auto;
 
             &.show {
                 transform: translateY(0px);

@@ -64,7 +64,8 @@ export default function Profile({ storage, onUpdateUser }: ProfileProps) {
                 </div>
 
                 <Button
-                    variant="outlined"
+                    variant="contained"
+                    color="secondary"
                     startIcon={<Icon name="edit" />}
                     onClick={toggle}
                 >

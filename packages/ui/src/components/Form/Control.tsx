@@ -8,7 +8,7 @@ interface ControlProps<
     Form, Key extends keyof Form = keyof Form
 > extends InputHTMLAttributes<InputHTMLAttributes<any>> {
     controlName: Key;
-    action?: 'onChange' | 'onInput';
+    action?: 'onChange' | 'onInput' | 'onBlur';
     type?: 'text' | 'checkbox' | 'radio' | 'number' | 'object';
     field: (control: FormControl<any>) => React.JSX.Element;
 }
@@ -35,7 +35,7 @@ export default function Control<Form>({
             onBlur: (e: any) => {
                 control.dirty = true;
 
-                update(getValue(e));
+                if (action === 'onBlur') { update(getValue(e)); };
 
                 if (child.props.onBlur) { child.props.onBlur(e); }
             },

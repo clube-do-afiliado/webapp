@@ -5,7 +5,7 @@ import Box from '@/components/Box';
 import ColorPicker from './ColorPicker';
 
 const meta: Meta<typeof ColorPicker> = {
-    title: 'components/ColorPicker',
+    title: 'components/Fields/ColorPicker',
     component: ColorPicker,
 };
 

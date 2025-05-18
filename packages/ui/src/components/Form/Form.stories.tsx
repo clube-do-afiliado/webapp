@@ -6,12 +6,12 @@ import { Select, Option } from '@/components/Select';
 import { Card, CardContent } from '@/components/Card';
 
 import Form from './Form';
+import Icon from '../Icon';
+import Stack from '../Stack';
 import Control from './Control';
 import useForm from './useForm';
-import FormControl from './formControl';
-import Stack from '../Stack';
 import ButtonIcon from '../ButtonIcon';
-import Icon from '../Icon';
+import FormControl from './formControl';
 import ColorPicker from '../ColorPicker';
 
 const meta: Meta<typeof Form> = {

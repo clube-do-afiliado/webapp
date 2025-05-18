@@ -9,7 +9,17 @@ function sanitizeOnlyNumbers(value: string) {
     return value.replace(regex, '');
 }
 
-export default function useControl<T, K extends keyof T>(controlName: K, delay = 0) {
+type Options = {
+    delay: number;
+    shouldGetDirty: boolean;
+}
+
+export default function useControl<T, K extends keyof T>(
+    controlName: K,
+    options: Partial<Options> = { delay: 0, shouldGetDirty: true }
+) {
+    const { delay, shouldGetDirty } = options;
+
     const { formGroup } = useContext(FormContext);
     const control = formGroup.controls[controlName] as AbstractControl<T>[K];
 
@@ -22,9 +32,15 @@ export default function useControl<T, K extends keyof T>(controlName: K, delay =
         };
 
         debounce.delay(() => {
+            if (shouldGetDirty) { control.dirty = true; }
+
             control.value = value;
 
-            formGroup.update({ [controlName]: shouldSanitize ? sanitezeMap[control.type](value) : value });
+            formGroup.update({
+                [controlName]: shouldSanitize
+                    ? sanitezeMap[control.type](value)
+                    : value
+            });
         }, delay);
     };
 

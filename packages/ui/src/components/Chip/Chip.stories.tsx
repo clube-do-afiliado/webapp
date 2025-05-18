@@ -25,7 +25,7 @@ export const template: StoryObj<typeof Chip> = {
 export const colors: StoryObj<typeof Chip> = {
     render: () => {
         return (
-            <>
+            <Stack spacing="small">
                 <Stack orientation="row" spacing="small">
                     <Chip label="primary" color="primary" variant="contained" />
                     <Chip label="secondary" color="secondary" variant="contained" />
@@ -43,7 +43,7 @@ export const colors: StoryObj<typeof Chip> = {
                     <Chip label="warning" color="warning" variant="outlined" />
                     <Chip label="info" color="info" variant="outlined" />
                 </Stack>
-            </>
+            </Stack>
         );
     }
 };
@@ -51,7 +51,7 @@ export const colors: StoryObj<typeof Chip> = {
 export const WithIcon: StoryObj<typeof Chip> = {
     render: () => {
         return (
-            <Stack orientation="row" spacing="small">
+            <Stack spacing="small">
                 <Stack orientation="row" spacing="small">
                     <Chip icon={<Icon name="user" />} label="primary" color="primary" variant="contained" />
                     <Chip icon={<Icon name="user" />} label="secondary" color="secondary" variant="contained" />

@@ -13,9 +13,9 @@ export default function ProductTable({ products, onToggleDrawer }: ProductTableP
     return (
         <Table className="product-table">
             <TableHeader>
-                <TableCell align="left" style={{ width: 400 }}>Nome do produto</TableCell>
-                <TableCell align="center" style={{ width: 250 }}>Loja</TableCell>
-                <TableCell align="center">Preço</TableCell>
+                <TableCell align="left">Nome do produto</TableCell>
+                <TableCell align="center" style={{ width: 350 }}>Loja</TableCell>
+                <TableCell align="center" style={{ width: 400 }}>Preço</TableCell>
                 <TableCell align="right" style={{ width: 50 }}>Visibilidade</TableCell>
                 <TableCell align="right" style={{ width: 50 }}>Ações</TableCell>
             </TableHeader>

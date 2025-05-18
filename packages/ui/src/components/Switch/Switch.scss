@@ -51,10 +51,6 @@
         border-radius: 100px;
         position: relative;
         transition: background-color .2s;
-
-        &:active .ui-switch__button {
-            width: 30px;
-        }
     }
 
     &__button {

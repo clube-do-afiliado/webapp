@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { productsServices, sitesServices, integrationsServices, serverFunctions } from '@/services/core';
+import { removeEmptyProperties } from '@cda/toolkit/object';
+
 import { TrackParams } from '@/services/trackService';
+import { productsServices, sitesServices, integrationsServices, serverFunctions } from '@/services/core';
 
 type RequestContext = {
     params: Promise<{
@@ -26,14 +28,12 @@ export async function GET(_: NextRequest, context: RequestContext) {
 }
 
 export async function POST(req: NextRequest) {
-    const body = (await req.json()) as TrackParams;
+    const data = (await req.json()) as TrackParams;
 
     const res = await serverFunctions.getFunction('track', {
-        name: 'ldp_view',
+        name: 'rp_view',
         createdAt: new Date(),
-        storeId: body.storeId,
-        utmSource: body.utmSource,
-        utmCampaign: body.utmCampaign
+        ...removeEmptyProperties(data)
     });
 
     return NextResponse.json(res, { status: 200 });

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { productsServices, sitesServices, integrationsServices, serverFunctions } from '@/services/core';
+import { removeEmptyProperties } from '@cda/toolkit/object';
+
 import { Action, TrackParams } from '@/services/trackService';
+import { productsServices, sitesServices, integrationsServices, serverFunctions } from '@/services/core';
 
 type RequestContext = {
     params: Promise<{
@@ -37,12 +39,9 @@ export async function POST(req: NextRequest) {
 
 async function trackLDPVisualization(data: TrackParams) {
     const res = await serverFunctions.getFunction('track', {
-        storeId: data.storeId,
-        productId: data.productId,
         name: 'ldp_view',
         createdAt: new Date(),
-        utmSource: data.utmSource,
-        utmCampaign: data.utmCampaign
+        ...removeEmptyProperties(data)
     });
 
     return NextResponse.json(res, { status: 200 });
@@ -50,12 +49,9 @@ async function trackLDPVisualization(data: TrackParams) {
 
 async function trackLDPImpression(data: TrackParams) {
     const res = await serverFunctions.getFunction('track', {
-        storeId: data.storeId,
-        productId: data.productId,
         name: 'ldp_cta',
         createdAt: new Date(),
-        utmSource: data.utmSource,
-        utmCampaign: data.utmCampaign
+        ...removeEmptyProperties(data)
     });
 
     return NextResponse.json(res, { status: 200 });

@@ -14,8 +14,11 @@
   },
   "dependencies": {
     "@firebase/auth": "^1.9.1",
+    "apexcharts": "^4.7.0",
+    "copy-to-clipboard": "^3.3.3",
     "firebase": "^11.5.0",
     "react": "^19.0.0",
+    "react-apexcharts": "^1.7.0",
     "react-dom": "^19.0.0",
     "react-gtm-module": "^2.0.11",
     "react-router-dom": "^7.4.0",

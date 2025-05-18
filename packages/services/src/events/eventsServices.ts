@@ -9,6 +9,13 @@ interface GetListData {
     endDate: Date;
 }
 
+interface GetProductListData {
+    storeId: string;
+    productId: string;
+    startDate: Date;
+    endDate: Date;
+}
+
 export default class EventsServices {
     private static PATH = 'events';
 
@@ -34,6 +41,34 @@ export default class EventsServices {
             filters: [
                 { field: 'name', operator: 'in', value: ['ldp_cta'] },
                 { field: 'storeId', operator: '==', value: storeId },
+                { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
+                { field: 'createdAt', operator: '<=', value: Timestamp.fromDate(endDate) },
+            ],
+        });
+    }
+
+    async getProductVisualizations({ storeId, productId, endDate, startDate }: GetProductListData) {
+        return this.db.getList<EventData>({
+            path: EventsServices.PATH,
+            pathSegments: [],
+            filters: [
+                { field: 'name', operator: 'in', value: ['rp_view', 'ldp_view'] },
+                { field: 'storeId', operator: '==', value: storeId },
+                { field: 'productId', operator: '==', value: productId },
+                { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
+                { field: 'createdAt', operator: '<=', value: Timestamp.fromDate(endDate) },
+            ],
+        });
+    }
+
+    async getProductImpressions({ storeId, productId, endDate, startDate }: GetProductListData) {
+        return this.db.getList<EventData>({
+            path: EventsServices.PATH,
+            pathSegments: [],
+            filters: [
+                { field: 'name', operator: 'in', value: ['ldp_cta'] },
+                { field: 'storeId', operator: '==', value: storeId },
+                { field: 'productId', operator: '==', value: productId },
                 { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
                 { field: 'createdAt', operator: '<=', value: Timestamp.fromDate(endDate) },
             ],

@@ -9,7 +9,7 @@ import Option from './Option';
 import Icon from '../Icon';
 
 const meta: Meta<typeof Select> = {
-    title: 'components/Select',
+    title: 'components/Fields/Select',
     component: Select,
 };
 

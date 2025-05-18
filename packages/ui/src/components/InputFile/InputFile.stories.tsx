@@ -8,7 +8,7 @@ import { Control, Form, FormControl, useForm } from '../Form';
 import InputFile from './InputFile';
 
 const meta: Meta<typeof InputFile> = {
-    title: 'components/InputFile',
+    title: 'components/Fields/InputFile',
     component: InputFile,
 };
 

@@ -1,19 +1,28 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Page from '@cda/ui/layout/Page';
 import Icon from '@cda/ui/components/Icon';
+import Stack from '@cda/ui/components/Stack';
+import Avatar from '@cda/ui/components/Avatar';
 import Button from '@cda/ui/components/Button';
+import Tooltip from '@cda/ui/components/Tooltip';
+import Typography from '@cda/ui/components/Typography';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
 import { Card, CardContent } from '@cda/ui/components/Card';
-import Stack from '@cda/ui/components/Stack';
-import Typography from '@cda/ui/components/Typography';
-import Avatar from '@cda/ui/components/Avatar';
+
+import { subMonths } from '@cda/toolkit/date';
+
+import type { EventFilter } from '@cda/services/events';
 
 import { useSites } from '@cda/common/Sites';
-import { useProducts } from '@cda/common/Products';
 import { useEvent } from '@cda/common/Event';
+import { useProducts } from '@cda/common/Products';
+import { EmptyContent } from '@cda/common/EmptyContent';
 
 import { release } from '@/services/core';
+import ResourceChart from '@/components/ResourceChart';
+import { Filter, useEventsFilter } from '@/components/Filter';
+import TotalSourcesChart from '@/components/TotalSourcesChart';
 
 import AnalyticCard from './components/AnalyticCard';
 
@@ -21,6 +30,19 @@ export default function Home() {
     const { userSites } = useSites();
     const { events, getEvents } = useEvent();
     const { products, getStoreProducts } = useProducts();
+
+    const [params, setParams] = useState<EventFilter>({
+        endDate: new Date(),
+        startDate: subMonths(new Date(), 1),
+        unique: false
+    });
+
+    const formGroup = useEventsFilter((options) => {
+        setParams(options);
+        fetchEvents(options);
+    });
+
+    const [loading, setLoading] = useState(true);
 
     const storeId = useMemo(() => {
         if (!userSites.length) { return ''; }
@@ -34,11 +56,19 @@ export default function Home() {
         setup();
     }, [userSites]);
 
-    const fetchEvents = () => { return getEvents(storeId); };
+    const fetchEvents = async (options: EventFilter) => {
+        setLoading(true);
+
+        const result = await getEvents(storeId, options);
+
+        setTimeout(() => { setLoading(false); }, 1000);
+
+        return result;
+    };
 
     const setup = async () => {
         return await Promise.all([
-            fetchEvents(),
+            fetchEvents(params),
             getStoreProducts(storeId),
         ]);
     };
@@ -51,60 +81,122 @@ export default function Home() {
                 <Button
                     variant="outlined"
                     startIcon={<Icon name="sync" />}
-                    onClick={fetchEvents}
+                    onClick={() => fetchEvents(params)}
                 >
                     Atualizar
                 </Button>
             }
             release={release}
         >
-            <Grid>
-                <GridItem xl={12} lg={12} md={12} sm={12}>
-                    <Card sx={{ background: ({ secondary }) => secondary.main }}>
-                        <CardContent>
-                            <Stack orientation="row" alignItems="center">
-                                <Avatar
-                                    icon={<Icon name="rocket" />}
-                                />
-                                <Stack spacing="small">
-                                    <Typography noMargin variant="h5" color="primary.main">
-                                        Desbloqueie todo o potencial!
-                                    </Typography>
-                                    <Typography noMargin variant="body2" color="secondary.contrastText">
-                                        Atualize para o plano premium e aproveite recursos
-                                        exclusivos que vão turbinar sua experiência.
-                                    </Typography>
-                                </Stack>
-                                <Button style={{ width: 280, minWidth: 280 }}>Conhecer o plano premium</Button>
+            <Stack>
+                <Card sx={{ background: ({ secondary }) => secondary.main }}>
+                    <CardContent>
+                        <Stack orientation="row" alignItems="center">
+                            <Avatar icon={<Icon name="rocket" />} />
+                            <Stack spacing="small">
+                                <Typography noMargin variant="h5" color="primary.main">
+                                    Desbloqueie todo o potencial!
+                                </Typography>
+                                <Typography noMargin variant="body2" color="secondary.contrastText">
+                                    Atualize para o plano premium e aproveite recursos
+                                    exclusivos que vão turbinar sua experiência.
+                                </Typography>
                             </Stack>
-                        </CardContent>
-                    </Card>
-                </GridItem>
-                <GridItem xl={4} lg={4} md={6} sm={12}>
-                    <AnalyticCard
-                        icon={<Icon name="shopping-basket" />}
-                        title="N° de produtos"
-                        tooltipLabel="Número de produtos cadastrados"
-                        value={products.length}
-                    />
-                </GridItem>
-                <GridItem xl={4} lg={4} md={6} sm={12}>
-                    <AnalyticCard
-                        icon={<Icon name="bolt" />}
-                        title="Impressões"
-                        tooltipLabel="Número de impressões em produtos que levaram até a url da promoção"
-                        value={events.impressions.length}
-                    />
-                </GridItem>
-                <GridItem xl={4} lg={4} md={12} sm={12}>
-                    <AnalyticCard
-                        icon={<Icon name="eye" />}
-                        title="Visualizações"
-                        tooltipLabel="teste"
-                        value={events.visualizations.length}
-                    />
-                </GridItem>
-            </Grid>
+                            <Button style={{ width: 280, minWidth: 280 }}>Conhecer o plano premium</Button>
+                        </Stack>
+                    </CardContent>
+                </Card>
+                {
+                    !events.impressions.length && !events.visualizations.length && (
+                        <Stack justifyContent="center" alignItems="center" sx={{ mt: 3 }}>
+                            <EmptyContent
+                                icon="chart-pie-alt"
+                                message="Nenhum evento por aqui"
+                            />
+                        </Stack>
+                    )
+                }
+                {
+                    Boolean(events.impressions.length || events.visualizations.length) && (
+                        <Grid>
+                            <GridItem xl={12} lg={12} md={12} sm={12}>
+                                <Filter formGroup={formGroup} />
+                            </GridItem>
+                            <GridItem xl={4} lg={4} md={6} sm={12}>
+                                <AnalyticCard
+                                    loading={loading}
+                                    title="N° de produtos"
+                                    icon={<Icon name="shopping-basket" />}
+                                    tooltip={
+                                        <Tooltip label="teste">
+                                            <Icon name="info-circle" color="text.secondary" />
+                                        </Tooltip>
+                                    }
+                                    value={products.length}
+                                />
+                            </GridItem>
+                            <GridItem xl={4} lg={4} md={6} sm={12}>
+                                <AnalyticCard
+                                    loading={loading}
+                                    title="Visualizações"
+                                    icon={<Icon name="eye" />}
+                                    tooltip={
+                                        <Tooltip label="teste">
+                                            <Icon name="info-circle" color="text.secondary" />
+                                        </Tooltip>
+                                    }
+                                    value={events.visualizations.length}
+                                />
+                            </GridItem>
+                            <GridItem xl={4} lg={4} md={12} sm={12}>
+                                <AnalyticCard
+                                    loading={loading}
+                                    title="Impressões"
+                                    icon={<Icon name="bolt" />}
+                                    tooltip={
+                                        <Tooltip
+                                            label="Número de impressões em produtos que levaram até a url da promoção"
+                                        >
+                                            <Icon name="info-circle" color="text.secondary" />
+                                        </Tooltip>
+                                    }
+                                    value={events.impressions.length}
+                                />
+                            </GridItem>
+                            <GridItem xl={8} lg={8} md={12} sm={12}>
+                                <ResourceChart
+                                    title="Visualizações"
+                                    loading={loading}
+                                    interval={formGroup.values.interval}
+                                    events={events.visualizations}
+                                />
+                            </GridItem>
+                            <GridItem xl={4} lg={4} md={6} sm={6}>
+                                <TotalSourcesChart
+                                    title="Visualizações"
+                                    loading={loading}
+                                    events={events.visualizations}
+                                />
+                            </GridItem>
+                            <GridItem xl={4} lg={4} md={6} sm={6}>
+                                <TotalSourcesChart
+                                    title="Impressões"
+                                    loading={loading}
+                                    events={events.impressions}
+                                />
+                            </GridItem>
+                            <GridItem xl={8} lg={8} md={12} sm={12}>
+                                <ResourceChart
+                                    title="Impressões"
+                                    loading={loading}
+                                    interval={formGroup.values.interval}
+                                    events={events.impressions}
+                                />
+                            </GridItem>
+                        </Grid>
+                    )
+                }
+            </Stack>
         </Page>
     );
 }

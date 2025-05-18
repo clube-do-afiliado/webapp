@@ -19,10 +19,10 @@ export default function Header({ site }: HeaderProps) {
                 <div className="info">
                     <a href={`${url.store}/${site.slug}`}>
                         <Image
-                            src={site.theme.logo}
                             fill
-                            alt={site.information.description}
                             loading="eager"
+                            src={site.theme.logo}
+                            alt={site.information.description}
                             style={{ objectFit: 'contain', objectPosition: 'left' }}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
@@ -36,14 +36,6 @@ export default function Header({ site }: HeaderProps) {
                                 style={{ color: getContrastColor(site.theme.primaryColor) }}
                             >
                                 Produtos
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="reviews"
-                                style={{ color: getContrastColor(site.theme.primaryColor) }}
-                            >
-                                Reviews
                             </a>
                         </li>
                     </ul>

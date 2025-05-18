@@ -27,7 +27,7 @@ export default function UserDrawer({ isOpen, role, onToggleDrawer }: HelperDrawe
                         <Stack orientation="column" spacing="medium">
                             <Stack orientation="row" justifyContent="space-between" alignItems="center">
                                 <Typography variant="h6" noMargin>{role?.name}</Typography>
-                                <ButtonIcon onClick={toggleEditModal}>
+                                <ButtonIcon color="text.secondary" onClick={toggleEditModal}>
                                     <Icon name="edit" />
                                 </ButtonIcon>
                             </Stack>

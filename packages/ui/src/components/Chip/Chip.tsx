@@ -37,7 +37,11 @@ function Chip({
 
     const renderIcon = (icon: React.JSX.Element) => {
         return cloneElement<IconProps>(icon, {
-            className: joinClass([icon.props.className, 'ui-chip__icon']),
+            className: joinClass([
+                icon.props.className,
+                'ui-chip__icon',
+                label && 'ui-chip__icon--margin',
+            ]),
             size: 'small'
         });
     };

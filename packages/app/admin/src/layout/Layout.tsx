@@ -10,22 +10,16 @@ import useResize from '@cda/ui/hooks/useResize';
 import Loading from '@cda/ui/components/Loading';
 import { Sidebar, SidebarButton } from '@cda/ui/layout/Sidebar';
 import { Menu, MenuButton, useMenu } from '@cda/ui/components/Menu';
-import { Header, ButtonMode, ButtonProfile, ButtonGuide } from '@cda/ui/layout/Header';
-import { createTheme, useTheme, themeDefaultLight, themeDefaultDark } from '@cda/ui/theme';
+import { Header, ButtonProfile, ButtonGuide } from '@cda/ui/layout/Header';
 
 import { useAuth } from '@cda/common/Auth';
+import { AccessControl } from '@cda/common/AccessControl';
 
 interface LayoutProps { children: React.JSX.Element; }
 export default function Layout({ children }: React.PropsWithChildren<LayoutProps>) {
-    const themes = {
-        light: themeDefaultLight,
-        dark: themeDefaultDark,
-    };
-
     const navigate = useNavigate();
 
     const [open, el, toggle] = useMenu();
-    const { theme, updateTheme } = useTheme();
 
     const { user, logout } = useAuth();
 
@@ -42,13 +36,6 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
 
     useEffect(() => { if (user) { setLoading(false); } }, [user]);
 
-    const toggleTheme = () => {
-        updateTheme(createTheme(theme.palette.mode === 'dark'
-            ? themes.light
-            : themes.dark
-        ));
-    };
-
     const goToByMenu = () => {
         navigate('/profile');
         toggle();
@@ -58,7 +45,6 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
         <Box sx={{ backgroundColor: ({ background }) => background.default }}>
             <Slide enter direction="top" timeout={.3}>
                 <Header
-                    buttonMode={<ButtonMode onUpdateMode={toggleTheme} />}
                     buttonProfile={
                         <ButtonProfile
                             user={{
@@ -114,28 +100,32 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                                     onClick={() => navigate('/site')}
                                 />
                                 <SidebarButton
-                                    path="stores"
-                                    label="Lojas"
-                                    icon={<Icon name="store" />}
-                                    onClick={() => navigate('/stores')}
-                                />
-                                <SidebarButton
                                     path="products"
                                     label="Produtos"
                                     icon={<Icon name="box" />}
                                     onClick={() => navigate('/products')}
                                 />
-                                <SidebarButton
-                                    path="templates"
-                                    label="Templates"
-                                    icon={<Icon name="image" />}
-                                    onClick={() => navigate('/templates')}
+                                <AccessControl
+                                    permissions={['templates:*']}
+                                    component={(allowed) => (
+                                        allowed && <SidebarButton
+                                            path="templates"
+                                            label="Templates"
+                                            icon={<Icon name="image" />}
+                                            onClick={() => navigate('/templates')}
+                                        />
+                                    )}
                                 />
-                                <SidebarButton
-                                    path="bio"
-                                    label="Link na bio"
-                                    icon={<Icon name="user-square" />}
-                                    onClick={() => navigate('/bio')}
+                                <AccessControl
+                                    permissions={['bio:*']}
+                                    component={(allowed) => (
+                                        allowed && <SidebarButton
+                                            path="bio"
+                                            label="Link na bio"
+                                            icon={<Icon name="user-square" />}
+                                            onClick={() => navigate('/bio')}
+                                        />
+                                    )}
                                 />
                             </div>
                         }

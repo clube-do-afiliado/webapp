@@ -1,10 +1,14 @@
 import Image from 'next/image';
 
+import Icon from '@cda/ui/components/Icon';
+import Logo from '@cda/ui/components/Logo';
+import Stack from '@cda/ui/components/Stack';
+import Avatar from '@cda/ui/components/Avatar';
+import Divider from '@cda/ui/components/Divider';
+import Typography from '@cda/ui/components/Typography';
 import { getContrastColor } from '@cda/ui/theme/utils';
 
-import type { Site, Social } from '@cda/services/sites';
-
-import SocialButton from '../SocialButton';
+import type { Site } from '@cda/services/sites';
 
 import './Footer.scss';
 
@@ -15,45 +19,49 @@ export default function Footer({ site }: FooterProps) {
 
     const hasSocial = Object.keys(site.socials).some(k => site.socials[k]);
 
+    const goTo = (url: string) => {
+        window.open(url, '_blank');
+    };
+
     return (
         <footer className="footer">
             <div className="container">
                 {
                     hasSocial && (
                         <>
-                            <span style={{ textAlign: 'center' }}>Siga nas redes sociais:</span>
-                            <div className="socials">
+                            <Typography noMargin textAlign="center" color="text.secondary">
+                                Siga nas redes sociais:
+                            </Typography>
+                            <Stack
+                                orientation="row"
+                                alignItems="center"
+                                justifyContent="center"
+                                style={{ flexWrap: 'wrap' }}
+                            >
                                 {
                                     Object.entries(site.socials)
                                         .map(([key, value]) => value && (
-                                            <SocialButton
+                                            <Avatar
                                                 key={key}
-                                                social={key as keyof Social}
-                                                value={value}
-                                                background={background}
-                                                color={color}
+                                                icon={<Icon name={key} style={{ color }} />}
+                                                style={{ backgroundColor: background }}
+                                                onClick={() => goTo(value)}
                                             />
                                         ))
                                 }
-                            </div>
+                            </Stack>
                         </>
                     )
                 }
-                <div className="create-info">
+                <Typography noMargin textAlign="center" color="text.secondary" style={{ fontSize: 12 }}>
                     Direitos autorais @ {new Date().getFullYear()} - {site.information.name}
-                </div>
+                </Typography>
 
-                <div className="divider" />
+                <Divider />
+
                 <ul className="security">
                     <li>
-                        <Image
-                            src="https://cdn.clubedoafiliado.com/assets/images/site-protegido.webp"
-                            width={124}
-                            height={51}
-                            loading="lazy"
-                            alt="Compra segura"
-                            decoding="async"
-                        />
+                        <Logo width={100} />
                     </li>
                     <li>
                         <span className="create-info">© 2025 - Powered by <a href="">Clube do Afiliado</a>™</span>

@@ -9,7 +9,7 @@ import ButtonIcon from '@/components/ButtonIcon';
 import Input, { type InputType } from './Input';
 
 const meta: Meta<typeof Input> = {
-    title: 'components/Input',
+    title: 'components/Fields/Input',
     component: Input,
 };
 

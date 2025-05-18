@@ -66,8 +66,11 @@
     }
 
     &__icon {
-        margin-right: 5px;
         color: currentColor !important;
+
+        &--margin {
+            margin-right: 5px;
+        }
     }
 
     &__delete-icon {

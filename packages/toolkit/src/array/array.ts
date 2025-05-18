@@ -46,3 +46,22 @@ export function getFilledArray(length: number) {
 export function orderByIndex<T>(arr: Array<T>, prop: keyof T, order: string[]) {
     return arr.sort((a, b) => order.indexOf(a[prop as any]) - order.indexOf(b[prop as any]));
 }
+
+export function groupBy<T>(arr: Array<T>, props: Array<keyof T>) {
+    const blockList = [];
+
+    return arr.reduce((acc, item) => {
+        const refs = props
+            .filter(Boolean)
+            .map(prop => item[prop]);
+        const key = refs.join('-');
+        const has = blockList.some(i => i === key);
+
+        if (!has) {
+            blockList.push(key);
+            acc.push(item);
+        }
+
+        return acc;
+    }, []);
+}
