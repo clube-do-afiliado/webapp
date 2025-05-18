@@ -1,6 +1,6 @@
 import type { PropsWithChildren, HTMLAttributes, JSX } from 'react';
 
-import joinClass from '../../utils/joinClass';
+import joinClass from '../../utils/joinClass/joinClass';
 import createComponent from '../../core/createComponent';
 import { useTheme, type MappedColors, convertPathToColor } from '../../theme';
 
@@ -63,7 +63,7 @@ function Typography({
     const c = convertPathToColor(color, palette);
 
     return (
-        <CustomTag className={cls} style={{ color: c, ...props.style, }}>
+        <CustomTag  {...props} className={cls} style={{ color: c, ...props.style }}>
             {children}
         </CustomTag>
     );

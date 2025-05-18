@@ -1,7 +1,7 @@
 import { type PropsWithChildren, type ButtonHTMLAttributes, cloneElement } from 'react';
 
 import Ripple from '../../components/Ripple';
-import joinClass from '../../utils/joinClass';
+import joinClass from '../../utils/joinClass/joinClass';
 import type { Colors, Size } from '../../theme';
 import createComponent from '../../core/createComponent';
 import type { LoadingProps } from '../../components/Loading';
@@ -55,8 +55,8 @@ function Button({
 
     return (
         <button
-            className={cls}
             {...props}
+            className={cls}
             onClick={(e) => !loading && props.onClick?.(e)}
         >
             {

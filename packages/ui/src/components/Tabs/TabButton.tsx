@@ -45,9 +45,9 @@ export default function Tab({ icon, label, disabled, variant = 'line', color = '
     return (
         <button
             type="button"
-            {...props}
             disabled={disabled}
             className={className}
+            {...props}
         >
             {renderIcon()}
             {label}

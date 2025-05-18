@@ -2,7 +2,7 @@ import { Children, cloneElement, ReactElement } from 'react';
 
 import type { GridBaseProps } from './interface';
 import type { GridItemProps } from './GridItem';
-import joinClass from '../../utils/joinClass';
+import joinClass from '../../utils/joinClass/joinClass';
 import createComponent from '../../core/createComponent';
 
 import './Grid.scss';

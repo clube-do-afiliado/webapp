@@ -1,7 +1,7 @@
 import { HTMLAttributes, useState } from 'react';
 
 import useResize from '../../hooks/useResize';
-import joinClass from '../../utils/joinClass';
+import joinClass from '../../utils/joinClass/joinClass';
 import createComponent from '../../core/createComponent';
 
 import './Container.scss';

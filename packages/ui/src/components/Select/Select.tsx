@@ -10,7 +10,7 @@ import {
 
 import Icon from '../../components/Icon';
 import type { OptionProps } from './Option';
-import joinClass from '../../utils/joinClass';
+import joinClass from '../../utils/joinClass/joinClass';
 import { Menu, useMenu } from '../../components/Menu';
 import createComponent from '../../core/createComponent';
 

@@ -3,7 +3,7 @@ import { HTMLAttributes, useEffect, useState } from 'react';
 import ButtonIcon from '../ButtonIcon';
 import Icon from '../../components/Icon';
 import Stack from '../../components/Stack';
-import joinClass from '../../utils/joinClass';
+import joinClass from '../../utils/joinClass/joinClass';
 import createComponent from '../../core/createComponent';
 import { Card, CardContent } from '../../components/Card';
 

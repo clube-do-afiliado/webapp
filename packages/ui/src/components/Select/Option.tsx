@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from 'react';
 
-import joinClass from '../../utils/joinClass';
+import joinClass from '../../utils/joinClass/joinClass';
 
 import './Select.scss';
 

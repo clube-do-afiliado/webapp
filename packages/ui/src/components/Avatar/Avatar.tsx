@@ -4,7 +4,7 @@ import { getInitials } from '@cda/toolkit/string';
 
 import Icon from '../../components/Icon';
 import Ripple from '../../components/Ripple';
-import joinClass from '../../utils/joinClass';
+import joinClass from '../../utils/joinClass/joinClass';
 import createComponent from '../../core/createComponent';
 
 import './Avatar.scss';

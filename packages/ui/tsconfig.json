@@ -12,6 +12,7 @@
         "src/*"
       ]
     },
+    "types": ["jest", "node", "@testing-library/jest-dom"],
     "strict": true,
     "sourceMap": true,
     "declaration": true,

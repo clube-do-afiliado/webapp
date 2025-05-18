@@ -35,7 +35,8 @@ function Alert({
         'ui-alert',
         `ui-alert--${color}`,
         `ui-alert--${color}--${theme.palette.mode === 'dark' ? 'opacity' : variant}`,
-        fullWidth && 'ui-alert--fullWidth'
+        fullWidth && 'ui-alert--fullWidth',
+        props.className
     ]);
 
     const message = typeof children === 'string'
@@ -49,7 +50,7 @@ function Alert({
     };
 
     return (
-        <div className={className} {...props}>
+        <div {...props} className={className}>
             <Stack orientation="row" alignItems="center" spacing="small">
                 {
                     icon && (

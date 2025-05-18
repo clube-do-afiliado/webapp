@@ -1,6 +1,6 @@
 import { InputHTMLAttributes, ReactElement, cloneElement, MouseEvent } from 'react';
 
-import joinClass from '../../utils/joinClass';
+import joinClass from '../../utils/joinClass/joinClass';
 import createComponent from '../../core/createComponent';
 import type { ButtonIconProps } from '../../components/ButtonIcon';
 

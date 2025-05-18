@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react';
 
-import joinClass from '../../utils/joinClass';
+import joinClass from '../../utils/joinClass/joinClass';
 import createComponent from '../../core/createComponent';
 
 import './Card.scss';

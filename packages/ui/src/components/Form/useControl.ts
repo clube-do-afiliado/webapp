@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 import FormContext from './FormContext';
-import debounce from '../../utils/debounce';
+import debounce from '../../utils/debounce/debounce';
 import { AbstractControl } from './formGroup';
 
 function sanitizeOnlyNumbers(value: string) {

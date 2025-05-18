@@ -2,7 +2,7 @@ import { cloneElement, HTMLAttributes, MouseEvent } from 'react';
 
 import { Colors, Size } from '../../theme';
 import Ripple from '../../components/Ripple';
-import joinClass from '../../utils/joinClass';
+import joinClass from '../../utils/joinClass/joinClass';
 import type { IconProps } from '../../components/Icon';
 import createComponent from '../../core/createComponent';
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import joinClass from '../../utils/joinClass';
+import joinClass from '../../utils/joinClass/joinClass';
 import useResize from '../../hooks/useResize';
 import type { GridBaseProps, Size } from './interface';
 import createComponent from '../../core/createComponent';

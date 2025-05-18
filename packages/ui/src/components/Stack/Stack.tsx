@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react';
 
-import joinClass from '../../utils/joinClass';
+import joinClass from '../../utils/joinClass/joinClass';
 import createComponent from '../../core/createComponent';
 
 import './Stack.scss';
@@ -27,9 +27,9 @@ function Stack({
     const CustomTag = tag;
     const cls = joinClass([
         'ui-stack',
-        nogap && 'ui-stack__nogap',
-        `ui-stack__${spacing}`,
-        `ui-stack__${orientation}`,
+        `ui-stack__orientation--${orientation}`,
+        !nogap && `ui-stack__spacing--${spacing}`,
+        nogap && 'ui-stack__spacing--nogap',
         props.className
     ]);
 
