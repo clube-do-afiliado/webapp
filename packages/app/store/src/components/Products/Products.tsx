@@ -20,9 +20,10 @@ export default function Products({ site, products, integrations }: ProductsProps
         const params = getParams<{ utm_source: EventSource; utm_campaing: string }>();
 
         const queryparams = serialize(params);
-        const productUrl = `${url.store}/${site.slug}/produtos/${product.slug}`;
 
-        if (queryparams) { return `${productUrl}?${queryparams}`; }
+        const productUrl = [`${url.store}/${site.slug}/produtos/${product.slug}`, queryparams]
+            .filter(Boolean)
+            .join('?');
 
         return productUrl;
     };

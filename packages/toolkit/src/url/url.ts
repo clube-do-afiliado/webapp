@@ -1,4 +1,8 @@
+const isBrowser = () => typeof (window) !== 'undefined';
+
 export function getParams<T>(): T {
+    if (!isBrowser()) { return {} as T; }
+
     return window.location.search
         .replace('?', '')
         .split('&')
