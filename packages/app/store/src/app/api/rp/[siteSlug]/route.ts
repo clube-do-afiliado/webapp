@@ -56,4 +56,6 @@ export async function POST(req: NextRequest) {
     const res = NextResponse.json(trackResponse, { status: 200 });
 
     res.headers.set('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
+
+    return res;
 }

@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 
 import { getContrastColor } from '@cda/ui/theme/utils';
@@ -13,12 +15,15 @@ import './Header.scss';
 interface HeaderProps { site: Site; }
 export default function Header({ site }: HeaderProps) {
     const params = getParams<{ utm_source: EventSource; utm_campaing: string }>();
-
     const queryparams = serialize(params);
-    const productsUrl = `${url.store}/${site.slug}/produtos?${queryparams}`;
-    const homeUrl = `${url.store}/${site.slug}?${queryparams}`;
 
-    console.log(productsUrl);
+    const productsUrl = [`${url.store}/${site.slug}/produtos`, queryparams]
+        .filter(Boolean)
+        .join('?');
+
+    const homeUrl = [`${url.store}/${site.slug}`, queryparams]
+        .filter(Boolean)
+        .join('?');;
 
     return (
         <header className="header" style={{
