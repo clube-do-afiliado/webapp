@@ -4,7 +4,7 @@
     right: 15px;
     position: fixed;
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     flex-direction: column;
 
     @include for-md {
@@ -37,13 +37,8 @@
 
             &--opacity {
                 overflow: hidden;
-                // background-color: var(--#{$color}-opacity);
                 box-shadow: none;
                 backdrop-filter: blur(4px);
-            }
-
-            &--contained {
-                // background-color: var(--#{$color}-light);
             }
 
             .ui-alert__icon {

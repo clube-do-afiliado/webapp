@@ -12,6 +12,7 @@
   "scripts": {
     "lint": "yarn workspaces foreach -ptv run lint",
     "build": "yarn workspaces foreach -ptv run build",
+    "build:ssr": "yarn workspaces foreach -ptv run build:ssr:dev",
     "test": "yarn workspaces foreach -ptv run test"
   },
   "devDependencies": {

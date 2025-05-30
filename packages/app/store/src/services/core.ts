@@ -50,7 +50,7 @@ if (isLocal) {
 }
 
 // ENTITY SERVICES
-export const userServices = new UserServices(db, url.sso);
+export const userServices = new UserServices(db);
 export const rolesServices = new RolesServices(db);
 export const plansServices = new PlansServices(db);
 export const sitesServices = new SitesServices(db);

@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "rm -rf .next && env-cmd -f .env.dev next dev -p 3002",
     "hmg": "rm -rf .next && env-cmd -f .env.hmg next dev -p 3002",
-    "build:hmg": "rm -rf .next && env-cmd -f .env.hmg next build",
-    "build:dev": "rm -rf .next && env-cmd -f .env.dev next build",
+    "build:ssr:hmg": "rm -rf .next && env-cmd -f .env.hmg next build",
+    "build:ssr:dev": "rm -rf .next && env-cmd -f .env.dev next build",
     "build:ssr": "next build",
     "start": "next start",
     "lint": "next lint"

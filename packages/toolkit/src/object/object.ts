@@ -13,17 +13,21 @@ export function deepCopy<T extends Array<any> | Record<string, any>>(obj: T) {
     return copy as T;
 }
 
-export function isEmptyObject(obj: any) {
+export function isEmptyObject(obj: Record<string, any>) {
     if (!obj || typeof obj !== 'object') { return false; }
     return !Object.keys(obj).length;
 }
 
-export function removeEmptyProperties<T>(obj: T, onlyNullishValues = false): T {
+export function removeEmptyProperties<T extends Record<string, any>>(obj: T, onlyNullishValues = false): T {
     return _removeEmptyProperties(obj, onlyNullishValues);
 }
 
-function _removeEmptyProperties<T>(obj: T, onlyNullishValues = false, recursion = false): T {
-    const data = recursion ? obj : deepCopy(obj);
+function _removeEmptyProperties<T extends Record<string, any>>(
+    obj: T,
+    onlyNullishValues = false,
+    recursion = false
+): T {
+    const data = recursion ? obj : deepCopy<T>(obj);
 
     for (const key in data) {
         const isPropertyObject = data[key] !== null && typeof data[key] === 'object';
