@@ -1,6 +1,7 @@
 import { createContext, PropsWithChildren, useMemo, useState } from 'react';
 
 import { useAlert } from '@cda/ui/components/Alert';
+import Icon from '@cda/ui/components/Icon';
 
 import type { Product } from '@cda/services/products';
 import type ProductsServices from '@cda/services/products';
@@ -94,8 +95,16 @@ export default function ProductsProvider({ children, productsServices }: PropsWi
     const updateProduct = async (data: Product) => {
         return productsServices.update(data)
             .then(() => setProducts(prev => prev.map(r => r.id === data.id ? data : r)))
-            .then(() => addAlert({ color: 'success', message: 'O produto foi editado' }))
-            .catch(() => addAlert({ color: 'error', message: 'Não foi possível editar o produto' }));
+            .then(() => addAlert({
+                color: 'success',
+                message: 'O produto foi editado',
+                icon: <Icon name="check" />,
+            }))
+            .catch(() => addAlert({
+                color: 'error',
+                message: 'Não foi possível editar o produto',
+                icon: <Icon name="warning" />,
+            }));
     };
 
     return (

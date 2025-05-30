@@ -18,6 +18,10 @@ const AlertComponent = ({ alert, onRemove }: AlertComponentProps) => {
             icon={alert.icon}
             color={alert.color}
             variant="contained"
+            sx={{
+                backgroundColor: ({ text }) => text.primary,
+                color: (palette) => palette[alert.color].main
+            }}
             onClose={() => { onRemove(alert); }}
         >
             {alert.message}
