@@ -17,7 +17,7 @@ export interface AuthConfig {
 export default class AuthServices {
     private cookies = new Cookies();
 
-    constructor(private methods: AuthConfig, public url: string) { }
+    constructor(private methods: AuthConfig) { }
 
     get access_token() { return this.cookies.get('access_token'); }
     set access_token(token: string) { this.cookies.set('access_token', token); }

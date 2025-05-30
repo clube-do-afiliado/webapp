@@ -30,7 +30,7 @@
         transition: all $animation;
         cursor: pointer;
         position: relative;
-        color: var(--text-disabled);
+        color: var(--text-secondary);
         border-right: 1.5px solid transparent;
 
         &--active {
@@ -55,7 +55,7 @@
         }
 
         &__icon {
-            color: var(--text-disabled) !important;
+            color: var(--text-secondary) !important;
         }
     }
 }

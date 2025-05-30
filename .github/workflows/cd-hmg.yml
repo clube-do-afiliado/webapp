@@ -44,6 +44,7 @@ jobs:
       ADMIN_URL: ${{ vars.STG_ADMIN_URL }}
       STORE_URL:  ${{ vars.STG_STORE_URL }}
       BACKOFFICE_URL:  ${{ vars.STG_BACKOFFICE_URL }}
+      PROMO_URL: ${{ vars.STG_PROMO_URL }}
     secrets:
       FIREBASE_API_KEY: ${{ secrets.STG_FIREBASE_API_KEY }}
       FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.STG_FIREBASE_MESSAGING_SENDER_ID }}

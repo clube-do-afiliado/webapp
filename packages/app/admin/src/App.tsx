@@ -6,6 +6,8 @@ import { createTheme, ThemeProvider, useTheme } from '@cda/ui/theme';
 
 import logger from '@cda/toolkit/logger';
 
+import { UserData } from '@cda/services/user';
+
 import { UserProvider } from '@cda/common/User';
 import { EventProvider } from '@cda/common/Event';
 import { ProductsProvider } from '@cda/common/Products';
@@ -98,14 +100,20 @@ function Providers({ children }: PropsWithChildren) {
 }
 
 export default function App() {
+    const handleAuthenticate = (user?: UserData) => {
+        if (user) { return; }
+
+        window.open(url.sso, '_self');
+    };
+
     return (
         <ThemeProvider theme={createTheme()}>
             <AlertProvider>
                 <AuthProvider
-                    shouldAuthenticate
                     url={url}
                     authServices={authServices}
                     usersServices={userServices}
+                    onAuthenticate={handleAuthenticate}
                 >
                     <Providers>
                         <Content />

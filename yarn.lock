@@ -523,6 +523,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@cda/lp@workspace:packages/app/lp":
+  version: 0.0.0-use.local
+  resolution: "@cda/lp@workspace:packages/app/lp"
+  dependencies:
+    "@types/node": ^22.13.13
+    "@types/react": ^19.0.12
+    "@types/react-dom": ^19.0.4
+    env-cmd: ^10.1.0
+    next: 15.2.4
+    react: ^19.0.0
+    react-dom: ^19.0.0
+    typescript: ^5.8.2
+    yarn: ^1.22.22
+  languageName: unknown
+  linkType: soft
+
 "@cda/services@*, @cda/services@workspace:packages/services":
   version: 0.0.0-use.local
   resolution: "@cda/services@workspace:packages/services"

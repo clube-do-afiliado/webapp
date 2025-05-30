@@ -10,3 +10,4 @@ export type Size = {
 }
 
 export type GridBaseProps = HtmlHTMLAttributes<HTMLElement> & Partial<Size>;
+export type GridItemBaseProps = GridBaseProps & { gridColumnStart?: IntRange<1, 13>; }

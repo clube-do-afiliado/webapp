@@ -18,6 +18,7 @@ interface ImportMetaEnv {
     readonly VITE_SSO_URL: string;
     readonly VITE_ADMIN_URL: string;
     readonly VITE_STORE_URL: string;
+    readonly VITE_PROMO_URL: string;
     readonly VITE_BACKOFFICE_URL: string;
 }
 

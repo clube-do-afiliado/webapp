@@ -34,7 +34,7 @@ const MAP: { [x: string]: keyof JSX.IntrinsicElements } = {
 interface TypographyProps extends PropsWithChildren<HTMLAttributes<HTMLParagraphElement>> {
     variant?: Variant;
     color?: MappedColors;
-    weight?: 'bold' | 'normal';
+    weight?: 'bold' | 'normal' | 'light';
     noMargin?: boolean;
     gutterBottom?: boolean;
 }

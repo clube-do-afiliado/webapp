@@ -1,15 +1,19 @@
 export interface Product {
     id: string;
     storeId: string;
+
     url: string;
     name: string;
     slug: string;
     price: number;
     originalPrice: number;
+
+    visible: boolean;
+    shortUrl?: string;
+    integration: string;
+
     tags: string[];
     images: string[];
-    integration: string;
-    visible: boolean;
 }
 
 export interface ProductInfo {

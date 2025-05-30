@@ -4,7 +4,9 @@ import { useEffect } from 'react';
 import { AlertProvider } from '@cda/ui/components/Alert';
 import { createTheme, ThemeProvider, useTheme } from '@cda/ui/theme';
 
-import { AuthProvider } from '@cda/common/Auth';
+import { UserData } from '@cda/services/user';
+
+import { AuthProvider, useAuth } from '@cda/common/Auth';
 
 import { authServices, userServices, url, siteServices } from '@/services/core';
 
@@ -31,7 +33,11 @@ function setFavicon(color: string) {
 function Content() {
     const { theme: { palette } } = useTheme();
 
+    const { user } = useAuth();
+
     useEffect(() => { setFavicon(palette.primary.contrastText); }, []);
+
+    useEffect(() => { console.log('user', user); }, [user]);
 
     return (
         <Outlet />
@@ -39,6 +45,10 @@ function Content() {
 }
 
 export default function App() {
+    const handleAuthenticate = (user?: UserData) => {
+        if (!user) { return; }
+    };
+
     return (
         <ThemeProvider theme={createTheme()}>
             <AlertProvider>
@@ -47,6 +57,7 @@ export default function App() {
                     authServices={authServices}
                     usersServices={userServices}
                     sitesServices={siteServices}
+                    onAuthenticate={handleAuthenticate}
                 >
                     <Content />
                 </AuthProvider>

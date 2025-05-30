@@ -44,10 +44,10 @@ function defineColor(options: CustomOptions): CSSProperties {
 function defineBorderColor(options: CustomOptions): CSSProperties {
     const { theme: { palette } } = useTheme();
 
-    if (!options.color) { return {}; }
+    if (!options.borderColor) { return {}; }
 
     return {
-        borderColor: options.color(palette)
+        borderColor: options.borderColor(palette)
     };
 };
 

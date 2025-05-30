@@ -34,6 +34,7 @@ export default {
             { protocol: 'https', hostname: 'http2.mlstatic.com' },
             { protocol: 'https', hostname: 'down-br.img.susercontent.com' },
             { protocol: 'https', hostname: 'm.media-amazon.com' },
+            { protocol: 'https', hostname: 'i.scdn.co' },
             // LOCAL
             { protocol: 'http', hostname: 'localhost' },
             { protocol: 'http', hostname: 'firebasestorage.googleapis.com' },

@@ -7,7 +7,6 @@ import Image from 'next/image';
 import Icon from '@cda/ui/components/Icon';
 import Button from '@cda/ui/components/Button';
 import Typography from '@cda/ui/components/Typography';
-import { getContrastColor } from '@cda/ui/theme/utils';
 
 import { maskCurrency } from '@cda/toolkit/mask';
 

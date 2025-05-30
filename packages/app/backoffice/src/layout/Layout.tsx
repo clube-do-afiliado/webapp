@@ -15,6 +15,8 @@ import { createTheme, useTheme, themeDefaultLight, themeDefaultDark } from '@cda
 
 import { useAuth } from '@cda/common/Auth';
 
+import { url } from '@/services/core';
+
 interface LayoutProps { children: React.JSX.Element; }
 export default function Layout({ children }: React.PropsWithChildren<LayoutProps>) {
     const navigate = useNavigate();
@@ -47,11 +49,16 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
         toggle();
     };
 
+    const handleLogout = async () => {
+        return logout()
+            .then(() => window.open(url.sso, '_self'));
+    };
+
     return (
         <Box sx={{ backgroundColor: ({ background }) => background.default }}>
             <Slide enter direction="top" timeout={.3}>
                 <Header
-                    buttonMode={<ButtonMode onUpdateMode={toggleTheme} />}
+                    actions={<ButtonMode onUpdateMode={toggleTheme} />}
                     buttonProfile={
                         <ButtonProfile
                             user={{
@@ -59,7 +66,7 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                                 email: user?.email || '',
                                 picture: user?.picture || '',
                             }}
-                            onProfile={toggle}
+                            onProfile={handleLogout}
                         />
                     }
                 />

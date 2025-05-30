@@ -52,9 +52,7 @@ function EmailAndPasswordForm() {
 
     const goToSignup = () => { navigate('/signup'); };
 
-    const handleLoginWithGoogle = async () => {
-        loginWithGoogle();
-    };
+    const handleLoginWithGoogle = async () => { loginWithGoogle(); };
 
     return (
         <Form formGroup={formGroup}>
@@ -120,7 +118,7 @@ function EmailAndPasswordForm() {
                     style={{
                         display: 'flex',
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
                     }}
                     onClick={handleLoginWithGoogle}
                 >
@@ -156,7 +154,7 @@ export default function Signin() {
                     <Box sx={{ mb: 2 }} textAlign="center">
                         <Logo
                             width={150}
-                            color="primary.main"
+                            secondary='text.primary'
                             style={{ margin: 'auto' }}
                         />
                     </Box>

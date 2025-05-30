@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, connectAuthEmulator } from 'firebase/auth';
+import { getAuth, signOut, connectAuthEmulator } from 'firebase/auth';
 import { getStorage, connectStorageEmulator } from 'firebase/storage';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
 import { getFunctions, httpsCallable, connectFunctionsEmulator } from 'firebase/functions';
@@ -21,6 +21,7 @@ export const url = {
     sso: import.meta.env.VITE_SSO_URL,
     admin: import.meta.env.VITE_ADMIN_URL,
     store: import.meta.env.VITE_STORE_URL,
+    promo: import.meta.env.VITE_PROMO_URL,
     backoffice: import.meta.env.VITE_BACKOFFICE_URL,
 };
 
@@ -45,7 +46,9 @@ const firestore = getFirestore(app);
 const functions = getFunctions(app, 'us-central1');
 const firebaseStorage = getStorage(app);
 
-export const authServices = new AuthServices({}, url.sso);
+export const authServices = new AuthServices({
+    signOut: () => signOut(firebaseAuth),
+});
 
 export const db = new DB(firestore);
 export const storage = new Storage(firebaseStorage);
@@ -58,7 +61,7 @@ if (isLocal) {
 }
 
 // ENTITY SERVICES
-export const userServices = new UserServices(db, url.sso);
+export const userServices = new UserServices(db);
 export const rolesServices = new RolesServices(db);
 export const plansServices = new PlansServices(db);
 export const sitesServices = new SitesServices(db);
@@ -68,4 +71,5 @@ export const integrationsServices = new IntegrationsServices(db);
 
 export const serverFunctions = new ServerFunctions({
     'getInfo': httpsCallable<{ url: string }, ProductInfo>(functions, 'getInfo'),
+    'shortUrl': httpsCallable<{ storeId: string; originalUrl?: string }, { hash: string }>(functions, 'shortUrl'),
 });

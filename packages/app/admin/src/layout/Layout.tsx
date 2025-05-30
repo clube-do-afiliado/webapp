@@ -15,6 +15,8 @@ import { Header, ButtonProfile, ButtonGuide } from '@cda/ui/layout/Header';
 import { useAuth } from '@cda/common/Auth';
 import { AccessControl } from '@cda/common/AccessControl';
 
+import { url } from '@/services/core';
+
 interface LayoutProps { children: React.JSX.Element; }
 export default function Layout({ children }: React.PropsWithChildren<LayoutProps>) {
     const navigate = useNavigate();
@@ -41,10 +43,18 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
         toggle();
     };
 
+    const handleLogout = async () => {
+        return logout()
+            .then(() => window.open(url.sso, '_self'));
+    };
+
     return (
         <Box sx={{ backgroundColor: ({ background }) => background.default }}>
             <Slide enter direction="top" timeout={.3}>
                 <Header
+                    actions={
+                        <ButtonGuide onStartGuide={console.log} />
+                    }
                     buttonProfile={
                         <ButtonProfile
                             user={{
@@ -54,9 +64,6 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                             }}
                             onProfile={toggle}
                         />
-                    }
-                    buttonGuide={
-                        <ButtonGuide onStartGuide={console.log} />
                     }
                 />
                 <Menu
@@ -77,7 +84,7 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                         color="error"
                         justifyContent="flex-start"
                         icon={<Icon color="error.main" name="signout" />}
-                        onClick={logout}
+                        onClick={handleLogout}
                     />
                 </Menu>
             </Slide>

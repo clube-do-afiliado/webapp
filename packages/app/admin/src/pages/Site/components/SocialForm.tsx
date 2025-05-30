@@ -21,7 +21,7 @@ interface FormProps {
     defaultSite: Omit<Site, 'id'>
 }
 
-export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref) => {
+export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }) => {
     const [loading, setLoading] = useState(false);
 
     const { updateUserSite } = useSites();

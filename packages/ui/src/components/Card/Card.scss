@@ -10,6 +10,7 @@
 
         &:hover {
             box-shadow: $boxShadowRegular;
+            border-color: var(--primary-light);
         }
     }
 

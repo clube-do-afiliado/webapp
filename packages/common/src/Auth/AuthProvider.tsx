@@ -20,6 +20,8 @@ type BasicUser = { name: string; email: string; password: string }
 export interface AuthContextConfig {
     user?: UserData;
 
+    redirect: (user: UserData) => Promise<void>;
+
     logout: () => Promise<void>;
 
     createByAuth: (data: BasicUser) => Promise<void>;
@@ -46,6 +48,8 @@ const FIREBASE = {
 export const AuthContext = createContext<AuthContextConfig>({
     user: undefined,
 
+    redirect: () => Promise.resolve(),
+
     logout: () => Promise.resolve(),
 
     createByAuth: async () => Promise.resolve(),
@@ -62,20 +66,20 @@ export const AuthContext = createContext<AuthContextConfig>({
 });
 
 interface AuthProviderProps {
-    shouldAuthenticate?: boolean;
     authServices: AuthServices;
     usersServices: UserServices;
     sitesServices?: SitesServices;
     children: React.JSX.Element;
     url: { admin: string; sso: string; backoffice: string; store: string; };
+    onAuthenticate?: (user?: UserData) => void;
 }
 export default function AuthProvider({
     url,
-    shouldAuthenticate = false,
     children,
     authServices,
     usersServices,
     sitesServices,
+    onAuthenticate = () => { },
 }: AuthProviderProps) {
     const { addAlert } = useAlert();
 
@@ -83,6 +87,8 @@ export default function AuthProvider({
 
     const context = useMemo<AuthContextConfig>(() => ({
         user,
+
+        redirect: async (user) => redirect(user),
 
         logout: async () => logout(),
 
@@ -99,11 +105,7 @@ export default function AuthProvider({
         updateAuthenticatedUser: async (user) => setUser(user)
     }), [user]);
 
-    useEffect(() => {
-        if (!shouldAuthenticate) { return; }
-
-        getUser();
-    }, []);
+    useEffect(() => { getUser(); }, []);
 
     const redirectToAdmin = (email: string) => {
         const adminUrl = `${url.admin}?token=${authServices.access_token}&email=${email}`;
@@ -122,10 +124,7 @@ export default function AuthProvider({
         if (user.roles.includes('admin')) { return redirectToBackoffice(user.email); }
     };
 
-    const logout = () => {
-        authServices.logout()
-            .then(() => window.open(authServices.url, '_self'));
-    };
+    const logout = () => { authServices.logout(); };
 
     const getUser = () => {
         const params = getParams<{ email: string; }>();
@@ -134,13 +133,20 @@ export default function AuthProvider({
 
         const email = params.email || usersServices.currentByToken.email;
 
+        if (!email) {
+            onAuthenticate();
+            return;
+        }
+
         return usersServices.getByEmail(email)
             .then((user) => {
                 setUser(user as UserData);
+                return user;
             })
+            .then((user) => onAuthenticate(user as UserData))
             .catch(() => {
                 authServices.logout()
-                    .then(() => window.open(authServices.url, '_self'))
+                    .then(() => onAuthenticate())
                     .then(() => logger.info('Usuário não encontrado'));
             });
     };

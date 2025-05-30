@@ -1,5 +1,4 @@
 import { getParams, serialize } from '@cda/toolkit/url';
-import { removeEmptyProperties } from '@cda/toolkit/object';
 
 import type { Site } from '@cda/services/sites';
 import type { Product } from '@cda/services/products';

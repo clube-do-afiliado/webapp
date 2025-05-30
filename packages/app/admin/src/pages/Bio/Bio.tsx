@@ -4,16 +4,12 @@ import Button from '@cda/ui/components/Button';
 import Icon from '@cda/ui/components/Icon';
 import Slide from '@cda/ui/animations/Slide';
 
-import { useSites } from '@cda/common/Sites';
-
 import { release } from '@/services/core';
 
 import Preview from './components/Preview';
 import BioForm from './components/BioForm';
 
 export default function Site() {
-    const { userSites } = useSites();
-
     return (
         <Page
             title="Link na bio"

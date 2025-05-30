@@ -82,13 +82,14 @@ export default function Signup() {
             <Stack
                 justifyContent="center"
                 style={{ height: '100vh' }}
-                sx={{ backgroundColor: ({ secondary }) => secondary.main }}
+                sx={{ backgroundColor: ({ primary }) => primary.main }}
             >
                 <Container sm="100%" md={500} lg={500}>
                     <Box sx={{ mb: 2 }} textAlign="center">
                         <Logo
                             width={150}
                             secondary="primary.contrastText"
+                            primary="secondary.main"
                             style={{ margin: 'auto' }}
                         />
                     </Box>

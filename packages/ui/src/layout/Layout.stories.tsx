@@ -37,7 +37,12 @@ export const template: StoryObj = {
             <Box sx={{ backgroundColor: ({ background }) => background.default }}>
                 <Slide enter direction="top" timeout={.3}>
                     <Header
-                        buttonMode={<ButtonMode onUpdateMode={toggleTheme} />}
+                        actions={
+                            <>
+                                <ButtonGuide onStartGuide={console.debug} />
+                                <ButtonMode onUpdateMode={toggleTheme} />
+                            </>
+                        }
                         buttonProfile={
                             <ButtonProfile
                                 user={{
@@ -47,9 +52,6 @@ export const template: StoryObj = {
                                 }}
                                 onProfile={console.debug}
                             />
-                        }
-                        buttonGuide={
-                            <ButtonGuide onStartGuide={console.debug} />
                         }
                     />
                 </Slide>

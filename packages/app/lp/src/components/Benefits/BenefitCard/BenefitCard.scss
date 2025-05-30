@@ -1,0 +1,8 @@
+.benefit-card {
+    border: none;
+    transition: all $animation;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+}

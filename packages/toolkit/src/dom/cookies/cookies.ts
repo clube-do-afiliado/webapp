@@ -21,7 +21,7 @@ export class Cookies<T extends string> {
     public set(key: T, data: any, encrypt = false, expires?: number | Date, path = '/') {
         if (data) {
             const value = encrypt ? window.btoa(JSON.stringify(data)) : data;
-            this.save(key, value, { path, domain: getDomain(), expires: expires || 1, });
+            this.save(key, value, { path, domain: getDomain(), sameSite: 'Lax', expires: expires || 1, });
         }
     }
 }

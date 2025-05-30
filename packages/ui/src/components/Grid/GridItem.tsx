@@ -1,39 +1,34 @@
-import { useState } from 'react';
-
 import joinClass from '../../utils/joinClass/joinClass';
-import useResize from '../../hooks/useResize';
-import type { GridBaseProps, Size } from './interface';
 import createComponent from '../../core/createComponent';
+import type { GridItemBaseProps } from './interface';
 
 import './Grid.scss';
 
-export interface GridItemProps extends GridBaseProps { children: React.ReactNode; }
-function GridItem({ children, xl = 1, lg, md, sm, ...props }: Readonly<GridItemProps>) {
-    const [size, setSize] = useState<keyof Size>('md');
-
-    const MAP = {
+export interface GridItemProps extends GridItemBaseProps { children: React.ReactNode; }
+function GridItem({ children, gridColumnStart, xl = 1, lg, md, sm, ...props }: Readonly<GridItemProps>) {
+    const SIZES = {
         xl,
         lg: lg || xl,
         md: md || lg || xl,
         sm: sm || md || lg || xl,
     };
 
-    useResize({
-        onXs: () => setSize('sm'),
-        onSm: () => setSize('md'),
-        onMd: () => setSize('lg'),
-        onLg: () => setSize('lg'),
-        onXl: () => setSize('xl'),
-    });
+    const className = joinClass([
+        'grid__item',
+        Object.entries(SIZES).map(([size, value]) => {
+            return `grid__item--${size}-${value}`;
+        }).join(' '),
+        props.className,
+    ]);
 
     return (
         <div
             {...props}
-            className={joinClass([
-                'grid__item',
-                `grid__item-${MAP[size]}`,
-                props.className,
-            ])}
+            className={className}
+            style={{
+                gridColumnStart,
+                ...props.style,
+            }}
         >
             {children}
         </div>

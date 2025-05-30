@@ -60,7 +60,7 @@ export const authServices = new AuthServices({
         { url: `${url.sso}/signin?email=${email}`, handleCodeInApp: true }
     ),
     createUserWithEmailAndPassword: (email, password) => createUserWithEmailAndPassword(firebaseAuth, email, password),
-}, url.sso);
+});
 
 export const db = new DB(firestore);
 export const storage = new Storage(firebaseStorage);
@@ -72,7 +72,7 @@ if (isLocal) {
 }
 
 // ENTITY SERVICES
-export const userServices = new UserServices(db, url.sso);
+export const userServices = new UserServices(db);
 export const sitesServices = new SitesServices(db);
 export const rolesServices = new RolesServices(db);
 export const plansServices = new PlansServices(db);

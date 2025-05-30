@@ -8,12 +8,19 @@
     height: 40px;
     font-size: 1.25rem;
     line-height: 1;
-    border-radius: 50%;
     overflow: hidden;
     user-select: none;
     border: 1px solid var(--divider);
 
     transition: all $animation;
+
+    &--rounded {
+        border-radius: var(--radius);
+    }
+
+    &--circular {
+        border-radius: 50%;
+    }
 
     &--name {
         background-color: var(--primary);

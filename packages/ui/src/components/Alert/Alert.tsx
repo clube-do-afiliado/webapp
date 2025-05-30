@@ -40,7 +40,7 @@ function Alert({
     ]);
 
     const message = typeof children === 'string'
-        ? <Typography variant="body1" color={`${color}.${themeRef}`}>{children}</Typography>
+        ? <Typography variant="body1" color="text.secondary">{children}</Typography>
         : children;
 
     const renderIcon = (icon: React.JSX.Element) => {

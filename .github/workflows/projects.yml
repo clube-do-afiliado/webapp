@@ -30,6 +30,9 @@ on:
       BACKOFFICE_URL:
         required: true
         type: string
+      PROMO_URL:
+        required: true
+        type: string
       FIREBASE_PROJECT_ID:
         required: true
         type: string
@@ -73,6 +76,7 @@ jobs:
       VITE_ADMIN_URL: ${{ inputs.ADMIN_URL }}
       VITE_STORE_URL: ${{ inputs.STORE_URL }}
       VITE_BACKOFFICE_URL: ${{ inputs.BACKOFFICE_URL }}
+      VITE_PROMO_URL: ${{ inputs.PROMO_URL }}
 
     steps:
       - name: Checkout

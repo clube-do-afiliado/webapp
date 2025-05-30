@@ -1,5 +1,3 @@
-// @use "../../styles/main.scss" as *
-
 .ui-typography {
     transition: all $animation;
 
@@ -14,7 +12,11 @@
     }
 
     &--weight-bold {
-        font-weight: 600 !important;
+        font-family: $font-bold;
+    }
+
+    &--weight-light {
+        font-family: $font-light;
     }
 
     &--weight-normal {
@@ -27,6 +29,10 @@
 
     &--h2 {
         font-size: 3.75rem;
+
+        @include for-sm {
+            font-size: 1.75rem;
+        }
     }
 
     &--h3 {
@@ -43,6 +49,11 @@
         @include for-md {
             font-size: 2rem;
         }
+
+
+        @include for-sm {
+            font-size: 1.25rem;
+        }
     }
 
     &--h5 {
@@ -55,18 +66,26 @@
 
     &--h6 {
         font-size: 1.25rem;
+
+        @include for-sm {
+            font-size: .85rem;
+        }
     }
 
     &--subtitle1 {
         font-size: 1rem;
 
         @include for-md {
-            font-size: 0.775rem;
+            font-size: 0.9rem;
         }
     }
 
     &--subtitle2 {
         font-size: 0.875rem;
+
+        @include for-md {
+            font-size: 0.8rem;
+        }
     }
 
     &--body1 {

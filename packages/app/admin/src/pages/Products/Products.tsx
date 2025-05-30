@@ -171,8 +171,8 @@ export default function Products() {
                 onGetProduct={handleToggleEditDrawer}
             />
             <ProductDrawer
-                product={selectProduct}
                 isOpen={openDrawer}
+                product={selectProduct}
                 onToggleDrawer={toggleDrawer}
             />
         </Page>

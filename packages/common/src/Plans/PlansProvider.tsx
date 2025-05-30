@@ -99,7 +99,7 @@ export default function PlansProvider({ children, plansServices }: PropsWithChil
     const updatePlan = async (data: Plan) => {
         return plansServices.update(data)
             .then(() => setPlans(prev => prev.map(r => r.id === data.id ? data : r)))
-            .then(() => addAlert({ color: 'success', message: `O plano "${data.name}" foi editado` }))
+            .then(() => addAlert({ color: 'success', message: `O plano "${data.name}" foi editado`, delay: 10000 }))
             .catch(() => addAlert({ color: 'error', message: 'Não foi possível editar o plano' }));
     };
 

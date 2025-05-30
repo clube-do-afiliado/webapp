@@ -15,7 +15,7 @@ import { trackRP, type TrackParams } from '@/services/trackService';
 
 interface RPProps {
     site: Site;
-    params: TrackParams;
+    params: Omit<TrackParams, 'anonymousId'>;
     products: Product[];
     integrations: Integration[];
 }

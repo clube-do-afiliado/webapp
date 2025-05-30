@@ -59,13 +59,15 @@ export const Controlled: StoryObj<typeof Switch> = {
                     type="checkbox"
                     action="onChange"
                     controlName="switch"
-                    field={(control) => (<Switch
-                        color="primary"
-                        label="Some label here"
-                        checked={control.value}
-                        error={control.isInvalid}
-                        helperText={control.messageError}
-                    />)}
+                    field={(control) => (
+                        <Switch
+                            color="primary"
+                            label="Some label here"
+                            checked={control.value}
+                            error={control.isInvalid}
+                            helperText={control.messageError}
+                        />)
+                    }
                 />
             </Form>
         );

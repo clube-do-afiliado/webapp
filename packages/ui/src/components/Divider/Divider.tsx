@@ -11,7 +11,7 @@ function Divider({ ...props }: DividerProps) {
     const clss = joinClass(['ui-divider', props.className]);
 
     return (
-        <div {...props} className={clss} style={{ ...props.style }}></div>
+        <div {...props} className={clss} />
     );
 }
 

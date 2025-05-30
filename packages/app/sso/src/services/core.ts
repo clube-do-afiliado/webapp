@@ -50,7 +50,7 @@ export const authServices = new AuthServices({
     signInWithPassword: (email, password) => signInWithEmailAndPassword(firebaseAuth, email, password),
     confirmPasswordReset: (oobCode: string, password: string) => confirmPasswordReset(firebaseAuth, oobCode, password),
     createUserWithEmailAndPassword: (email, password) => createUserWithEmailAndPassword(firebaseAuth, email, password),
-}, url.sso);
+});
 
 export const db = new DB(firestore);
 
@@ -60,5 +60,5 @@ if (isLocal) {
 }
 
 // ENTITY SERVICES
-export const userServices = new UserServices(db, url.sso);
+export const userServices = new UserServices(db);
 export const siteServices = new SiterServices(db);

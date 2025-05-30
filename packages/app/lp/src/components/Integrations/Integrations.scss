@@ -1,0 +1,7 @@
+.integration-grid {
+    gap: 30px !important;
+
+    @include for-xs {
+        gap: 15px !important;
+    }
+}

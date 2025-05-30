@@ -6,20 +6,20 @@ export const defaultShape: Theme['shape'] = { radius: 8 };
 export const themeDefaultLight: Theme = {
     palette: {
         mode: 'light',
-        info: '#6E5BAA',
-        error: '#f83a54',
-        warning: '#ff9800',
-        success: '#2ECC71',
-        primary: '#FF6F0F',
-        secondary: '#000',
+        info: '#72e4fc',
+        error: '#ff5377',
+        warning: '#FF9457',
+        success: '#36e79b',
+        primary: '#6c37f4',
+        secondary: '#72e4fc',
         grey: '#F4F4F4',
         text: {
-            primary: 'rgba(0, 0, 0, 0.87)',
-            secondary: 'rgba(0, 0, 0, 0.6)',
-            disabled: 'rgba(0, 0, 0, 0.38)'
+            primary: 'rgb(31, 41, 55)',
+            secondary: 'rgb(75, 85, 99)',
+            disabled: 'rgb(209, 213, 219)'
         },
         background: {
-            paper: '#F5F0F3',
+            paper: '#f9f8f9',
             default: '#FFF',
         },
         divider: 'rgba(0, 0, 0, 0.12)'
@@ -31,12 +31,12 @@ export const themeDefaultLight: Theme = {
 export const themeDefaultDark: Theme = {
     palette: {
         mode: 'dark',
-        info: '#8C7DD1',
-        error: '#FF5C72',
-        warning: '#FFA726',
-        success: '#48C78E',
-        primary: '#FF6F0F',
-        secondary: '#333',
+        info: '#72e4fc',
+        error: '#ff5377',
+        warning: '#FF9457',
+        success: '#36e79b',
+        primary: '#6c37f4',
+        secondary: '#ebff5e',
         grey: '#2A2A2A',
         text: {
             primary: 'rgba(255, 255, 255, 0.87)',
@@ -44,8 +44,8 @@ export const themeDefaultDark: Theme = {
             disabled: 'rgba(255, 255, 255, 0.38)'
         },
         background: {
-            paper: '#242424',
-            default: '#181818',
+            paper: '#0d0225',
+            default: '#30294e',
         },
         divider: 'rgba(255, 255, 255, 0.12)'
     },

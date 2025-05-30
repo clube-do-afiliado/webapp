@@ -28,7 +28,7 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
         <Box sx={{ backgroundColor: ({ background }) => background.default }}>
             <Slide enter direction="top" timeout={.3}>
                 <Header
-                    buttonMode={
+                    actions={
                         user && <ButtonMode onUpdateMode={toggleTheme} />
                     }
                     buttonProfile={

@@ -30,7 +30,12 @@ export const Template: StoryObj<typeof Header> = {
 
         return (
             <Header
-                buttonMode={<ButtonMode onUpdateMode={toggleTheme} />}
+                actions={
+                    <>
+                        <ButtonGuide onStartGuide={console.debug} />
+                        <ButtonMode onUpdateMode={toggleTheme} />
+                    </>
+                }
                 buttonProfile={
                     <ButtonProfile
                         user={{
@@ -40,9 +45,6 @@ export const Template: StoryObj<typeof Header> = {
                         }}
                         onProfile={console.debug}
                     />
-                }
-                buttonGuide={
-                    <ButtonGuide onStartGuide={console.debug} />
                 }
             />
         );

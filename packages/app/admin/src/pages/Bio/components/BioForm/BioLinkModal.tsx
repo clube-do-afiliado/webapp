@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import Input from '@cda/ui/components/Input';
 import Stack from '@cda/ui/components/Stack';
 import Button from '@cda/ui/components/Button';
 import Loading from '@cda/ui/components/Loading';
@@ -12,7 +11,6 @@ import { Modal, ModalFooter, HelperModalProps } from '@cda/ui/components/Modal';
 import { generateBytesSize } from '@cda/toolkit/file';
 
 import Storage from '@cda/services/storage';
-import type { UserData } from '@cda/services/user';
 
 interface Form {
     images: File[];
@@ -22,11 +20,10 @@ interface EditProfileModalProps {
     storage: Storage;
 }
 export default function BioLinkModal({
-    storage,
     isOpen,
     onToggleModal,
 }: HelperModalProps<EditProfileModalProps>) {
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
 
     const [formGroup] = useForm<Form>({
         form: {

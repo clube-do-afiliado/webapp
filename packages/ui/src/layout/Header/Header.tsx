@@ -7,30 +7,27 @@ import Stack from '../../components/Stack';
 import './Header.scss';
 
 interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
-    buttonMode?: React.JSX.Element;
-    buttonGuide?: React.JSX.Element;
+    actions?: React.JSX.Element;
     buttonProfile?: React.JSX.Element;
 }
 export default function Header({
-    buttonMode,
-    buttonGuide,
+    actions,
     buttonProfile,
     ...props
 }: HeaderProps) {
     return (
         <div className={joinClass(['ui-header', props.className])} {...props}>
             <div className="ui-header__logo">
-                <button>
-                    <Logo width={75} />
+                <button aria-label="Ir para tela inicial">
+                    <Logo width={75} secondary="text.primary" />
                 </button>
             </div>
 
             {
                 (
-                    buttonGuide || buttonMode || buttonProfile) && (
+                    actions || buttonProfile) && (
                     <Stack orientation="row" justifyContent="flex-end" alignItems="center">
-                        {buttonGuide}
-                        {buttonMode}
+                        {actions}
                         {buttonProfile}
                     </Stack>
                 )

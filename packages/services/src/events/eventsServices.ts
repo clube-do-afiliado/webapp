@@ -26,7 +26,7 @@ export default class EventsServices {
             path: EventsServices.PATH,
             pathSegments: [],
             filters: [
-                { field: 'name', operator: 'in', value: ['rp_view', 'ldp_view'] },
+                { field: 'name', operator: 'in', value: ['rp_view', 'ldp_view', 'rp_sl', 'ldp_sl'] },
                 { field: 'storeId', operator: '==', value: storeId },
                 { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
                 { field: 'createdAt', operator: '<=', value: Timestamp.fromDate(endDate) },
@@ -39,7 +39,7 @@ export default class EventsServices {
             path: EventsServices.PATH,
             pathSegments: [],
             filters: [
-                { field: 'name', operator: 'in', value: ['ldp_cta'] },
+                { field: 'name', operator: 'in', value: ['ldp_cta', 'original_sl'] },
                 { field: 'storeId', operator: '==', value: storeId },
                 { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
                 { field: 'createdAt', operator: '<=', value: Timestamp.fromDate(endDate) },
@@ -52,7 +52,7 @@ export default class EventsServices {
             path: EventsServices.PATH,
             pathSegments: [],
             filters: [
-                { field: 'name', operator: 'in', value: ['rp_view', 'ldp_view'] },
+                { field: 'name', operator: 'in', value: ['rp_view', 'ldp_view', 'rp_sl', 'ldp_sl'] },
                 { field: 'storeId', operator: '==', value: storeId },
                 { field: 'productId', operator: '==', value: productId },
                 { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
@@ -66,7 +66,7 @@ export default class EventsServices {
             path: EventsServices.PATH,
             pathSegments: [],
             filters: [
-                { field: 'name', operator: 'in', value: ['ldp_cta'] },
+                { field: 'name', operator: 'in', value: ['ldp_cta', 'original_sl'] },
                 { field: 'storeId', operator: '==', value: storeId },
                 { field: 'productId', operator: '==', value: productId },
                 { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },

@@ -3,19 +3,25 @@ import { useMemo, useRef } from 'react';
 import Page from '@cda/ui/layout/Page';
 import Slide from '@cda/ui/animations/Slide';
 import Stack from '@cda/ui/components/Stack';
+import Button from '@cda/ui/components/Button';
+import Icon from '@cda/ui/components/Icon';
+import { useModal } from '@cda/ui/components/Modal';
 
 import type { Site } from '@cda/services/sites';
 
 import { useSites, generateDefaultSite } from '@cda/common/Sites';
 
-import { release } from '@/services/core';
+import { release, url } from '@/services/core';
+import SharedModal from '@/components/SharedModal';
 
+import SocialForm from './components/SocialForm';
 import ThemeForm from './components/ThemeForm/ThemeForm';
 import InformationForm from './components/InformationForm';
-import SocialForm from './components/SocialForm';
 
 export default function Site() {
     const defaultSite = generateDefaultSite('', '');
+
+    const [openSharedModal, toggleSharedModal] = useModal();
 
     const { userSites } = useSites();
 
@@ -25,8 +31,22 @@ export default function Site() {
 
     const currentSite = useMemo(() => userSites.find(u => u.slug === userSites[0].slug), [userSites]);
 
+    const shortUrl = `${url.store}/${currentSite?.slug}/produtos`;
+
     return (
-        <Page title="Configurações do site" release={release}>
+        <Page
+            title="Configurações do site"
+            release={release}
+            action={
+                <Button
+                    variant="outlined"
+                    startIcon={<Icon name="share-alt" />}
+                    onClick={toggleSharedModal}
+                >
+                    Compartilhar
+                </Button>
+            }
+        >
             <Stack>
                 <Slide enter delay={250}>
                     <InformationForm
@@ -50,6 +70,11 @@ export default function Site() {
                     />
                 </Slide>
             </Stack>
+            <SharedModal
+                url={shortUrl}
+                isOpen={openSharedModal}
+                onToggleModal={toggleSharedModal}
+            />
         </Page>
     );
 }

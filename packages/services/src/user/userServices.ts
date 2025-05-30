@@ -9,15 +9,18 @@ export default class UserServices {
     private static PATH = 'users';
     private cookies = new Cookies();
 
-    constructor(private db: DB, private urlToRedirect: string) { }
+    constructor(private db: DB) { }
 
     get currentByToken(): { email: string } {
         try {
-            const data = decode<FirebaseUser>(this.cookies.get('access_token'));
+            const token = this.cookies.get<string>('access_token');
+
+            if (!token) { return { email: '' }; }
+
+            const data = decode<FirebaseUser>(token);
 
             return { email: data.email };
         } catch {
-            window.location.href = this.urlToRedirect;
             return { email: '' };
         }
     }

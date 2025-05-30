@@ -41,12 +41,12 @@ export default function EventProvider({ eventsServices, children }: EventProvide
     }), [events]);
 
     const getEvents = async (storeId: string, options: EventFilter) => {
-        console.log('getEvents', options);
-
         const [impressions, visualizations] = await Promise.all([
             getImpressions(storeId, options),
             getVisualizations(storeId, options),
         ]);
+
+        console.log(visualizations.filter(e => e.utmSource === 'instagram').length);
 
         if (options.unique) {
             setEvents({

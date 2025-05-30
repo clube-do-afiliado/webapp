@@ -1,0 +1,42 @@
+.hero {
+    @include for-sm {
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        h6 {
+            font-size: .85rem;
+        }
+
+        button {
+            font-size: 14px !important;
+            min-height: 48px !important;
+        }
+    }
+
+    &__image-container {
+        padding-left: calc(var(--spacing) * 32);
+        padding-right: calc(var(--spacing) * 32);
+
+        @include for-md {
+            padding-left: calc(var(--spacing) * 16);
+            padding-right: calc(var(--spacing) * 16);
+        }
+
+        @include for-sm {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    &__image-content {
+        width: 100%;
+
+        img {
+            overflow: hidden;
+            border-radius: var(--radius);
+            margin: auto;
+            box-shadow: $boxShadowSmall;
+        }
+    }
+}

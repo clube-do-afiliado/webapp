@@ -48,6 +48,27 @@ export const Colors: StoryObj<typeof AlertProvider> = {
     }
 };
 
+export const Opacity: StoryObj<typeof AlertProvider> = {
+    render: () => {
+        return (
+            <Stack>
+                <Alert
+                    variant="opacity"
+                    display="flex"
+                    justifyContent="flex-end" sx={{ color: ({ info }) => info.main }}
+                >
+                    Uma mensagem aleatória
+                </Alert>
+                <Alert color="secondary" variant="opacity">Uma mensagem aleatória</Alert>
+                <Alert color="success" variant="opacity">Uma mensagem aleatória</Alert>
+                <Alert color="error" variant="opacity">Uma mensagem aleatória</Alert>
+                <Alert color="warning" variant="opacity">Uma mensagem aleatória</Alert>
+                <Alert color="info" variant="opacity">Uma mensagem aleatória</Alert>
+            </Stack>
+        );
+    }
+};
+
 export const WithClose: StoryObj<typeof AlertProvider> = {
     render: () => {
         return (

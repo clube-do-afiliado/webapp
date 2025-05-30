@@ -59,11 +59,8 @@ export default function Home() {
     const fetchEvents = async (options: EventFilter) => {
         setLoading(true);
 
-        const result = await getEvents(storeId, options);
-
-        setTimeout(() => { setLoading(false); }, 1000);
-
-        return result;
+        getEvents(storeId, { ...options, endDate: new Date() })
+            .finally(() => setTimeout(() => { setLoading(false); }, 1000));
     };
 
     const setup = async () => {
@@ -89,20 +86,32 @@ export default function Home() {
             release={release}
         >
             <Stack>
-                <Card sx={{ background: ({ secondary }) => secondary.main }}>
+                <Card sx={{ background: ({ primary }) => primary.main }}>
                     <CardContent>
                         <Stack orientation="row" alignItems="center">
-                            <Avatar icon={<Icon name="rocket" />} />
+                            <Avatar
+                                icon={<Icon name="rocket" />}
+                                sx={{ backgroundColor: ({ background }) => background.default }}
+                            />
                             <Stack spacing="small">
-                                <Typography noMargin variant="h5" color="primary.main">
+                                <Typography noMargin variant="h5" color="background.default">
                                     Desbloqueie todo o potencial!
                                 </Typography>
-                                <Typography noMargin variant="body2" color="secondary.contrastText">
+                                <Typography noMargin variant="body2" color="primary.contrastText">
                                     Atualize para o plano premium e aproveite recursos
                                     exclusivos que vão turbinar sua experiência.
                                 </Typography>
                             </Stack>
-                            <Button style={{ width: 280, minWidth: 280 }}>Conhecer o plano premium</Button>
+                            <Button
+                                variant="outlined"
+                                sx={{
+                                    borderColor: ({ background }) => background.default,
+                                    color: ({ background }) => background.default,
+                                }}
+                                style={{ width: 280, minWidth: 280 }}
+                            >
+                                Conhecer o plano premium
+                            </Button>
                         </Stack>
                     </CardContent>
                 </Card>

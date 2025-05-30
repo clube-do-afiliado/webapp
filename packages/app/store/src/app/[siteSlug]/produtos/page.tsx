@@ -63,7 +63,7 @@ export default async function Page({ params, searchParams }: NextPageProps<{ sit
             params={{
                 utmSource,
                 utmCampaign,
-                storeId: site.id
+                storeId: site.id,
             }}
         />
     );

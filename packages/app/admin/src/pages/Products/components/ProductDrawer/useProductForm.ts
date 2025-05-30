@@ -7,6 +7,8 @@ import type { Product } from '@cda/services/products';
 import { useProducts } from '@cda/common/Products';
 import { useSites } from '@cda/common/Sites';
 
+import { serverFunctions } from '@/services/core';
+
 import type { ProductForm } from './interface';
 
 export default function useProductForm(product: Product | undefined, onToggleDrawer: () => void) {
@@ -35,29 +37,37 @@ export default function useProductForm(product: Product | undefined, onToggleDra
             integration: new FormControl({ defaultValue: product?.integration || '', required: true }),
         },
         handle: {
-            submit: (form) => {
+            submit: async (form) => {
+                const { storeId, url } = form.values;
+
                 if (!product) {
-                    const { name, originalPrice, price, storeId, tags, url, integration, image } = form.values;
+                    const shortUrl = await serverFunctions.getFunction('shortUrl', {
+                        storeId,
+                        originalUrl: url
+                    });
 
                     createProduct({
-                        url,
-                        name,
-                        tags,
-                        storeId,
-                        integration,
+                        ...generateProductData(form.values),
                         visible: false,
-                        slug: slug(name),
-                        images: [image],
-                        price: Number(price) / 100,
-                        originalPrice: Number(originalPrice) / 100,
-                    }).then(onToggleDrawer);
+                        shortUrl: shortUrl.hash
+                    }).finally(onToggleDrawer);
                 } else {
+                    let hash = product.shortUrl;
+
+                    if (!hash) {
+                        const shortUrl = await serverFunctions.getFunction('shortUrl', {
+                            storeId,
+                            originalUrl: url
+                        });
+
+                        hash = shortUrl.hash;
+                    }
+
                     updateProduct({
                         ...product,
-                        ...form.values,
-                        originalPrice: Number(form.values.originalPrice) / 100,
-                        price: Number(form.values.price) / 100,
-                    }).then(onToggleDrawer);
+                        ...generateProductData(form.values),
+                        shortUrl: hash,
+                    }).finally(onToggleDrawer);
                 }
             },
         },
@@ -74,6 +84,20 @@ export default function useProductForm(product: Product | undefined, onToggleDra
             }
         }
     }, [product, userSites]);
+
+    const generateProductData = (data: ProductForm): Omit<Product, 'id' | 'visible' | 'shortUrl'> => {
+        return {
+            url: data.url,
+            name: data.name,
+            tags: data.tags,
+            storeId: data.storeId,
+            integration: data.integration,
+            slug: slug(data.name),
+            images: [data.image],
+            price: Number(data.price) / 100,
+            originalPrice: Number(data.originalPrice) / 100,
+        };
+    };
 
     return [formGroup];
 }

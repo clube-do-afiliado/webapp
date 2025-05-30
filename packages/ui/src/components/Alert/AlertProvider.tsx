@@ -17,6 +17,7 @@ const AlertComponent = ({ alert, onRemove }: AlertComponentProps) => {
         <Alert
             icon={alert.icon}
             color={alert.color}
+            variant="contained"
             onClose={() => { onRemove(alert); }}
         >
             {alert.message}

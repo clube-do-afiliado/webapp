@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Input from '@cda/ui/components/Input';
 import Stack from '@cda/ui/components/Stack';
@@ -8,6 +8,7 @@ import Typography from '@cda/ui/components/Typography';
 import ColorPicker from '@cda/ui/components/ColorPicker';
 import { Form, FormControl, useForm, Control } from '@cda/ui/components/Form';
 import { Modal, ModalFooter, HelperModalProps } from '@cda/ui/components/Modal';
+import { useTheme } from '@cda/ui/theme';
 
 import permissions from '@cda/services/permissions';
 import type { Plan } from '@cda/services/plans';
@@ -17,18 +18,17 @@ import { usePlans } from '@cda/common/Plans';
 import { PermissionsList } from '@/components';
 
 export default function FormPlanModal({ plan, isOpen, onToggleModal }: HelperModalProps<{ plan?: Plan }>) {
+    const { theme: { palette } } = useTheme();
     const { createPlan, updatePlan } = usePlans();
 
     const [loading, setLoading] = useState(false);
-
-    const isEdit = useMemo(() => Boolean(plan), [plan]);
 
     const [formGroup] = useForm<Omit<Plan, 'id'>>({
         form: {
             name: new FormControl({ defaultValue: plan?.name || '', required: true }),
             description: new FormControl({ defaultValue: plan?.description || '', required: true }),
             permissions: new FormControl({ defaultValue: plan?.permissions || [], required: true }),
-            color: new FormControl({ defaultValue: plan?.color || '', required: true }),
+            color: new FormControl({ defaultValue: plan?.color || palette.primary.main, required: true }),
             price: new FormControl({ defaultValue: plan?.price || 0, type: 'money', required: false }),
         },
         handle: {
@@ -59,7 +59,7 @@ export default function FormPlanModal({ plan, isOpen, onToggleModal }: HelperMod
             title={
                 <Typography variant="h6" noMargin>
                     {
-                        isEdit
+                        plan
                             ? 'Editar role'
                             : 'Criar nova role'
                     }
@@ -75,7 +75,7 @@ export default function FormPlanModal({ plan, isOpen, onToggleModal }: HelperMod
                             <Input
                                 fullWidth
                                 gutterBottom
-                                disabled={isEdit}
+                                disabled={!plan}
                                 placeholder="Nome"
                                 data-cy="name-plan"
                                 value={control.value}
@@ -157,7 +157,7 @@ export default function FormPlanModal({ plan, isOpen, onToggleModal }: HelperMod
                             variant="contained"
                             loading={loading && <Loading />}
                         >
-                            {isEdit ? 'Salvar' : 'Criar'}
+                            {plan ? 'Salvar' : 'Criar'}
                         </Button>
                     </ModalFooter>
                 </Stack>

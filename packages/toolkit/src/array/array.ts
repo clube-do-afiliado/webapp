@@ -48,9 +48,9 @@ export function orderByIndex<T>(arr: Array<T>, prop: keyof T, order: string[]) {
 }
 
 export function groupBy<T>(arr: Array<T>, props: Array<keyof T>) {
-    const blockList = [];
+    const blockList: string[] = [];
 
-    return arr.reduce((acc, item) => {
+    return arr.reduce<T[]>((acc, item) => {
         const refs = props
             .filter(Boolean)
             .map(prop => item[prop]);

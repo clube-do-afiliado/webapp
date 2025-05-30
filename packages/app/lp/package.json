@@ -1,0 +1,26 @@
+{
+  "name": "@cda/lp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "rm -rf .next && env-cmd -f .env.dev next dev -p 3004",
+    "hmg": "rm -rf .next && env-cmd -f .env.hmg next dev -p 3004",
+    "build:hmg": "rm -rf .next && env-cmd -f .env.hmg next build",
+    "build:dev": "rm -rf .next && env-cmd -f .env.dev next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "15.2.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.13",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "env-cmd": "^10.1.0",
+    "typescript": "^5.8.2",
+    "yarn": "^1.22.22"
+  }
+}

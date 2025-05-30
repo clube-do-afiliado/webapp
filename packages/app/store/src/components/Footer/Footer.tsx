@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import Icon from '@cda/ui/components/Icon';
 import Logo from '@cda/ui/components/Logo';
 import Stack from '@cda/ui/components/Stack';
@@ -61,7 +59,7 @@ export default function Footer({ site }: FooterProps) {
 
                 <ul className="security">
                     <li>
-                        <Logo width={100} />
+                        <Logo width={100} secondary="text.primary" />
                     </li>
                     <li>
                         <span className="create-info">© 2025 - Powered by <a href="">Clube do Afiliado</a>™</span>

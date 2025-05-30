@@ -64,6 +64,8 @@ clean-modules:
 	$(call delete_dependencies,app/backoffice)
 	$(call delete_dependencies,app/admin)
 	$(call delete_dependencies,app/store)
+	$(call delete_dependencies,app/lp)
+	$(call delete_dependencies,app/extension)
 	@printf "${SUCCESS_TEXT}>>>> dependencies deleted successfully ${RESET_TEXT}\n";
 
 build-dependencies:

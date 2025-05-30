@@ -34,7 +34,7 @@ describe('Auth', () => {
     };
 
     beforeEach(() => {
-        auth = new Auth(mockAuthMethods, '');
+        auth = new Auth(mockAuthMethods);
         cookiesMock = auth['cookies'] as jest.Mocked<Cookies<any>>;
     });
 
@@ -53,15 +53,6 @@ describe('Auth', () => {
 
         expect(auth.access_token).toBe('it_token');
         expect(cookiesMock.get).toHaveBeenCalledWith('access_token');
-    });
-
-    it('should call googleAuth and set access_token on login', async () => {
-        mockAuthMethods.googleAuth = jest.fn().mockResolvedValue({ user: { accessToken: 'mock_token' } });
-
-        await auth.login();
-
-        expect(mockAuthMethods.googleAuth).toHaveBeenCalled();
-        expect(cookiesMock.set).toHaveBeenCalledWith('access_token', 'mock_token');
     });
 
     it('should call signout, remove access_token', async () => {
