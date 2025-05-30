@@ -17,7 +17,6 @@ interface ProductsProps {
 }
 export default function Products({ site, products, integrations }: ProductsProps) {
     const getUrl = (product: Product) => {
-
         const params = getParams<{ utm_source: EventSource; utm_campaing: string }>();
 
         const queryparams = serialize(params);

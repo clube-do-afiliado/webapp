@@ -88,14 +88,18 @@ export default function LDP({ site, product, integration, trackParams }: LDPProp
                         </div>
                         <Typography noMargin variant="h3">{product.name}</Typography>
                         <div className="info-price">
-                            <Typography
-                                noMargin
-                                variant="h6"
-                                color="text.secondary"
-                                style={{ textDecoration: 'line-through' }}
-                            >
-                                {maskCurrency(product.originalPrice * 100)}
-                            </Typography>
+                            {
+                                Boolean(product.originalPrice) && (
+                                    <Typography
+                                        noMargin
+                                        variant="h6"
+                                        color="text.secondary"
+                                        style={{ textDecoration: 'line-through' }}
+                                    >
+                                        {maskCurrency(product.originalPrice * 100)}
+                                    </Typography>
+                                )
+                            }
                             <Typography noMargin variant="h4" style={{ color: primaryColor }}>
                                 {maskCurrency(product.price * 100)}
                             </Typography>

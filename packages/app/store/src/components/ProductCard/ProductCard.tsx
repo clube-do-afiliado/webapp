@@ -72,6 +72,6 @@ export default function ProductCard({ site, product, integrations }: ProductCard
                     </span>
                 </div>
             </div>
-        </article >
+        </article>
     );
 }
