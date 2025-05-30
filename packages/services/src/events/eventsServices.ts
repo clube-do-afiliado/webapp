@@ -1,4 +1,4 @@
-import { Timestamp } from 'firebase/firestore';
+// import { Timestamp } from 'firebase/firestore';
 
 import db from '../db';
 import type { EventData } from './interface';
@@ -21,7 +21,7 @@ export default class EventsServices {
 
     constructor(private db: db) { }
 
-    async getVisualizations({ storeId, endDate, startDate }: GetListData) {
+    async getVisualizations({ storeId }: GetListData) {
         return this.db.getList<EventData>({
             path: EventsServices.PATH,
             pathSegments: [],
@@ -34,7 +34,7 @@ export default class EventsServices {
         });
     }
 
-    async getImpressions({ storeId, endDate, startDate }: GetListData) {
+    async getImpressions({ storeId }: GetListData) {
         return this.db.getList<EventData>({
             path: EventsServices.PATH,
             pathSegments: [],
@@ -47,7 +47,7 @@ export default class EventsServices {
         });
     }
 
-    async getProductVisualizations({ storeId, productId, endDate, startDate }: GetProductListData) {
+    async getProductVisualizations({ storeId, productId }: GetProductListData) {
         return this.db.getList<EventData>({
             path: EventsServices.PATH,
             pathSegments: [],
@@ -61,7 +61,7 @@ export default class EventsServices {
         });
     }
 
-    async getProductImpressions({ storeId, productId, endDate, startDate }: GetProductListData) {
+    async getProductImpressions({ storeId, productId }: GetProductListData) {
         return this.db.getList<EventData>({
             path: EventsServices.PATH,
             pathSegments: [],
