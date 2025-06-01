@@ -1,6 +1,8 @@
 .grid {
     @include grid(15px, 12);
 
+    margin-bottom: 30px;
+
     &__item {
         text-decoration: none;
         color: #000;
