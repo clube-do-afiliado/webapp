@@ -46,7 +46,7 @@ jobs:
           key: ${{ runner.os }}-project-${{ inputs.PROJECT }}-${{ inputs.BUILD_ENV }}-${{ github.sha }}
 
       - name: Generate artifact
-        uses: actions/download-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
             name: build-${{ inputs.PROJECT }}
-            path: ./downloaded-artifact
+            path: ${{ github.workspace }}/packages/app/${{ inputs.PROJECT }}/${{ inputs.PATH }}
