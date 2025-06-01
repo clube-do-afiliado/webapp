@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "STG - Clube do afiliado",
+  "name": "Clube do afiliado",
   "version": "1.0.0",
-  "description": "STG - Extensão para administrar produtos",
+  "description": "Extensão para administrar produtos",
   "permissions": [
     "cookies",
     "storage",

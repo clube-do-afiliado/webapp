@@ -1,8 +1,18 @@
 import { resolve } from 'path';
+import { copyFileSync } from 'fs';
 import { defineConfig } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 import react from '@vitejs/plugin-react';
+
+// Ambientes válidos: 'dev', 'hmg', 'prod'
+const env = process.env.VITE_ENV || 'dev';
+
+// Copia o manifest correto para `public/manifest.json`
+copyFileSync(
+    resolve(__dirname, `public/manifest.${env}.json`),
+    resolve(__dirname, 'public/manifest.json')
+);
 
 // https://vite.dev/config/
 export default defineConfig({

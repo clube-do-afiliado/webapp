@@ -21,7 +21,7 @@ import { SitesProvider, useSites } from '@cda/common/Sites';
 import { ProductsProvider, useProducts } from '@cda/common/Products';
 
 import Layout from './layout';
-import { getCookie } from './services/chrome';
+import { cookie } from './services/chrome';
 import type { Info } from './scrapings/interface';
 import LoggedContent from './components/LoggedContent';
 import { productServices, siteServices, userServices } from './services/core';
@@ -38,7 +38,7 @@ function Content() {
     useEffect(() => { setup(); }, []);
 
     const setup = async () => {
-        const token = await getCookie('getCookie', 'access_token');
+        const token = await cookie('getCookie', 'access_token');
 
         if (!token) { return; }
 

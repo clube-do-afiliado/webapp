@@ -31,14 +31,14 @@
     @each $color in $colors {
         &--#{$color} {
             box-shadow: $boxShadowSmall;
-            border-left: 4px solid var(--#{$color});
-
-            background-color: var(--grey);
+            background-color: var(--#{$color}-light);
+            color: var(--#{$color}-dark);
 
             &--opacity {
                 overflow: hidden;
                 box-shadow: none;
                 backdrop-filter: blur(4px);
+                background-color: var(--#{$color}-opacity);
             }
 
             .ui-alert__icon {

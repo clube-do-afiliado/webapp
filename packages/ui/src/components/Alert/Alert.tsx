@@ -12,10 +12,10 @@ import './Alert.scss';
 
 export interface AlertProps extends HtmlHTMLAttributes<HTMLDivElement> {
     color?: Colors;
-    icon?: React.JSX.Element;
     variant?: 'opacity' | 'contained';
+    icon?: React.JSX.Element;
+    children: React.ReactNode;
     fullWidth?: boolean;
-    children: React.JSX.Element | string;
     onClose?: () => void;
 }
 function Alert({
@@ -45,7 +45,7 @@ function Alert({
 
     const renderIcon = (icon: React.JSX.Element) => {
         return cloneElement<IconProps>(icon, {
-            color: `${color}.${themeRef}`
+            color: `${color}.dark`
         });
     };
 

@@ -9,6 +9,8 @@
     "start:prod": "env-cmd -f .env.prod vite --port 3005",
     "build": "tsc -b && vite build",
     "build:dev": "tsc -b && env-cmd -f .env.dev vite build",
+    "build:hmg": "tsc -b && env-cmd -f .env.hmg vite build",
+    "build:prod": "tsc -b && env-cmd -f .env.prod vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview --port 3005"
   },

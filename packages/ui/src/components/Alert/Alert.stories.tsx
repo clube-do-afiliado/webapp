@@ -22,7 +22,10 @@ const Child = () => {
     const handleAddAlert = () => {
         setCount(count + 1);
         addAlert({
-            color: 'success', message: `${count + 1}`, delay: 80000
+            color: 'success',
+            message: `${count + 1}`,
+            icon: <Icon name="check" />,
+            delay: 80000,
         });
     };
 

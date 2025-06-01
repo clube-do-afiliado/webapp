@@ -25,6 +25,8 @@ export const url = {
 
 export const release = import.meta.env.VITE_RELEASE;
 
+export const env = import.meta.env.VITE_ENV;
+export const isProd = import.meta.env.VITE_ENV === 'prod';
 export const isLocal = import.meta.env.VITE_ENV === 'local';
 
 // FIREBASE
