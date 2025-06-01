@@ -1,4 +1,4 @@
-name: CD - SSR HMG
+name: CD SSR - HMG
 run-name: Deploy to ${{ inputs.project }} SSR
 
 on:

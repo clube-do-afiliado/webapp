@@ -1,0 +1,41 @@
+name: CD Extension - HMG
+run-name: Upload extension
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup:
+    uses: ./.github/workflows/setup.yml
+    with:
+      BUILD_ENV: homolog
+    secrets: inherit
+
+  build-project:
+    needs: [setup]
+    uses: ./.github/workflows/projects.yml
+    with:
+      ENVIRONMENT: EXTENSION HMG
+      BUILD_ENV: homolog
+      PATH: dist
+      PROJECT: extension
+      COMMAND: build
+      FIREBASE_PROJECT_ID: clube-do-afiliado-homolog
+      SSO_URL:  ${{ vars.STG_SSO_URL }}
+      ADMIN_URL: ${{ vars.STG_ADMIN_URL }}
+      STORE_URL:  ${{ vars.STG_STORE_URL }}
+      BACKOFFICE_URL:  ${{ vars.STG_BACKOFFICE_URL }}
+      PROMO_URL: ${{ vars.STG_PROMO_URL }}
+    secrets:
+      FIREBASE_API_KEY: ${{ secrets.STG_FIREBASE_API_KEY }}
+      FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.STG_FIREBASE_MESSAGING_SENDER_ID }}
+
+  deploy-project:
+    needs: [build-project]
+    uses: ./.github/workflows/package.yml
+    with:
+      ENVIRONMENT: EXTENSION
+      BUILD_ENV: homolog
+      PATH: dist
+      PROJECT: extension
+    secrets: inherit
