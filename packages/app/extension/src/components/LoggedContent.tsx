@@ -12,7 +12,7 @@ import type { UserData } from '@cda/services/user';
 import { env, isProd } from '../services/core';
 
 const ENV_MAP: { [x in string]: string } = {
-    dev: 'desenvolvimento',
+    local: 'desenvolvimento',
     homolog: 'homologação'
 };
 

@@ -1,8 +1,13 @@
 {
   "manifest_version": 3,
-  "name": "STG - Clube do afiliado",
+  "name": "DEV - Clube do afiliado",
   "version": "1.0.0",
-  "description": "STG - Extensão para administrar produtos",
+  "description": "DEV - Extensão para administrar produtos",
+  "icons": {
+    "16": "icons/extension-DEV-16.png",
+    "48": "icons/extension-48.png",
+    "128": "icons/extension-128.png"
+  },
   "permissions": [
     "cookies",
     "storage",
