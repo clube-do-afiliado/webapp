@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 
 import Page from '@cda/ui/layout/Page';
 import Slide from '@cda/ui/animations/Slide';
@@ -25,10 +25,6 @@ export default function Site() {
 
     const { userSites } = useSites();
 
-    const refInfo = useRef<null | HTMLDivElement>(null);
-    const refTheme = useRef<null | HTMLDivElement>(null);
-    const refSocial = useRef<null | HTMLDivElement>(null);
-
     const currentSite = useMemo(() => userSites.find(u => u.slug === userSites[0].slug), [userSites]);
 
     const shortUrl = `${url.store}/${currentSite?.slug}/produtos`;
@@ -50,21 +46,18 @@ export default function Site() {
             <Stack>
                 <Slide enter delay={250}>
                     <InformationForm
-                        ref={refInfo}
                         site={currentSite}
                         defaultSite={defaultSite}
                     />
                 </Slide>
                 <Slide enter delay={250} direction="right">
                     <ThemeForm
-                        ref={refTheme}
                         site={currentSite}
                         defaultSite={defaultSite}
                     />
                 </Slide>
                 <Slide enter delay={250}>
                     <SocialForm
-                        ref={refSocial}
                         site={currentSite}
                         defaultSite={defaultSite}
                     />

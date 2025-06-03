@@ -1,1 +1,1 @@
-export { default as SitePage } from './Site';
+export { default } from './Site';

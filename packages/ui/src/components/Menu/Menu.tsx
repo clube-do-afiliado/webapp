@@ -127,9 +127,9 @@ export default forwardRef<HTMLDivElement, MenuListProps>(function Menu({
                 className={joinClass(['ui-menu', config?.animation])}
                 {...props}
             >
-                <Card>
+                <Card className="ui-menu__card">
                     <CardContent
-                        className="ui-menu__content"
+                        className="ui-menu__card__content"
                         sx={{ py: 1 }}
                         style={{ display: 'flex', flexDirection: 'column', maxHeight }}
                     >

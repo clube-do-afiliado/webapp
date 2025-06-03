@@ -13,10 +13,19 @@ interface AvatarProps extends HTMLAttributes<HTMLElement> {
     alt?: string;
     src?: string;
     name?: string;
+    size?: number;
     variant?: 'rounded' | 'circular'
     icon?: React.JSX.Element;
 }
-function Avatar({ src, alt, name, variant = 'circular', icon, ...props }: AvatarProps) {
+function Avatar({
+    src,
+    alt,
+    name,
+    size = 40,
+    variant = 'circular',
+    icon,
+    ...props
+}: AvatarProps) {
     const className = joinClass([
         'ui-avatar',
         `ui-avatar--${variant}`,
@@ -33,8 +42,8 @@ function Avatar({ src, alt, name, variant = 'circular', icon, ...props }: Avatar
                 <img
                     src={src}
                     alt={alt}
-                    width={40}
-                    height={40}
+                    width={size}
+                    height={size}
                     sizes="100vw"
                     loading="lazy"
                     style={{ width: '100%', height: 'auto' }}
@@ -50,7 +59,7 @@ function Avatar({ src, alt, name, variant = 'circular', icon, ...props }: Avatar
     };
 
     return (
-        <div {...props} className={className}>
+        <div {...props} style={{ width: size, height: size, ...props.style }} className={className}>
             {content()}
             {props.onClick && <Ripple />}
         </div>

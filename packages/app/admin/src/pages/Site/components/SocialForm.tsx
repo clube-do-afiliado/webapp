@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 
 import Icon from '@cda/ui/components/Icon';
 import Stack from '@cda/ui/components/Stack';
@@ -21,7 +21,7 @@ interface FormProps {
     defaultSite: Omit<Site, 'id'>
 }
 
-export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }) => {
+export default function SocialForm({ site, defaultSite }: FormProps) {
     const [loading, setLoading] = useState(false);
 
     const { updateUserSite } = useSites();
@@ -96,4 +96,4 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }) => 
             </Card>
         </Stack>
     );
-});
+}

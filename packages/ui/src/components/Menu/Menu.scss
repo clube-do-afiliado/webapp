@@ -16,9 +16,12 @@
     flex-direction: column;
     z-index: 4;
 
-    &__content {
-        overflow: auto;
+    &__card {
         box-shadow: $boxShadowSmall;
+
+        &__content {
+            overflow: auto;
+        }
     }
 
     &.open {

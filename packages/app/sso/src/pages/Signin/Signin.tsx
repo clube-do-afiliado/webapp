@@ -124,7 +124,7 @@ function EmailAndPasswordForm() {
                 >
                     Entrar com o Google
                 </Button>
-                <Stack orientation="row" justifyContent="center">
+                <Stack orientation="row" justifyContent="center" alignItems="center">
                     <Typography variant="body2" style={{ textAlign: 'center' }}>Não possui conta?</Typography>
                     <Button
                         noHover
@@ -146,6 +146,7 @@ export default function Signin() {
     return (
         <Slide enter direction="top">
             <Stack
+                spacing="medium"
                 justifyContent="center"
                 style={{ height: '100vh' }}
                 sx={{ backgroundColor: ({ background }) => background.paper }}
@@ -167,7 +168,7 @@ export default function Signin() {
                             </Stack>
                         </CardContent>
                     </Card>
-                    <Box>
+                    <Box sx={{ mt: 2 }}>
                         <Typography
                             variant="body2"
                             color="text.secondary"

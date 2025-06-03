@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { getParams, serialize } from '@cda/toolkit/url';
 
 import type { Site } from '@cda/services/sites';
@@ -5,8 +7,8 @@ import type { Product } from '@cda/services/products';
 import type { EventSource } from '@cda/services/events';
 import type { Integration } from '@cda/services/integrations';
 
-import ProductCard from '@/components/ProductCard';
 import { url } from '@/services/core';
+import ProductCard from '@/components/ProductCard';
 
 import './Products.scss';
 
@@ -16,7 +18,7 @@ interface ProductsProps {
     integrations: Integration[];
 }
 export default function Products({ site, products, integrations }: ProductsProps) {
-    const getUrl = (product: Product) => {
+    const getUrl = useCallback((product: Product) => {
         const params = getParams<{ utm_source: EventSource; utm_campaing: string }>();
 
         const queryparams = serialize(params);
@@ -26,7 +28,7 @@ export default function Products({ site, products, integrations }: ProductsProps
             .join('?');
 
         return productUrl;
-    };
+    }, [site]);
 
     return (
         <div className="grid">

@@ -1,15 +1,17 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { lazy } from 'react';
 
 import ProfilePage from '@cda/common/Profile';
 
 import App from '@/App';
-import { BioPage } from '@/pages/Bio';
-import { HomePage } from '@/pages/Home';
-import { SitePage } from '@/pages/Site';
-import { StoresPage } from '@/pages/Stores';
-import { ProductsPage } from '@/pages/Products';
-import { TemplatePage } from '@/pages/Templates';
 import { storage, userServices } from '@/services/core';
+
+const BioPage = lazy(() => import('@/pages/Bio'));
+const HomePage = lazy(() => import('@/pages/Home'));
+const SitePage = lazy(() => import('@/pages/Site'));
+const StoresPage = lazy(() => import('@/pages/Stores'));
+const ProductsPage = lazy(() => import('@/pages/Products'));
+const TemplatesPage = lazy(() => import('@/pages/Templates'));
 
 export const router = createBrowserRouter([
     {
@@ -54,7 +56,7 @@ export const router = createBrowserRouter([
                 path: 'templates',
                 loader: () => document.title = 'Clube do afiliado - Template',
                 element: (
-                    <TemplatePage />
+                    <TemplatesPage />
                 ),
             },
             {

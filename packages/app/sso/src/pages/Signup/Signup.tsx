@@ -177,7 +177,7 @@ export default function Signup() {
                                             Criar conta
                                         </Button>
                                         <Divider />
-                                        <Stack orientation="row" justifyContent="center">
+                                        <Stack orientation="row" justifyContent="center" alignItems="center">
                                             <Typography variant="body2" style={{ textAlign: 'center' }}>
                                                 Já possui conta?
                                             </Typography>

@@ -142,7 +142,7 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                                 />
                                 <SidebarButton
                                     icon={<Icon name="signout" />}
-                                    onClick={logout}
+                                    onClick={handleLogout}
                                 />
                             </div>
                         }

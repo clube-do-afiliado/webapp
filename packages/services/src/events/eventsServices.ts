@@ -1,4 +1,4 @@
-// import { Timestamp } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 
 import db from '../db';
 import type { EventData } from './interface';
@@ -21,33 +21,35 @@ export default class EventsServices {
 
     constructor(private db: db) { }
 
-    async getVisualizations({ storeId }: GetListData) {
+    async getVisualizations({ storeId, endDate, startDate }: GetListData) {
+        console.log(endDate, startDate);
+
         return this.db.getList<EventData>({
             path: EventsServices.PATH,
             pathSegments: [],
             filters: [
                 { field: 'name', operator: 'in', value: ['rp_view', 'ldp_view', 'rp_sl', 'ldp_sl'] },
                 { field: 'storeId', operator: '==', value: storeId },
-                // { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
-                // { field: 'createdAt', operator: '<=', value: Timestamp.fromDate(endDate) },
+                { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
+                { field: 'createdAt', operator: '<=', value: Timestamp.fromDate(endDate) },
             ],
         });
     }
 
-    async getImpressions({ storeId }: GetListData) {
+    async getImpressions({ storeId, endDate, startDate }: GetListData) {
         return this.db.getList<EventData>({
             path: EventsServices.PATH,
             pathSegments: [],
             filters: [
                 { field: 'name', operator: 'in', value: ['ldp_cta', 'original_sl'] },
                 { field: 'storeId', operator: '==', value: storeId },
-                // { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
-                // { field: 'createdAt', operator: '<=', value: Timestamp.fromDate(endDate) },
+                { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
+                { field: 'createdAt', operator: '<=', value: Timestamp.fromDate(endDate) },
             ],
         });
     }
 
-    async getProductVisualizations({ storeId, productId }: GetProductListData) {
+    async getProductVisualizations({ storeId, productId, endDate, startDate }: GetProductListData) {
         return this.db.getList<EventData>({
             path: EventsServices.PATH,
             pathSegments: [],
@@ -55,13 +57,13 @@ export default class EventsServices {
                 { field: 'name', operator: 'in', value: ['rp_view', 'ldp_view', 'rp_sl', 'ldp_sl'] },
                 { field: 'storeId', operator: '==', value: storeId },
                 { field: 'productId', operator: '==', value: productId },
-                // { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
-                // { field: 'createdAt', operator: '<=', value: Timestamp.fromDate(endDate) },
+                { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
+                { field: 'createdAt', operator: '<=', value: Timestamp.fromDate(endDate) },
             ],
         });
     }
 
-    async getProductImpressions({ storeId, productId }: GetProductListData) {
+    async getProductImpressions({ storeId, productId, endDate, startDate }: GetProductListData) {
         return this.db.getList<EventData>({
             path: EventsServices.PATH,
             pathSegments: [],
@@ -69,8 +71,8 @@ export default class EventsServices {
                 { field: 'name', operator: 'in', value: ['ldp_cta', 'original_sl'] },
                 { field: 'storeId', operator: '==', value: storeId },
                 { field: 'productId', operator: '==', value: productId },
-                // { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
-                // { field: 'createdAt', operator: '<=', value: Timestamp.fromDate(endDate) },
+                { field: 'createdAt', operator: '>=', value: Timestamp.fromDate(startDate) },
+                { field: 'createdAt', operator: '<=', value: Timestamp.fromDate(endDate) },
             ],
         });
     }

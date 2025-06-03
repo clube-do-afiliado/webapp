@@ -40,7 +40,7 @@ interface TypographyProps extends PropsWithChildren<HTMLAttributes<HTMLParagraph
 }
 function Typography({
     children,
-    noMargin,
+    noMargin = true,
     gutterBottom,
     variant = 'body1',
     color = 'text.primary',

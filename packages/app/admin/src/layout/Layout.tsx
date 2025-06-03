@@ -139,13 +139,20 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                         downButtons={
                             <div>
                                 <SidebarButton
+                                    path="questions"
+                                    label="Dúvidas"
+                                    icon={<Icon name="question-circle" />}
+                                    onClick={() => navigate('/products')}
+                                />
+                                <SidebarButton
                                     label="Configuração"
                                     icon={<Icon name="setting" />}
+                                    onClick={() => navigate('/profile')}
                                 />
                                 <SidebarButton
                                     label="Sair"
                                     icon={<Icon name="signout" />}
-                                    onClick={logout}
+                                    onClick={handleLogout}
                                 />
                             </div>
                         }
