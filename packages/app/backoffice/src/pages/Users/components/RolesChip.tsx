@@ -1,9 +1,7 @@
 import Icon from '@cda/ui/components/Icon';
-import Stack from '@cda/ui/components/Stack';
-import Button from '@cda/ui/components/Button';
-import { Checkbox, useControl } from '@cda/ui/components';
-import MultiSelect from '@cda/ui/components/MultiSelect';
 import Chip from '@cda/ui/components/Chip';
+import MultiSelect from '@cda/ui/components/MultiSelect';
+import { Checkbox, useControl } from '@cda/ui/components';
 
 import { RoleConfig } from '@cda/services/roles';
 

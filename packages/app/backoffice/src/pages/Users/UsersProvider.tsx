@@ -1,5 +1,7 @@
 import { createContext, PropsWithChildren, useMemo, useState } from 'react';
 
+import { Timestamp } from 'firebase/firestore';
+
 import { useAlert } from '@cda/ui/components/Alert';
 
 import type { UserData } from '@cda/services/user';
@@ -38,6 +40,7 @@ const USER_DEFAULT: UserData = {
     status: 'active',
     plans: [],
     roles: [],
+    createdAt: Timestamp.fromDate(new Date())
 };
 
 export default function UsersProvider({ children }: PropsWithChildren) {
