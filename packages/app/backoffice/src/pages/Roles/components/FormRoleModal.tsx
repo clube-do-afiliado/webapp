@@ -42,7 +42,7 @@ export default function FormRoleModal({ role, isOpen, onToggleModal }: HelperMod
                     .finally(() => setLoading(false));
             }
         }
-    }, [role]);
+    }, [role, isOpen]);
 
     useEffect(() => { if (!isOpen) { formGroup.reset(); } }, [isOpen]);
 

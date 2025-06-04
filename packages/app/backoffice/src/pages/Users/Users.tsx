@@ -1,38 +1,46 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import Page from '@cda/ui/layout/Page';
-import { debounce } from '@cda/ui/utils';
-import { useFilter } from '@cda/ui/hooks';
 import Icon from '@cda/ui/components/Icon';
-import Slide from '@cda/ui/animations/Slide';
 import Input from '@cda/ui/components/Input';
 import Stack from '@cda/ui/components/Stack';
 import Button from '@cda/ui/components/Button';
 import Loading from '@cda/ui/components/Loading';
+import ButtonIcon from '@cda/ui/components/ButtonIcon';
+import { debounce } from '@cda/ui/utils';
+import { useFilter } from '@cda/ui/hooks';
 import { useModal } from '@cda/ui/components/Modal';
 import { useDrawer } from '@cda/ui/components/Drawer';
-import ButtonIcon from '@cda/ui/components/ButtonIcon';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
 import { Form, Control, FormControl, useForm } from '@cda/ui/components/Form';
+import { Table, TableBody, TableCell, TableHeader } from '@cda/ui/components/Table';
 
 import { slug } from '@cda/toolkit/string';
 
 import type { UserData } from '@cda/services/user';
 
+import { useRoles } from '@cda/common/Roles';
 import { EmptyContent } from '@cda/common/EmptyContent';
 
 import { release } from '@/services/core';
 
 import useUsers from './useUsers';
-import UserCard from './components/UserCard';
+import UserRow from './components/UserRow';
 import UserDrawer from './components/UserDrawer';
 import CreateUserModal from './components/FormUserModal';
+import RolesChip from './components/RolesChip';
+
+export interface FilterForm {
+    name: string;
+    roles: string[];
+}
 
 export default function Users() {
     const [open, toggle] = useModal();
     const [openUserDrawer, toggleUserDrawer] = useDrawer();
 
     const { users, getUsers } = useUsers();
+    const { roles } = useRoles();
 
     const { filter, filtered, reset } = useFilter(users, []);
 
@@ -42,13 +50,20 @@ export default function Users() {
 
     const selectedUser = useMemo(() => users.find(u => u.id === selectedUserId), [users, selectedUserId]);
 
-    const [formGroup] = useForm<{ name: string; }>({
+    const [formGroup] = useForm<FilterForm>({
         form: {
             name: new FormControl({ defaultValue: '' }),
+            roles: new FormControl({ defaultValue: roles.map(r => r.id) }),
         },
         handle: {
             change: (form) => {
-                const { name } = form.values;
+                const { name, roles } = form.values;
+
+                filter((user) => {
+                    console.log(user);
+
+                    return user.roles.every(role => roles.includes(role));
+                });
 
                 if (currentSearch === name) { return; }
 
@@ -67,7 +82,7 @@ export default function Users() {
                 }, 500);
             }
         }
-    }, []);
+    }, [roles]);
 
     useEffect(() => { getUsers().then(() => setLoadingList(false)); }, []);
 
@@ -94,9 +109,9 @@ export default function Users() {
             }
         >
             <Stack>
-                <Grid xl={3} lg={4} md={6} sm={12}>
-                    <GridItem>
-                        <Form formGroup={formGroup}>
+                <Form formGroup={formGroup}>
+                    <Grid xl={3} lg={4} md={6} sm={12} alignItems="center">
+                        <GridItem>
                             <Control
                                 action="onChange"
                                 controlName="name"
@@ -119,9 +134,12 @@ export default function Users() {
                                     />
                                 }
                             />
-                        </Form>
-                    </GridItem>
-                </Grid>
+                        </GridItem>
+                        <GridItem>
+                            <RolesChip />
+                        </GridItem>
+                    </Grid>
+                </Form>
                 {
                     loadingList && (
                         <Stack
@@ -136,21 +154,28 @@ export default function Users() {
                 }
                 {
                     !loadingList && Boolean(filtered.length) && (
-                        <Grid xl={3} lg={4} md={6} sm={12}>
-                            {
-                                filtered.map((user, i) => (
-                                    <GridItem key={user.id}  >
-                                        <Slide enter delay={(i + 1) * 100} style={{ height: '100%' }}>
-                                            <UserCard
-                                                key={user.id}
-                                                user={user}
-                                                onClick={handleOpenDrawer}
-                                            />
-                                        </Slide>
-                                    </GridItem>
-                                ))
-                            }
-                        </Grid>)
+                        <Table>
+                            <TableHeader>
+                                <TableCell style={{ width: 50 }}>Id</TableCell>
+                                <TableCell>Nome</TableCell>
+                                <TableCell>Email</TableCell>
+                                <TableCell style={{ width: 200 }}>Roles</TableCell>
+                                <TableCell align="center" style={{ width: 50 }}>Detalhes</TableCell>
+                            </TableHeader>
+                            <TableBody>
+                                {
+                                    filtered.map((user, i) => (
+                                        <UserRow
+                                            key={user.id}
+                                            user={user}
+                                            index={i}
+                                            onView={handleOpenDrawer}
+                                        />
+                                    ))
+                                }
+                            </TableBody>
+                        </Table>
+                    )
                 }
             </Stack>
             {

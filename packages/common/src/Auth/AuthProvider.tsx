@@ -12,6 +12,7 @@ import type { UserData } from '@cda/services/user';
 import type UserServices from '@cda/services/user';
 import type AuthServices from '@cda/services/auth';
 import type SitesServices from '@cda/services/sites';
+import type SignaruteServices from '@cda/services/signatures';
 
 import generateDefaultSite from '../Sites/defaultSite';
 
@@ -69,6 +70,7 @@ interface AuthProviderProps {
     authServices: AuthServices;
     usersServices: UserServices;
     sitesServices?: SitesServices;
+    signatureServices?: SignaruteServices;
     children: React.JSX.Element;
     url: { admin: string; sso: string; backoffice: string; store: string; };
     onAuthenticate?: (user?: UserData) => void;
@@ -79,6 +81,7 @@ export default function AuthProvider({
     authServices,
     usersServices,
     sitesServices,
+    signatureServices,
     onAuthenticate = () => { },
 }: AuthProviderProps) {
     const { addAlert } = useAlert();
@@ -171,12 +174,13 @@ export default function AuthProvider({
     const loginWithGoogle = async () => {
         try {
             if (!sitesServices) { throw new Error('sitesServices is not defined'); }
+            if (!signatureServices) { throw new Error('signatureServices is not defined'); }
 
             const googleUser = await authServices.loginWithGoogle();
 
             if (!googleUser) { throw new Error('Erro ao autenticar'); }
 
-            logger.info('usuário criado no autenticador!', user);
+            logger.info('usuário criado no autenticador!', googleUser);
 
             const userByEmail = await usersServices.getByEmail(googleUser.email);
 
@@ -190,12 +194,21 @@ export default function AuthProvider({
                 id: googleUser?.user_id as string,
                 email: googleUser?.email || '',
                 name: ''
-            }).then(() => logger.info('usuario criado!', createdUser));
+            });
 
-            sitesServices.create(generateDefaultSite(`Loja ${createdUser.name || createdUser.email}`, createdUser.id))
-                .then(() => logger.log('loja criada!'));
+            logger.info('usuario criado!', createdUser);
 
-            redirect(user as UserData);
+            await sitesServices.create(
+                generateDefaultSite(`Loja ${createdUser.name || createdUser.email}`, createdUser.id)
+            );
+
+            logger.log('loja criada!');
+
+            await signatureServices.create(createdUser.id);
+
+            logger.log('assinatura criada!');
+
+            redirect(createdUser as UserData);
         } catch (error: any) {
             addAlert({
                 color: 'error',
@@ -208,36 +221,38 @@ export default function AuthProvider({
     };
 
     const createByAuth = async ({ email, name, password }: BasicUser) => {
-        if (!sitesServices) { throw new Error('sitesServices is not defined'); }
+        try {
+            if (!sitesServices) { throw new Error('sitesServices is not defined'); }
+            if (!signatureServices) { throw new Error('signaruteServices is not defined'); }
 
-        return authServices.createUserWithPassword(email, password, { persist: true })
-            .then(user => {
-                logger.info('usuário criado no autenticador!', user);
-                return user;
-            })
-            .then(user => usersServices.createByAuth({ id: user?.user_id as string, email, name }))
-            .then(user => {
-                logger.info('usuario criado!', user);
-                return user;
-            })
-            .then(async user => {
-                await sitesServices.create(generateDefaultSite(`Loja ${user.name}`, user.id))
-                    .then(() => logger.log('loja criada!'));
+            const firebaseUser = await authServices.createUserWithPassword(email, password, { persist: true });
 
-                return user;
-            })
-            .then((user) => redirect(user))
-            .catch((e) => {
-                const { code } = e;
+            logger.info('usuário criado no autenticador!', firebaseUser);
 
-                addAlert({
-                    color: 'error',
-                    message: FIREBASE[code] || 'Erro ao criar usuário',
-                    icon: <Icon name="error" />,
-                });
+            const user = await usersServices.createByAuth({ id: firebaseUser?.user_id as string, email, name });
 
-                logger.error('Erro ao criar ususario, ', { e });
+            logger.info('usuario criado!', user);
+
+            await sitesServices.create(generateDefaultSite(`Loja ${user.name}`, user.id));
+
+            logger.log('loja criada!');
+
+            await signatureServices.create(user.id);
+
+            logger.log('assinatura criada!');
+
+            redirect(user);
+        } catch (error: any) {
+            const { code } = error;
+
+            addAlert({
+                color: 'error',
+                message: FIREBASE[code] || 'Erro ao criar usuário',
+                icon: <Icon name="error" />,
             });
+
+            logger.error('Erro ao criar ususario, ', { error });
+        }
     };
 
     const createByBackoffice = async ({ email, name, roles }: Pick<UserData, 'name' | 'email' | 'roles'>) => {

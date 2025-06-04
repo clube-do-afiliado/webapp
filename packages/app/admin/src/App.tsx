@@ -15,6 +15,7 @@ import { AuthProvider, useAuth } from '@cda/common/Auth';
 import { SitesProvider, useSites } from '@cda/common/Sites';
 import { PlansProvider, usePlans } from '@cda/common/Plans';
 import { AccessControlProvider } from '@cda/common/AccessControl';
+import { SignaturesProvider, useSignatures } from '@cda/common/Signatures';
 import { IntegrationsProvider, useIntegrations } from '@cda/common/Integrations';
 
 import Layout from '@/layout';
@@ -28,6 +29,7 @@ import {
     productsServices,
     integrationsServices,
     eventsServices,
+    signatureServices,
 } from '@/services/core';
 
 function setFavicon(color: string) {
@@ -57,6 +59,7 @@ function Content() {
 
     const { getPlans } = usePlans();
     const { getUserSites } = useSites();
+    const { getSignature } = useSignatures();
     const { getIntegrations } = useIntegrations();
 
     useEffect(() => {
@@ -64,7 +67,7 @@ function Content() {
 
         if (!user) { return; }
 
-        Promise.all([getIntegrations(), getPlans(), getUserSites(user.id)])
+        Promise.all([getIntegrations(), getPlans(), getSignature(user.id), getUserSites(user.id)])
             .then(() => logger.log('Informações base carregadas'));
     }, [user]);
 
@@ -86,13 +89,15 @@ function Providers({ children }: PropsWithChildren) {
         <UserProvider userServices={userServices}>
             <PlansProvider plansServices={plansServices}>
                 <IntegrationsProvider integrationsServices={integrationsServices}>
-                    <SitesProvider sitesServices={sitesServices}>
-                        <ProductsProvider productsServices={productsServices}>
-                            <EventProvider eventsServices={eventsServices}>
-                                {children}
-                            </EventProvider>
-                        </ProductsProvider>
-                    </SitesProvider>
+                    <SignaturesProvider signaturesServices={signatureServices}>
+                        <SitesProvider sitesServices={sitesServices}>
+                            <ProductsProvider productsServices={productsServices}>
+                                <EventProvider eventsServices={eventsServices}>
+                                    {children}
+                                </EventProvider>
+                            </ProductsProvider>
+                        </SitesProvider>
+                    </SignaturesProvider>
                 </IntegrationsProvider>
             </PlansProvider>
         </UserProvider>

@@ -1,12 +1,12 @@
 import { slug } from '@cda/toolkit/string';
 
-import db from '../db';
+import type DB from '../db';
 import type { Integration } from './interface';
 
 export default class IntegrationsServices {
     private static PATH = 'integrations';
 
-    constructor(private db: db) { }
+    constructor(private db: DB) { }
 
     async list() {
         return this.db.getList<Integration>({

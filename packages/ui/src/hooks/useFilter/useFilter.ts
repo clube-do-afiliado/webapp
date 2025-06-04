@@ -5,7 +5,7 @@ export default function useFilter<T>(data: T[], deps: any[]) {
 
     useEffect(() => { setFiltered(data); }, [data, ...deps]);
 
-    function filter(fn: (data: T) => boolean) { setFiltered(prev => prev.filter(fn)); }
+    function filter(fn: (data: T) => boolean) { setFiltered(data.filter(fn)); }
 
     function reset() { setFiltered(data); }
 

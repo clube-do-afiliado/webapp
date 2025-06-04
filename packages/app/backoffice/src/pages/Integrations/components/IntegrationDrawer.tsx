@@ -4,11 +4,11 @@ import Chip from '@cda/ui/components/Chip';
 import Icon from '@cda/ui/components/Icon';
 import Stack from '@cda/ui/components/Stack';
 import Button from '@cda/ui/components/Button';
-import { generateSupportColors, getOpacityColor } from '@cda/ui/theme';
 import Divider from '@cda/ui/components/Divider';
-import { useModal } from '@cda/ui/components/Modal';
 import Typography from '@cda/ui/components/Typography';
 import ButtonIcon from '@cda/ui/components/ButtonIcon';
+import { useModal } from '@cda/ui/components/Modal';
+import { generateSupportColors, getOpacityColor } from '@cda/ui/theme';
 import { Drawer, DrawerContent, DrawerFooter, HelperDrawerProps } from '@cda/ui/components/Drawer';
 
 import type { Integration } from '@cda/services/integrations';
@@ -41,7 +41,7 @@ export default function UserDrawer({
                         <Stack orientation="column" spacing="medium">
                             <Stack orientation="row" justifyContent="space-between" alignItems="center">
                                 <Typography variant="h6" noMargin>{integration?.name}</Typography>
-                                <ButtonIcon onClick={toggleEditModal}>
+                                <ButtonIcon onClick={toggleEditModal} color="text.secondary">
                                     <Icon name="edit" />
                                 </ButtonIcon>
                             </Stack>

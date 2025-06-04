@@ -4,6 +4,7 @@ export * from './Roles';
 export * from './Plans';
 export * from './Event';
 export * from './Profile';
+export * from './Signatures';
 export * from './Integrations';
 export * from './EmptyContent';
 export * from './AccessControl';

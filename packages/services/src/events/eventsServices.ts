@@ -1,6 +1,6 @@
 import { Timestamp } from 'firebase/firestore';
 
-import db from '../db';
+import type DB from '../db';
 import type { EventData } from './interface';
 
 interface GetListData {
@@ -19,7 +19,7 @@ interface GetProductListData {
 export default class EventsServices {
     private static PATH = 'events';
 
-    constructor(private db: db) { }
+    constructor(private db: DB) { }
 
     async getVisualizations({ storeId, endDate, startDate }: GetListData) {
         console.log(endDate, startDate);

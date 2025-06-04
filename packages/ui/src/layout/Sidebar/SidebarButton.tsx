@@ -9,12 +9,11 @@ import type { IconProps } from '../../components/Icon';
 import './Sidebar.scss';
 
 export interface SidebarButtonProps extends LiHTMLAttributes<HTMLElement> {
-    compact?: boolean;
     icon: React.JSX.Element;
     path?: string;
     label?: string;
 }
-export default function SidebarButton({ compact, label, icon, ...props }: SidebarButtonProps) {
+export default function SidebarButton({ label, icon, ...props }: SidebarButtonProps) {
     const url = getPath();
 
     const isActive = url === props.path;
@@ -33,7 +32,7 @@ export default function SidebarButton({ compact, label, icon, ...props }: Sideba
     return (
         <li tabIndex={0} className={className} {...props}>
             {renderIcon()}
-            {!compact && <span className="ui-sidebar__button__label">{label}</span>}
+            {label && <span className="ui-sidebar__button__label">{label}</span>}
             <Ripple />
         </li>
     );

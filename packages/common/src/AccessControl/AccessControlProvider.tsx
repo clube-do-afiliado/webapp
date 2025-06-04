@@ -39,15 +39,17 @@ export default function AccessControlProvider({
 
         return Promise.all([
             ...user.roles.map(role => rolesServices.details(role)),
-            ...user.plans.map(plan => plansServices.details(plan))
-        ]).then(res => setPermissions(prev => ([
-            ...prev,
-            ...removeDuplicate(
-                flatten(
-                    res.map(r => r?.permissions)
+            ...(user.plans ? user.plans.map(plan => plansServices.details(plan)) : [])
+        ]).then(res => {
+            return setPermissions(prev => ([
+                ...prev,
+                ...removeDuplicate(
+                    flatten(
+                        res.map(r => r?.permissions)
+                    )
                 )
-            )
-        ])));
+            ]));
+        });
     };
 
     return (

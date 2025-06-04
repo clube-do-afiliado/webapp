@@ -105,8 +105,8 @@ function EmailAndPasswordForm() {
                     ou
                 </Typography>
                 <Button
-                    variant="outlined"
                     size="large"
+                    variant="outlined"
                     type="button"
                     startIcon={
                         <img

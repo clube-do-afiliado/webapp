@@ -1,4 +1,3 @@
-import Page from '@cda/ui/layout/Page';
 import Stack from '@cda/ui/components/Stack';
 
 import Storage from '@cda/services/storage';
@@ -8,6 +7,7 @@ import { useAuth } from '../Auth';
 import PlanInfo from './components/PlanInfo';
 import PersonalInfo from './components/PersonalInfo';
 import SecurityInfo from './components/SecurityInfo';
+import { useSignatures } from '../Signatures';
 
 interface ProfileProps {
     storage: Storage;
@@ -16,23 +16,22 @@ interface ProfileProps {
 
 export default function Profile({ storage, onUpdateUser }: ProfileProps) {
     const { user } = useAuth();
+    const { signature } = useSignatures();
 
-    if (!user) { return; }
+    if (!user || !signature) { return; }
 
     return (
-        <Page
-            title="Configurações da conta"
-            subtitle="Personalize suas informações e preferências de uso."
-        >
-            <Stack sx={{ mb: 3 }}>
-                <PersonalInfo
-                    user={user}
-                    storage={storage}
-                    onUpdateUser={onUpdateUser}
-                />
-                <PlanInfo />
-                <SecurityInfo />
-            </Stack>
-        </Page>
+        <Stack sx={{ mb: 3 }}>
+            <PersonalInfo
+                user={user}
+                storage={storage}
+                onUpdateUser={onUpdateUser}
+            />
+            <PlanInfo
+                user={user}
+                signature={signature}
+            />
+            <SecurityInfo user={user} />
+        </Stack>
     );
 }

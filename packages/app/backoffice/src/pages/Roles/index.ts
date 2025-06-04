@@ -1,1 +1,1 @@
-export { default as RolesPage } from './Roles';
+export { default } from './Roles';

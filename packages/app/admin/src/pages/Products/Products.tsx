@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import Page from '@cda/ui/layout/Page';
 import Box from '@cda/ui/components/Box';
 import { debounce } from '@cda/ui/utils';
 import Icon from '@cda/ui/components/Icon';
@@ -8,9 +7,9 @@ import Stack from '@cda/ui/components/Stack';
 import Input from '@cda/ui/components/Input';
 import Button from '@cda/ui/components/Button';
 import useFilter from '@cda/ui/hooks/useFilter';
+import ButtonIcon from '@cda/ui/components/ButtonIcon';
 import { useModal } from '@cda/ui/components/Modal';
 import { useDrawer } from '@cda/ui/components/Drawer';
-import ButtonIcon from '@cda/ui/components/ButtonIcon';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
 import { Control, Form, FormControl, useForm } from '@cda/ui/components/Form';
 
@@ -22,6 +21,7 @@ import { useSites } from '@cda/common/Sites';
 import { useProducts } from '@cda/common/Products';
 import { EmptyContent } from '@cda/common/EmptyContent';
 
+import AdminPage from '@/components/AdminPage';
 import { release } from '@/services/core';
 
 import ProductTable from './components/ProductTable';
@@ -97,7 +97,7 @@ export default function Products() {
     const resetForm = () => { formGroup.setValues({ name: '' }); };
 
     return (
-        <Page
+        <AdminPage
             title="Produtos"
             subtitle="Essa é a lista de produtos disponíveis na sua loja"
             release={release}
@@ -175,6 +175,6 @@ export default function Products() {
                 product={selectProduct}
                 onToggleDrawer={toggleDrawer}
             />
-        </Page>
+        </AdminPage>
     );
 }

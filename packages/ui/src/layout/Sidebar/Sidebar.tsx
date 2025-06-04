@@ -20,7 +20,6 @@ export default function Sidebar({ compact = false, upButtons, downButtons }: Sid
         return arrayChildren.map((child, index) => {
             return cloneElement(child, {
                 key: `sidebar-button-${index}`,
-                compact
             });
         });
     };

@@ -7,11 +7,12 @@ type CheckboxData = { id: string; value: any; checked: boolean };
 
 let ID_REFERENCE = 0;
 
-interface CheckboxGroupProps {
+export interface CheckboxGroupProps {
     children: React.ReactNode;
     values?: string[];
     onChange?: (data: CheckboxData[]) => void;
 }
+
 export default function CheckboxGroup({ children, values, onChange }: CheckboxGroupProps) {
     const reference = ++ID_REFERENCE;
     const arrayChildren = Children.toArray(children) as ReactElement<CheckboxProps>[];

@@ -60,27 +60,32 @@ export default function BasePage({
                         orientation={orientation}
                         justifyContent="space-between"
                     >
-                        <Stack orientation="row" alignItems="center" style={{ width: 'auto' }}>
-                            <div>
-                                {
-                                    title && (
-                                        <Typography variant="h5" noMargin>{title}</Typography>
-                                    )
-                                }
-                                {
-                                    subtitle && (
-                                        <Typography
-                                            noMargin
-                                            weight="normal"
-                                            variant="subtitle2"
-                                            color="text.secondary"
-                                        >
-                                            {subtitle}
-                                        </Typography>
-                                    )
-                                }
-                            </div>
-                        </Stack>
+                        {
+                            (title || subtitle) && (
+                                <Stack orientation="row" alignItems="center" style={{ width: 'auto' }}>
+                                    <div>
+                                        {
+                                            title && (
+                                                <Typography variant="h5" noMargin>{title}</Typography>
+                                            )
+                                        }
+                                        {
+                                            subtitle && (
+                                                <Typography
+                                                    noMargin
+                                                    weight="normal"
+                                                    variant="subtitle2"
+                                                    color="text.secondary"
+                                                >
+                                                    {subtitle}
+                                                </Typography>
+                                            )
+                                        }
+                                    </div>
+                                </Stack>
+                            )
+                        }
+
                         {action && renderAction(action as React.JSX.Element)}
                     </Stack>
                     {

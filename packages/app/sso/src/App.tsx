@@ -8,7 +8,13 @@ import { UserData } from '@cda/services/user';
 
 import { AuthProvider, useAuth } from '@cda/common/Auth';
 
-import { authServices, userServices, url, siteServices } from '@/services/core';
+import {
+    url,
+    authServices,
+    userServices,
+    siteServices,
+    signatureServices,
+} from '@/services/core';
 
 function setFavicon(color: string) {
     let link = document.querySelector<HTMLLinkElement>('link[rel~=\'icon\']');
@@ -57,6 +63,7 @@ export default function App() {
                     authServices={authServices}
                     usersServices={userServices}
                     sitesServices={siteServices}
+                    signatureServices={signatureServices}
                     onAuthenticate={handleAuthenticate}
                 >
                     <Content />

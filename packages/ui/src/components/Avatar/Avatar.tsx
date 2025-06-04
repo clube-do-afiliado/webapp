@@ -61,6 +61,7 @@ function Avatar({
     return (
         <div {...props} style={{ width: size, height: size, ...props.style }} className={className}>
             {content()}
+            {props.children}
             {props.onClick && <Ripple />}
         </div>
     );

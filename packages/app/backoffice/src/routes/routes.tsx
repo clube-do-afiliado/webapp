@@ -1,14 +1,16 @@
+import { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import ProfilePage from '@cda/common/Profile';
 
 import App from '@/App';
 import { storage, userServices } from '@/services/core';
-import { RolesPage } from '@/pages/Roles';
-import { PlansPage } from '@/pages/Plans';
-import { UsersPage } from '@/pages/Users';
-import { StoresPage } from '@/pages/Stores';
-import { IntegrationsPage } from '@/pages/Integrations';
+
+const RolesPage = lazy(() => import('@/pages/Roles'));
+const PlansPage = lazy(() => import('@/pages/Plans'));
+const UsersPage = lazy(() => import('@/pages/Users'));
+const StoresPage = lazy(() => import('@/pages/Stores'));
+const IntegrationsPage = lazy(() => import('@/pages/Integrations'));
 
 export const router = createBrowserRouter([
     {

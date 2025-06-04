@@ -1,3 +1,6 @@
+import { useMemo } from 'react';
+
+import type { Colors } from '@cda/ui/theme';
 import Chip from '@cda/ui/components/Chip';
 import Icon from '@cda/ui/components/Icon';
 import Stack from '@cda/ui/components/Stack';
@@ -7,9 +10,31 @@ import Typography from '@cda/ui/components/Typography';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
 import { Card, CardContent } from '@cda/ui/components/Card';
 
-import { getFilledArray } from '@cda/toolkit/array';
+import { formatDate } from '@cda/toolkit/date';
 
-export default function PlanInfo() {
+import { MAP_PERMISSION } from '@cda/services/permissions';
+import type { UserData } from '@cda/services/user';
+import type { Signature, SignatureStatus } from '@cda/services/signatures';
+
+import { usePlans } from '../../Plans';
+
+const MAP_SIGNATURE_STATUS: { [x in SignatureStatus]: { label: string; color: Colors; } } = {
+    active: { label: 'Ativo', color: 'success' },
+    expired: { label: 'Expirado', color: 'warning' },
+    inactive: { label: 'Inativo', color: 'error' },
+};
+
+interface PlanInfoProps {
+    user: UserData;
+    signature: Signature;
+}
+export default function PlanInfo({ user, signature }: PlanInfoProps) {
+    const { plans } = usePlans();
+
+    const plan = useMemo(() => {
+        return plans.find((plan) => user.plans.includes(plan.id));
+    }, []);
+
     return (
         <Card>
             <CardContent>
@@ -34,13 +59,20 @@ export default function PlanInfo() {
                             <Stack orientation="row" alignItems="center">
                                 <Stack spacing="small">
                                     <Typography variant="body1" style={{ fontWeight: 600 }}>
-                                        Plano free
+                                        Plano {plan?.name}
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">
-                                        Cobrança mensal • Próximo pagamento: 15/06/2023
+                                        Cobrança mensal • Contratado em: {
+                                            formatDate(signature.updatedAt.toDate(), {
+                                                separator: '/'
+                                            })
+                                        }
                                     </Typography>
                                 </Stack>
-                                <Chip label="Ativo" color="success" />
+                                <Chip
+                                    label={MAP_SIGNATURE_STATUS[signature.status].label}
+                                    color={MAP_SIGNATURE_STATUS[signature.status].color}
+                                />
                             </Stack>
                         </CardContent>
                     </Card>
@@ -50,11 +82,13 @@ export default function PlanInfo() {
                         </Typography>
                         <Grid xl={6} lg={6} md={6} sm={12}>
                             {
-                                getFilledArray(4).map(i => (
+                                plan?.permissions.map(i => (
                                     <GridItem key={i}>
                                         <Stack spacing="small" orientation="row" alignItems="center">
                                             <Icon name="check-circle" color="success.main" />
-                                            <Typography variant="body2">Projetos ilimitados</Typography>
+                                            <Typography variant="body2">
+                                                {MAP_PERMISSION[i]}
+                                            </Typography>
                                         </Stack>
                                     </GridItem>
                                 ))

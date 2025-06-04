@@ -1,1 +1,1 @@
-export { default as IntegrationsPage } from './Integrations';
+export { default } from './Integrations';

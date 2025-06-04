@@ -9,8 +9,8 @@ import { useModal } from '@cda/ui/components/Modal';
 
 import { formatDate } from '@cda/toolkit/date';
 
-import { UserData } from '@cda/services/user';
-import Storage from '@cda/services/storage';
+import type Storage from '@cda/services/storage';
+import type { UserData } from '@cda/services/user';
 
 import EditProfileModal from './EditProfleModal';
 

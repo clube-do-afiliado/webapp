@@ -1,12 +1,12 @@
 import { uuid } from '@cda/toolkit/uuid';
 
-import db from '../db';
+import type DB from '../db';
 import type { Site } from './interface';
 
 export default class SitesServices {
     private static PATH = 'sites';
 
-    constructor(private db: db) { }
+    constructor(private db: DB) { }
 
     async details(id: string) {
         return this.db.getItem<Site>({

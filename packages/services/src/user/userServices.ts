@@ -1,8 +1,10 @@
+import { Timestamp } from 'firebase/firestore';
+
 import { uuid } from '@cda/toolkit/uuid';
 import { decode } from '@cda/toolkit/jwt';
 import { Cookies, local } from '@cda/toolkit/dom';
 
-import DB from '../db';
+import type DB from '../db';
 import type { UserData, FirebaseUser } from './interface';
 
 export default class UserServices {
@@ -26,17 +28,7 @@ export default class UserServices {
     }
 
     get current(): UserData {
-        const data = local.get<UserData>('user', true);
-
-        return {
-            id: data?.id,
-            name: data?.name,
-            email: data?.email,
-            roles: data?.roles,
-            plans: data?.plans,
-            status: data?.status,
-            picture: data?.picture,
-        };
+        return local.get<UserData>('user', true);
     }
 
     set current(data: UserData) { local.set('user', data); }
@@ -65,7 +57,8 @@ export default class UserServices {
             roles: ['user'],
             plans: ['gratis'],
             status: 'active',
-            picture: `https://robohash.org/${email}`
+            picture: `https://robohash.org/${email}`,
+            createdAt: Timestamp.fromDate(new Date()),
         };
 
         return this.db.setItem<UserData>({
@@ -82,6 +75,7 @@ export default class UserServices {
             picture: '',
             plans: [],
             status: 'active',
+            createdAt: Timestamp.fromDate(new Date()),
         };
 
         return this.db.setItem<UserData>({

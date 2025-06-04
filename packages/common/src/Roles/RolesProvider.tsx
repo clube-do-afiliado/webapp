@@ -79,7 +79,7 @@ export default function RolesProvider({ children, rolesServices }: PropsWithChil
         return rolesServices.update(data)
             .then(() => setRoles(prev => prev.map(r => r.id === data.id ? data : r)))
             .then(() => addAlert({ color: 'success', message: `A role "${data.name}" foi editada` }))
-            .then(() => addAlert({ color: 'success', message: 'Não foi possível editar a role' }));
+            .catch(() => addAlert({ color: 'error', message: 'Não foi possível editar a role' }));
     };
 
     return (

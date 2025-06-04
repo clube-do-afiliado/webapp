@@ -12,6 +12,7 @@ import RolesServices from '@cda/services/roles';
 import PlansServices from '@cda/services/plans';
 import SitesServices from '@cda/services/sites';
 import EventsServices from '@cda/services/events';
+import SignatureServices from '@cda/services/signatures';
 import ServerFunctions from '@cda/services/serverFunctions';
 import IntegrationsServices from '@cda/services/integrations';
 import ProductsServices, { type ProductInfo } from '@cda/services/products';
@@ -67,6 +68,7 @@ export const plansServices = new PlansServices(db);
 export const sitesServices = new SitesServices(db);
 export const eventsServices = new EventsServices(db);
 export const productsServices = new ProductsServices(db);
+export const signatureServices = new SignatureServices(db);
 export const integrationsServices = new IntegrationsServices(db);
 
 export const serverFunctions = new ServerFunctions({

@@ -66,7 +66,7 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                                 email: user?.email || '',
                                 picture: user?.picture || '',
                             }}
-                            onProfile={handleLogout}
+                            onProfile={toggle}
                         />
                     }
                 />
@@ -139,6 +139,7 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                             <div>
                                 <SidebarButton
                                     icon={<Icon name="setting" />}
+                                    onClick={goToByMenu}
                                 />
                                 <SidebarButton
                                     icon={<Icon name="signout" />}

@@ -79,7 +79,7 @@ export default function IntegrationsProvider({ children, integrationsServices }:
         return integrationsServices.update(data)
             .then(() => setIntegrations(prev => prev.map(r => r.id === data.id ? data : r)))
             .then(() => addAlert({ color: 'success', message: `A integração "${data.name}" foi editada` }))
-            .then(() => addAlert({ color: 'success', message: 'Não foi possível editar a integração' }));
+            .catch(() => addAlert({ color: 'error', message: 'Não foi possível editar a integração' }));
     };
 
     return (

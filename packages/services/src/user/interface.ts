@@ -1,3 +1,5 @@
+import type { Timestamp } from 'firebase/firestore';
+
 export type UserStatus = 'active' | 'inactive';
 
 export interface UserData {
@@ -7,6 +9,7 @@ export interface UserData {
     picture: string;
     roles: string[];
     plans: string[];
+    createdAt: Timestamp;
     status: UserStatus;
 }
 

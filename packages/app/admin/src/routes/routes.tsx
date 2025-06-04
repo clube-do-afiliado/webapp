@@ -1,15 +1,13 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { lazy } from 'react';
 
-import ProfilePage from '@cda/common/Profile';
-
 import App from '@/App';
-import { storage, userServices } from '@/services/core';
 
 const BioPage = lazy(() => import('@/pages/Bio'));
 const HomePage = lazy(() => import('@/pages/Home'));
 const SitePage = lazy(() => import('@/pages/Site'));
 const StoresPage = lazy(() => import('@/pages/Stores'));
+const ProfilePage = lazy(() => import('@/pages/Profile'));
 const ProductsPage = lazy(() => import('@/pages/Products'));
 const TemplatesPage = lazy(() => import('@/pages/Templates'));
 
@@ -70,10 +68,7 @@ export const router = createBrowserRouter([
                 path: '/profile',
                 loader: () => document.title = 'Clube do afiliado - Meu perfil',
                 element: (
-                    <ProfilePage
-                        storage={storage}
-                        onUpdateUser={(user) => userServices.update(user)}
-                    />
+                    <ProfilePage />
                 ),
             },
             {

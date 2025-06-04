@@ -1,12 +1,12 @@
 import { uuid } from '@cda/toolkit/uuid';
 
-import db from '../db';
+import type DB from '../db';
 import type { Product } from './interface';
 
 export default class ProductsServices {
     private static PATH = 'products';
 
-    constructor(private db: db) { }
+    constructor(private db: DB) { }
 
     async list() {
         return this.db.getList<Product>({

@@ -1,12 +1,12 @@
 import { slug } from '@cda/toolkit/string';
 
-import db from '../db';
+import type DB from '../db';
 import type { RoleConfig } from './interface';
 
 export default class RolesServices {
     private static PATH = 'roles';
 
-    constructor(private db: db) { }
+    constructor(private db: DB) { }
 
     async details(id: string) {
         return this.db.getItem<RoleConfig>({

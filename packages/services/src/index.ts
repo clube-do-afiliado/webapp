@@ -5,6 +5,7 @@ export * from './plans';
 export * from './roles';
 export * from './sites';
 export * from './products';
+export * from './signatures';
 export * from './permissions';
 export * from './integrations';
 export * from './serverFunctions';

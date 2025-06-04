@@ -1,7 +1,6 @@
 import {
     cloneElement,
     HTMLAttributes,
-    HtmlHTMLAttributes,
     MouseEvent,
     ReactElement,
     useEffect,
@@ -15,8 +14,8 @@ import { joinClass } from '../../utils';
 import Slide from '../../animations/Slide';
 import Typography from '../../components/Typography';
 import { Menu, useMenu } from '../../components/Menu';
-import { Checkbox, CheckboxGroup } from '../../components/Checkbox';
 import { type ButtonIconProps } from '../../components/ButtonIcon';
+import { Checkbox, CheckboxGroup, type CheckboxProps } from '../../components/Checkbox';
 
 import './MultiSelect.scss';
 
@@ -105,8 +104,9 @@ export default function MultiSelect<T extends Record<string, any>>({
     };
 
     const HOCOption = (itemData: T) => {
-        return cloneElement<HtmlHTMLAttributes<HTMLDivElement>>(renderOption(itemData), {
+        return cloneElement<CheckboxProps>(renderOption(itemData), {
             key: uuid(),
+            isChecked: _selecteds.some(s => s[identifier] === itemData[identifier]),
             onClick: (e: MouseEvent<any, globalThis.MouseEvent>) => {
                 e.stopPropagation();
 
@@ -154,8 +154,8 @@ export default function MultiSelect<T extends Record<string, any>>({
                 <div className="ui-multiselect__chips">
                     {startIcon && renderIcon(startIcon as React.JSX.Element, 'right')}
                     {
-                        _selecteds.length
-                            ? _selecteds.map((v) => (
+                        Boolean(_selecteds.length) && (
+                            _selecteds.map((v) => (
                                 <Slide
                                     enter
                                     direction="top"
@@ -164,9 +164,14 @@ export default function MultiSelect<T extends Record<string, any>>({
                                     {HOCValue(v)}
                                 </Slide>
                             ))
-                            : <Typography noMargin color="text.secondary">
+                        )
+                    }
+                    {
+                        !_selecteds.length && (
+                            <Typography noMargin color="text.secondary">
                                 Nenhum item selecionado
                             </Typography>
+                        )
                     }
                 </div>
                 {endIcon && renderIcon(endIcon as React.JSX.Element, 'left')}
