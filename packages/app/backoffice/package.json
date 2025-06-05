@@ -14,13 +14,13 @@
   },
   "dependencies": {
     "@firebase/auth": "^1.9.1",
+    "copy-to-clipboard": "^3.3.3",
     "firebase": "^11.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-gtm-module": "^2.0.11",
     "react-router-dom": "^7.3.0",
-    "react-shadow": "^20.6.0",
-    "copy-to-clipboard": "^3.3.3"
+    "react-shadow": "^20.6.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.10",
