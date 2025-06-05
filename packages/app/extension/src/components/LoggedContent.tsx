@@ -13,7 +13,7 @@ import { env, isProd } from '../services/core';
 
 const ENV_MAP: { [x in string]: string } = {
     local: 'desenvolvimento',
-    homolog: 'homologação'
+    staging: 'staging'
 };
 
 interface LoggedContentProps { user: UserData; site: Site; onGetProduct: () => void; }

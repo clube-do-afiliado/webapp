@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "rm -rf .next && env-cmd -f .env.dev next dev -p 3002",
-    "hmg": "rm -rf .next && env-cmd -f .env.hmg next dev -p 3002",
-    "build:ssr:hmg": "rm -rf .next && env-cmd -f .env.hmg next build",
+    "hmg": "rm -rf .next && env-cmd -f .env.stg next dev -p 3002",
+    "build:ssr:stg": "rm -rf .next && env-cmd -f .env.stg next build",
     "build:ssr:dev": "rm -rf .next && env-cmd -f .env.dev next build",
     "build:ssr": "next build",
     "start": "next start",

@@ -1,4 +1,4 @@
-name: CD - HMG
+name: CD - STG
 run-name: Deploy to ${{ inputs.project }}
 
 on:
@@ -17,7 +17,7 @@ jobs:
   setup:
     uses: ./.github/workflows/setup.yml
     with:
-      BUILD_ENV: homolog
+      BUILD_ENV: staging
     secrets: inherit
   
   project-env:
@@ -34,12 +34,12 @@ jobs:
     needs: [setup, project-env]
     uses: ./.github/workflows/projects.yml
     with:
-      ENVIRONMENT: ${{ needs.project-env.outputs.PROJECT_ENV }} HMG
-      BUILD_ENV: homolog
+      ENVIRONMENT: ${{ needs.project-env.outputs.PROJECT_ENV }} STG
+      BUILD_ENV: staging
       PATH: dist
       PROJECT: ${{inputs.project}}
       COMMAND: build
-      FIREBASE_PROJECT_ID: clube-do-afiliado-homolog
+      FIREBASE_PROJECT_ID: clube-do-afiliado-stg
       SSO_URL:  ${{ vars.STG_SSO_URL }}
       ADMIN_URL: ${{ vars.STG_ADMIN_URL }}
       STORE_URL:  ${{ vars.STG_STORE_URL }}
@@ -54,7 +54,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       ENVIRONMENT: ${{ needs.project-env.outputs.PROJECT_ENV }}
-      BUILD_ENV: homolog
+      BUILD_ENV: staging
       PATH: dist
       PROJECT: ${{ inputs.project }}
     secrets: inherit

@@ -32,12 +32,12 @@ jobs:
     needs: [unit-tests]
     uses: ./.github/workflows/projects.yml
     with:
-      ENVIRONMENT: SSO HMG
+      ENVIRONMENT: SSO STG
       BUILD_ENV: local
       PATH: dist
       PROJECT: sso
       COMMAND: build
-      FIREBASE_PROJECT_ID: clube-do-afiliado-homolog
+      FIREBASE_PROJECT_ID: clube-do-afiliado-stg
       SSO_URL:  ${{ vars.STG_SSO_URL }}
       ADMIN_URL: ${{ vars.STG_ADMIN_URL }}
       STORE_URL:  ${{ vars.STG_STORE_URL }}
