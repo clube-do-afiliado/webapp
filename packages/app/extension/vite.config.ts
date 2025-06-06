@@ -5,7 +5,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 import react from '@vitejs/plugin-react';
 
-// Ambientes válidos: 'dev', 'hmg', 'prod'
+// Ambientes válidos: 'dev', 'stg', 'prod'
 const env = process.env.VITE_ENV || 'dev';
 
 // Copia o manifest correto para `public/manifest.json`

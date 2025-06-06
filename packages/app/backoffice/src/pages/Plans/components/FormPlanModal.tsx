@@ -60,8 +60,8 @@ export default function FormPlanModal({ plan, isOpen, onToggleModal }: HelperMod
                 <Typography variant="h6" noMargin>
                     {
                         plan
-                            ? 'Editar role'
-                            : 'Criar nova role'
+                            ? 'Editar plano'
+                            : 'Criar novo plano'
                     }
                 </Typography>
             }
@@ -75,7 +75,7 @@ export default function FormPlanModal({ plan, isOpen, onToggleModal }: HelperMod
                             <Input
                                 fullWidth
                                 gutterBottom
-                                disabled={!plan}
+                                disabled={Boolean(plan)}
                                 placeholder="Nome"
                                 data-cy="name-plan"
                                 value={control.value}
