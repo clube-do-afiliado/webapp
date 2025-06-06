@@ -115,7 +115,6 @@ export default function App() {
         <ThemeProvider theme={createTheme()}>
             <AlertProvider>
                 <AuthProvider
-                    url={url}
                     authServices={authServices}
                     usersServices={userServices}
                     onAuthenticate={handleAuthenticate}
