@@ -37,8 +37,5 @@ export function getDomain() {
 }
 
 export function serialize(data: Record<string, any>) {
-    if (Object.keys(data).some((key) => key)) {
-        const url = new URLSearchParams(data).toString();
-        return url;
-    }
+    return new URLSearchParams(data).toString();
 }
