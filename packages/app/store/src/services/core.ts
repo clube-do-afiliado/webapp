@@ -40,7 +40,7 @@ const app = getApps().length === 0 ? initializeApp({
 
 // FIREBASE SERVICES
 const firestore = getFirestore(app);
-const functions = getFunctions(app, 'us-central1');
+const functions = getFunctions(app, 'southamerica-east1');
 
 const db = new DB(firestore);
 

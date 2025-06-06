@@ -44,11 +44,12 @@ export default class AuthServices {
     }
 
     public async loginWithPassword(email: string, password: string) {
-        if (!this.methods.signInWithPassword) { return; }
+        if (!this.methods.signInWithPassword) { return ''; }
 
         return this.methods?.signInWithPassword(email, password)
             .then(r => {
                 this.access_token = r.user.accessToken;
+                return r.user.accessToken as string;
             });
     }
 

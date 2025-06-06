@@ -9,7 +9,6 @@ import { UserData } from '@cda/services/user';
 import { AuthProvider, useAuth } from '@cda/common/Auth';
 
 import {
-    url,
     authServices,
     userServices,
     siteServices,
@@ -59,7 +58,6 @@ export default function App() {
         <ThemeProvider theme={createTheme()}>
             <AlertProvider>
                 <AuthProvider
-                    url={url}
                     authServices={authServices}
                     usersServices={userServices}
                     sitesServices={siteServices}

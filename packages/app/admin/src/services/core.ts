@@ -44,8 +44,8 @@ const app = initializeApp({
 // FIREBASE SERVICES
 const firebaseAuth = getAuth(app);
 const firestore = getFirestore(app);
-const functions = getFunctions(app, 'us-central1');
 const firebaseStorage = getStorage(app);
+const functions = getFunctions(app, 'southamerica-east1');
 
 export const authServices = new AuthServices({
     signOut: () => signOut(firebaseAuth),

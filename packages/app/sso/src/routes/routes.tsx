@@ -27,11 +27,6 @@ export const router = createBrowserRouter([
                 element: <Signup />,
             },
             {
-                path: '/create-password',
-                loader: () => document.title = 'Clube do afiliado - Criar senha',
-                element: <CreatePassword />,
-            },
-            {
                 path: '*',
                 element: <Navigate to='/signin' />,
             }

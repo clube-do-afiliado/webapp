@@ -19,7 +19,7 @@ import { getParams } from '@cda/toolkit/url';
 
 import { useAuth } from '@cda/common/Auth';
 
-import { release } from '@/services/core';
+import { release, serverFunctions } from '@/services/core';
 
 function EmailAndPasswordForm() {
     const { email } = getParams<{ email: string }>();
@@ -43,6 +43,11 @@ function EmailAndPasswordForm() {
                 const { email, password } = form.values;
 
                 loginWithPassword({ email, password })
+                    .then(async (token) => {
+                        const { url } = await serverFunctions.getFunction('goToApp', { token });
+
+                        window.open(url, '_self');
+                    })
                     .finally(() => setLoading(false));
             }
         }
@@ -52,7 +57,14 @@ function EmailAndPasswordForm() {
 
     const goToSignup = () => { navigate('/signup'); };
 
-    const handleLoginWithGoogle = async () => { loginWithGoogle(); };
+    const handleLoginWithGoogle = async () => {
+        loginWithGoogle()
+            .then(async (token) => {
+                const { url } = await serverFunctions.getFunction('goToApp', { token });
+
+                window.open(url, '_self');
+            });
+    };
 
     return (
         <Form formGroup={formGroup}>

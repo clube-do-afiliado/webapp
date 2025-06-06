@@ -10,12 +10,14 @@ import {
     confirmPasswordReset,
     createUserWithEmailAndPassword,
 } from 'firebase/auth';
+import { getFunctions, httpsCallable, connectFunctionsEmulator } from 'firebase/functions';
 
 import DB from '@cda/services/db';
 import AuthServices from '@cda/services/auth';
 import UserServices from '@cda/services/user';
 import SiteServices from '@cda/services/sites';
 import SignatureServices from '@cda/services/signatures';
+import ServerFunctions from '@cda/services/serverFunctions';
 
 // VARIABLES
 export const url = {
@@ -42,8 +44,9 @@ const app = initializeApp({
 
 // FIREBASE SERVICES
 const firebaseAuth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
 const firestore = getFirestore(app);
+const functions = getFunctions(app, 'southamerica-east1');
+const googleProvider = new GoogleAuthProvider();
 
 export const authServices = new AuthServices({
     signOut: () => signOut(firebaseAuth),
@@ -58,9 +61,14 @@ export const db = new DB(firestore);
 if (isLocal) {
     connectFirestoreEmulator(firestore, '127.0.0.1', 8080);
     connectAuthEmulator(firebaseAuth, 'http://127.0.0.1:9099');
+    connectFunctionsEmulator(functions, '127.0.0.1', 5001);
 }
 
 // ENTITY SERVICES
 export const userServices = new UserServices(db);
 export const siteServices = new SiteServices(db);
 export const signatureServices = new SignatureServices(db);
+
+export const serverFunctions = new ServerFunctions({
+    'goToApp': httpsCallable<{ token: string }, { url: string }>(functions, 'goToApp'),
+});

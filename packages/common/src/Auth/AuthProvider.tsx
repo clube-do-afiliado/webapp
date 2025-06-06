@@ -20,16 +20,15 @@ type BasicUser = { name: string; email: string; password: string }
 
 export interface AuthContextConfig {
     user?: UserData;
-
-    redirect: (user: UserData) => Promise<void>;
+    token?: string;
 
     logout: () => Promise<void>;
 
-    createByAuth: (data: BasicUser) => Promise<void>;
+    createByAuth: (data: BasicUser) => Promise<string>;
     createByBackoffice: (data: Pick<UserData, 'name' | 'email' | 'roles'>) => Promise<UserData>;
 
-    loginWithGoogle: () => Promise<void>;
-    loginWithPassword: (data: Pick<BasicUser, 'email' | 'password'>) => Promise<void>;
+    loginWithGoogle: () => Promise<string>;
+    loginWithPassword: (data: Pick<BasicUser, 'email' | 'password'>) => Promise<string>;
 
     confirmPassword: (password: string) => Promise<void>;
 
@@ -48,16 +47,15 @@ const FIREBASE = {
 
 export const AuthContext = createContext<AuthContextConfig>({
     user: undefined,
-
-    redirect: () => Promise.resolve(),
+    token: undefined,
 
     logout: () => Promise.resolve(),
 
-    createByAuth: async () => Promise.resolve(),
+    createByAuth: async () => Promise.resolve(''),
     createByBackoffice: async () => Promise.resolve({} as UserData),
 
-    loginWithPassword: async () => Promise.resolve(),
-    loginWithGoogle: async () => Promise.resolve(),
+    loginWithGoogle: async () => Promise.resolve(''),
+    loginWithPassword: async () => Promise.resolve(''),
 
     confirmPassword: async () => Promise.resolve(),
 
@@ -72,11 +70,9 @@ interface AuthProviderProps {
     sitesServices?: SitesServices;
     signatureServices?: SignaruteServices;
     children: React.JSX.Element;
-    url: { admin: string; sso: string; backoffice: string; store: string; };
     onAuthenticate?: (user?: UserData) => void;
 }
 export default function AuthProvider({
-    url,
     children,
     authServices,
     usersServices,
@@ -90,8 +86,7 @@ export default function AuthProvider({
 
     const context = useMemo<AuthContextConfig>(() => ({
         user,
-
-        redirect: async (user) => redirect(user),
+        token: authServices.access_token,
 
         logout: async () => logout(),
 
@@ -109,23 +104,6 @@ export default function AuthProvider({
     }), [user]);
 
     useEffect(() => { getUser(); }, []);
-
-    const redirectToAdmin = (email: string) => {
-        const adminUrl = `${url.admin}?token=${authServices.access_token}&email=${email}`;
-        logger.info('Redirecting to admin page:', adminUrl);
-        window.open(adminUrl, '_self');
-    };
-
-    const redirectToBackoffice = (email: string) => {
-        const backofficeUrl = `${url.backoffice}?token=${authServices.access_token}&email=${email}`;
-        logger.info('Redirecting to backoffice page:', backofficeUrl);
-        window.open(backofficeUrl, '_self');
-    };
-
-    const redirect = (user: UserData) => {
-        if (user.roles.includes('user')) { return redirectToAdmin(user.email); }
-        if (user.roles.includes('admin')) { return redirectToBackoffice(user.email); }
-    };
 
     const logout = () => { authServices.logout(); };
 
@@ -156,8 +134,6 @@ export default function AuthProvider({
 
     const loginWithPassword = async ({ email, password }: Pick<BasicUser, 'email' | 'password'>) => {
         return authServices.loginWithPassword(email, password)
-            .then(() => usersServices.getByEmail(email))
-            .then(user => { redirect(user as UserData); })
             .catch((e) => {
                 const { code } = e;
 
@@ -168,6 +144,8 @@ export default function AuthProvider({
                 });
 
                 logger.info('Error on login:', { e });
+
+                throw e;
             });
     };
 
@@ -184,11 +162,7 @@ export default function AuthProvider({
 
             const userByEmail = await usersServices.getByEmail(googleUser.email);
 
-            if (userByEmail) {
-                redirect(userByEmail as UserData);
-
-                return;
-            }
+            if (userByEmail) { return authServices.access_token; }
 
             const createdUser = await usersServices.createByAuth({
                 id: googleUser?.user_id as string,
@@ -208,7 +182,7 @@ export default function AuthProvider({
 
             logger.log('assinatura criada!');
 
-            redirect(createdUser as UserData);
+            return authServices.access_token;
         } catch (error: any) {
             addAlert({
                 color: 'error',
@@ -217,6 +191,8 @@ export default function AuthProvider({
             });
 
             logger.info('Error on login:', { error });
+
+            throw error;
         }
     };
 
@@ -241,7 +217,7 @@ export default function AuthProvider({
 
             logger.log('assinatura criada!');
 
-            redirect(user);
+            return authServices.access_token;
         } catch (error: any) {
             const { code } = error;
 
@@ -252,6 +228,8 @@ export default function AuthProvider({
             });
 
             logger.error('Erro ao criar ususario, ', { error });
+
+            throw error;
         }
     };
 

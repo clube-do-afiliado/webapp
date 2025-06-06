@@ -18,6 +18,8 @@ import { Form, Control, FormControl, useForm } from '@cda/ui/components/Form';
 
 import { useAuth } from '@cda/common/Auth';
 
+import { serverFunctions } from '@/services/core';
+
 interface SignupForm {
     name: string;
     email: string;
@@ -48,6 +50,11 @@ export default function Signup() {
                 const { email, name, password } = form.values;
 
                 createByAuth({ email, name, password })
+                    .then(async (token) => {
+                        const { url } = await serverFunctions.getFunction('goToApp', { token });
+
+                        window.open(url, '_self');
+                    })
                     .finally(() => setLoading(false));
             },
         },

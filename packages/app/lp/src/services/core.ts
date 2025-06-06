@@ -39,7 +39,7 @@ const app = getApps().length === 0 ? initializeApp({
 // FIREBASE SERVICES
 const firebaseAuth = getAuth(app);
 const firestore = getFirestore(app);
-const functions = getFunctions(app, 'us-central1');
+const functions = getFunctions(app, 'southamerica-east1');
 
 export const authServices = new AuthServices({
     signOut: () => signOut(firebaseAuth),
@@ -59,4 +59,5 @@ export const plansServices = new PlansServices(db);
 
 export const serverFunctions = new ServerFunctions({
     'track': httpsCallable<EventConfig>(functions, 'track'),
+    'goToApp': httpsCallable<{ token: string }, { url: string }>(functions, 'getInfo'),
 });

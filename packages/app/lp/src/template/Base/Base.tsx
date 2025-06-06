@@ -11,7 +11,7 @@ import { createTheme, ThemeProvider, useTheme } from '@cda/ui/theme';
 import { AuthProvider, useAuth } from '@cda/common/Auth';
 
 import Footer from '@/components/Footer';
-import { authServices, url, userServices } from '@/services/core';
+import { authServices, serverFunctions, url, userServices } from '@/services/core';
 
 function setFavicon(color: string) {
     let link = document.querySelector<HTMLLinkElement>('link[rel~=\'icon\']');
@@ -34,16 +34,18 @@ function setFavicon(color: string) {
 }
 
 function Content({ children }: PropsWithChildren) {
-    const { user, redirect } = useAuth();
+    const { user, token } = useAuth();
     const { theme: { palette } } = useTheme();
 
     useEffect(() => { setFavicon(palette.primary.contrastText); }, []);
 
     const handleLogin = () => { window.open(`${url.sso}/signin`, '_blank'); };
 
-    const handleRedirect = () => {
-        if (!user) { return; }
-        redirect(user);
+    const handleRedirect = async () => {
+        if (!token) { return; }
+        const { url } = await serverFunctions.getFunction('goToApp', { token });
+
+        window.open(url, '_self');
     };
 
     return (
@@ -83,7 +85,6 @@ export default function Base({ children }: PropsWithChildren) {
     return (
         <ThemeProvider theme={createTheme()}>
             <AuthProvider
-                url={url}
                 authServices={authServices}
                 usersServices={userServices}
             >
