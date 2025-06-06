@@ -46,8 +46,6 @@ export default function EventProvider({ eventsServices, children }: EventProvide
             getVisualizations(storeId, options),
         ]);
 
-        console.log(visualizations.filter(e => e.utmSource === 'instagram').length);
-
         if (options.unique) {
             setEvents({
                 impressions: groupBy(impressions, ['anonymousId', 'utmSource', 'utmCampaign']),

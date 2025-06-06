@@ -6,7 +6,7 @@ import { createTheme, ThemeProvider, useTheme } from '@cda/ui/theme';
 
 import { UserData } from '@cda/services/user';
 
-import { AuthProvider, useAuth } from '@cda/common/Auth';
+import { AuthProvider } from '@cda/common/Auth';
 
 import {
     authServices,
@@ -38,11 +38,7 @@ function setFavicon(color: string) {
 function Content() {
     const { theme: { palette } } = useTheme();
 
-    const { user } = useAuth();
-
     useEffect(() => { setFavicon(palette.primary.contrastText); }, []);
-
-    useEffect(() => { console.log('user', user); }, [user]);
 
     return (
         <Outlet />

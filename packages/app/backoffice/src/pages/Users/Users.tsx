@@ -59,11 +59,7 @@ export default function Users() {
             change: (form) => {
                 const { name, roles } = form.values;
 
-                filter((user) => {
-                    console.log(user);
-
-                    return user.roles.every(role => roles.includes(role));
-                });
+                filter((user) => user.roles.every(role => roles.includes(role)));
 
                 if (currentSearch === name) { return; }
 

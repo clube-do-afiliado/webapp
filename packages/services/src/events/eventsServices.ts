@@ -22,11 +22,6 @@ export default class EventsServices {
     constructor(private db: DB) { }
 
     async getVisualizations({ storeId, endDate, startDate }: GetListData) {
-        console.log({
-            endDate: Timestamp.fromDate(endDate),
-            startDate: Timestamp.fromDate(startDate),
-        });
-
         return this.db.getList<EventData>({
             path: EventsServices.PATH,
             pathSegments: [],
