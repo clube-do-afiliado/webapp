@@ -3,7 +3,6 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import App from '@/App';
 import Signin from '@/pages/Signin';
 import Signup from '@/pages/Signup';
-import CreatePassword from '@/pages/CreatePassword';
 
 export const router = createBrowserRouter([
     {
