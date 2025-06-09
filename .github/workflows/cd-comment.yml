@@ -25,7 +25,7 @@ jobs:
           message: |
             Visit the preview URL for this PR (updated for commit [`${{ steps.vars.outputs.sha_short }}`](https://github.com/clube-do-afiliado/webapp/commit/${{ github.sha }}):
 
-            This is your temporary link: https://sso.stg.clubedoafiliado.com/
+            TESTE - This is your temporary link: https://sso.stg.clubedoafiliado.com/
           github-token: ${{ secrets.GH_TOKEN_WRITER }}
           comment-tag: execution
           pr-number: ${{ github.event.number }}
