@@ -55,7 +55,11 @@ export default function ProductRow({ product, onToggleDrawer }: ProductRowProps)
                         <span>{product.name}</span>
                     </div>
                     <div className="image-integration-container">
-                        <Avatar src={integration?.image} style={{ width: 22, height: 22 }} />
+                        <Avatar
+                            src={integration?.image}
+                            style={{ width: 22, height: 22 }}
+                            sx={{ background: ({ background }) => background.default }}
+                        />
                     </div>
                 </Stack>
             </TableCell>

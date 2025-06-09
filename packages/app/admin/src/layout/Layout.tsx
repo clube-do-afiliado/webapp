@@ -106,6 +106,17 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                                     icon={<Icon name="window" />}
                                     onClick={() => navigate('/site')}
                                 />
+                                <AccessControl
+                                    permissions={['catagory:*']}
+                                    component={(allowed) => (
+                                        allowed && <SidebarButton
+                                            path="tags"
+                                            label="Categorias"
+                                            icon={<Icon name="tag-alt" />}
+                                            onClick={() => navigate('/tags')}
+                                        />
+                                    )}
+                                />
                                 <SidebarButton
                                     path="products"
                                     label="Produtos"

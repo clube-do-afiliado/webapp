@@ -1,9 +1,10 @@
 import { type PropsWithChildren, type ButtonHTMLAttributes, cloneElement } from 'react';
 
 import Ripple from '../../components/Ripple';
-import joinClass from '../../utils/joinClass/joinClass';
-import type { Colors, Size } from '../../theme';
+import joinClass from '../../utils/joinClass';
 import createComponent from '../../core/createComponent';
+import type { Colors, Size } from '../../theme';
+import type { IconProps } from '../../components/Icon';
 import type { LoadingProps } from '../../components/Loading';
 
 import './Button.scss';
@@ -41,7 +42,8 @@ function Button({
     ]);
 
     const renderIcon = (icon: React.JSX.Element, direction: 'left' | 'right') => {
-        return cloneElement(icon, {
+        return cloneElement<IconProps>(icon, {
+            color: `${color}.contrastText`,
             className: joinClass([icon.props.className, 'ui-button__icon', `ui-button__icon--${direction}`])
         });
     };

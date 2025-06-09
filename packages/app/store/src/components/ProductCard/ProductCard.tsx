@@ -62,7 +62,7 @@ export default function ProductCard({ site, product, integrations }: ProductCard
                         loading="lazy"
                         alt={product.name}
                         className="product-image"
-                        src={product.images[0]}
+                        src={`/api/image-proxy?url=${encodeURIComponent(product.images[0])}`}
                     />
                 </div>
                 <div className="product-integration-container">

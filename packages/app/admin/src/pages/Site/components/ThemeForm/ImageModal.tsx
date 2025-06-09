@@ -12,7 +12,10 @@ import { generateBytesSize } from '@cda/toolkit/file';
 
 import { storage } from '@/services/core';
 
-export default function ImageModal({ isOpen, siteId, onSave, onToggleModal }: HelperModalProps<{
+type Ref = 'favicon' | 'logo';
+
+export default function ImageModal({ isOpen, siteId, reference, onSave, onToggleModal }: HelperModalProps<{
+    reference?: Ref;
     siteId: string;
     onSave: (url: string) => void;
 }>) {
@@ -28,11 +31,14 @@ export default function ImageModal({ isOpen, siteId, onSave, onToggleModal }: He
 
                 const image = images[0];
 
+                const [extension] = image.name.split('.').reverse();
+                const nameImage = `${reference}.${extension}`;
+
                 setLoading(true);
 
                 storage.upload({
                     file: image,
-                    path: `${siteId}/${image.name}`
+                    path: `${siteId}/${nameImage}`
                 })
                     .then(onSave)
                     .finally(() => setLoading(false));

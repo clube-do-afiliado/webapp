@@ -6,6 +6,7 @@ import App from '@/App';
 const BioPage = lazy(() => import('@/pages/Bio'));
 const HomePage = lazy(() => import('@/pages/Home'));
 const SitePage = lazy(() => import('@/pages/Site'));
+const PlansPage = lazy(() => import('@/pages/Plans'));
 const StoresPage = lazy(() => import('@/pages/Stores'));
 const ProfilePage = lazy(() => import('@/pages/Profile'));
 const ProductsPage = lazy(() => import('@/pages/Products'));
@@ -48,6 +49,13 @@ export const router = createBrowserRouter([
                 loader: () => document.title = 'Clube do afiliado - Produtos',
                 element: (
                     <ProductsPage />
+                ),
+            },
+            {
+                path: 'plans',
+                loader: () => document.title = 'Clube do afiliado - Planos',
+                element: (
+                    <PlansPage />
                 ),
             },
             {

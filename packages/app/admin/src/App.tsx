@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { PropsWithChildren, useEffect } from 'react';
 
 import { AlertProvider } from '@cda/ui/components/Alert';
@@ -53,14 +53,16 @@ function setFavicon(color: string) {
 }
 
 function Content() {
+    const navigate = useNavigate();
+
     const { theme: { palette } } = useTheme();
 
     const { user } = useAuth();
 
     const { getPlans } = usePlans();
     const { getUserSites } = useSites();
-    const { getSignature } = useSignatures();
     const { getIntegrations } = useIntegrations();
+    const { signature, getSignature } = useSignatures();
 
     useEffect(() => {
         setFavicon(palette.primary.main);
@@ -70,6 +72,15 @@ function Content() {
         Promise.all([getIntegrations(), getPlans(), getSignature(user.id), getUserSites(user.id)])
             .then(() => logger.log('Informações base carregadas'));
     }, [user]);
+
+    useEffect(() => {
+        if (!signature) { return; }
+
+        if (signature.status === 'inactive') {
+            navigate('plans');
+        }
+
+    }, [signature]);
 
     return (
         <AccessControlProvider

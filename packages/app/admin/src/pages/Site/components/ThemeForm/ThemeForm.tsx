@@ -149,6 +149,7 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
                     </Form>
                     <ImageModal
                         isOpen={open}
+                        reference={reference}
                         siteId={userSites.length ? userSites[0].id : ''}
                         onToggleModal={toggle}
                         onSave={handleSave}

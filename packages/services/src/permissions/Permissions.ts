@@ -6,7 +6,9 @@ export default [
     'product:*',
     'product:self:*',
     'plans:*',
-    'templates:*',
     'bio:*',
-    'cta:*'
+    'analytics:*',
+    'cta:*',
+    'category:*',
+    'templates:*',
 ] as const satisfies string[];

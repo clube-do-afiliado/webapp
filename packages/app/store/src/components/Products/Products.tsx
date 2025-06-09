@@ -2,6 +2,8 @@ import type { Site } from '@cda/services/sites';
 import type { Product } from '@cda/services/products';
 import type { Integration } from '@cda/services/integrations';
 
+import { EmptyContent } from '@cda/common/EmptyContent';
+
 import ProductCard from '@/components/ProductCard';
 
 import './Products.scss';
@@ -13,12 +15,27 @@ interface ProductsProps {
 }
 export default function Products({ site, products, integrations }: ProductsProps) {
     return (
-        <div className="grid">
+        <>
             {
-                Boolean(products.length) && products.map(p => (
-                    <ProductCard key={p.id} site={site} product={p} integrations={integrations} />
-                ))
+                Boolean(products.length) && (
+                    <div className="grid">
+                        {
+                            products.map(p => (
+                                <ProductCard key={p.id} site={site} product={p} integrations={integrations} />
+                            ))
+                        }
+                    </div>
+                )
             }
-        </div>
+            {
+                !products.length && (
+                    <EmptyContent
+                        icon="box"
+                        message="Nenhum produto foi encontrado"
+                    />
+                )
+            }
+        </>
+
     );
 }

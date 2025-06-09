@@ -38,17 +38,17 @@
             background-color: var(--#{$color});
 
             &:disabled {
-                background-color: var(--divider);
-                color: var(--text-disabled);
+                background-color: var(--text-disabled);
+                color: var(--text-secondary);
                 cursor: not-allowed;
 
                 .ui-button__icon {
-                    color: var(--text-disabled) !important;
+                    color: var(--text-secondary) !important;
                 }
             }
 
             .ui-button__icon {
-                color: var(--#{$color}-contrast) !important;
+                color: var(--#{$color}-contrast);
                 font-size: 16px !important;
 
                 &--left {

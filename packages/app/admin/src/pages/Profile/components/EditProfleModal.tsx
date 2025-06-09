@@ -52,11 +52,13 @@ export default function EditProfileModal({
                 const { name, images } = form.values;
 
                 const image = images[0];
+                const [extension] = image.name.split('.').reverse();
+                const nameImage = `profile.${extension}`;
 
                 if (image) {
                     url = await storage.upload({
                         file: image,
-                        path: `${user.id}/${image.name}`
+                        path: `${user.id}/${nameImage}`
                     });
                 }
 

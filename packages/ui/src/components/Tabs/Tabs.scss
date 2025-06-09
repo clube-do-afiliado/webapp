@@ -1,5 +1,3 @@
-// @use "../../styles/main.scss" as *
-
 .ui-tabs {
     display: flex;
     position: relative;
@@ -78,7 +76,7 @@
 
         &--rounded {
             height: 100%;
-            border-radius: 50px;
+            border-radius: var(--radius);
             text-transform: uppercase;
 
             display: flex;

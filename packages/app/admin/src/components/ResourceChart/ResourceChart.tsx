@@ -98,6 +98,9 @@ export default function ResourcerChart({ title, events, interval, loading }: Res
             }
         ],
         options: {
+            tooltip: {
+                enabled: false,
+            },
             chart: {
                 id: title,
                 toolbar: {
