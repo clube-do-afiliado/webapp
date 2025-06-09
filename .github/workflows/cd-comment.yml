@@ -1,0 +1,32 @@
+name: CD - Preview
+
+on:
+  pull_request:
+    types: [labeled, synchronize, edited]
+    branches:
+      - master
+
+jobs:
+  visualizer:
+    if: contains(github.event.pull_request.labels.*.name, 'preview')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set outputs
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: |
+            Visit the preview URL for this PR (updated for commit [`${{ steps.vars.outputs.sha_short }}`](https://github.com/clube-do-afiliado/webapp/commit/${{ github.sha }}):
+
+            TESTE - This is your temporary link: https://sso.stg.clubedoafiliado.com/
+          github-token: ${{ secrets.GH_TOKEN_WRITER }}
+          comment-tag: execution
+          pr-number: ${{ github.event.number }}
+
