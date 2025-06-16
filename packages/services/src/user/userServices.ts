@@ -28,7 +28,7 @@ export default class UserServices {
     }
 
     get current(): UserData {
-        return local.get<UserData>('user', true);
+        return local.get<UserData>('user', { parse: true });
     }
 
     set current(data: UserData) { local.set('user', data); }
@@ -55,7 +55,7 @@ export default class UserServices {
         const newUser: UserData = {
             ...user,
             roles: ['user'],
-            plans: ['gratis'],
+            plans: ['beta'],
             status: 'active',
             picture: `https://robohash.org/${email}`,
             createdAt: Timestamp.fromDate(new Date()),

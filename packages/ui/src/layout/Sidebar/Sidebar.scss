@@ -48,6 +48,18 @@
             font-size: $font-medium;
         }
 
+        &__tag {
+            padding: 2px 5px;
+            border-radius: var(--radius);
+            font-size: $font-small;
+
+            @each $color in $colors {
+                &--#{$color} {
+                    background-color: var(--#{$color}-opacity);
+                }
+            }
+        }
+
         &--active {
             .ui-sidebar__button__icon {
                 color: var(--primary) !important;

@@ -30,7 +30,7 @@
 
     @each $color in $colors {
         &--#{$color} {
-            box-shadow: $boxShadowSmall;
+            box-shadow: $box-shadow-small;
             background-color: var(--#{$color}-light);
             color: var(--#{$color}-dark);
 

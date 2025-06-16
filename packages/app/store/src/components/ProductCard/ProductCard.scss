@@ -12,7 +12,7 @@
     justify-content: space-between;
 
     &:hover {
-        box-shadow: $boxShadowRegular;
+        box-shadow: $box-shadow-regular;
     }
 
     .product-header {
@@ -55,7 +55,7 @@
             bottom: -7px;
             right: 15px;
             background-color: #fff;
-            box-shadow: $boxShadowSmall;
+            box-shadow: $box-shadow-small;
         }
     }
 

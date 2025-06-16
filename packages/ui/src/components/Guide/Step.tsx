@@ -63,9 +63,7 @@ function Frame({ next, previous, step, index, length }: FrameProps) {
     ]);
 
     return (
-        <div data-step={step.name}
-            className={className}
-        >
+        <div data-step={step.name} className={className}>
             <Card className={classNameContent}>
                 <CardContent>
                     <Stack spacing="small">

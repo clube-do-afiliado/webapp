@@ -1,4 +1,5 @@
 import { forwardRef, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Icon from '@cda/ui/components/Icon';
 import Stack from '@cda/ui/components/Stack';
@@ -16,6 +17,7 @@ import { slug } from '@cda/toolkit/string';
 import { Site } from '@cda/services/sites';
 
 import { useSites } from '@cda/common/Sites';
+import { useSignatures } from '@cda/common/Signatures';
 
 import { url } from '@/services/core';
 
@@ -25,9 +27,12 @@ interface FormProps {
 }
 
 export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref) => {
-    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
+    const { isActive } = useSignatures();
     const { updateUserSite } = useSites();
+
+    const [loading, setLoading] = useState(false);
 
     const siteUrl = useMemo(() => `${url.store}/${site?.slug}`, [site]);
 
@@ -49,6 +54,12 @@ export default forwardRef<HTMLDivElement, FormProps>(({ site, defaultSite }, ref
         handle: {
             submit: (form) => {
                 if (!site) { return; }
+
+                if (!isActive) {
+                    navigate('/plans');
+                    return;
+                }
+
                 setLoading(true);
 
                 const newSite: Site = {

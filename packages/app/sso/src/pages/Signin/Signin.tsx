@@ -62,6 +62,8 @@ function EmailAndPasswordForm() {
             .then(async (token) => {
                 const { url } = await serverFunctions.getFunction('goToApp', { token });
 
+                console.log(url);
+
                 window.open(url, '_self');
             });
     };

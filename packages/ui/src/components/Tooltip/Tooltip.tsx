@@ -92,16 +92,20 @@ export default function Tooltip({
     const renderChildren = () => {
         return cloneElement<HtmlHTMLAttributes<HTMLDivElement>>(children, {
             onMouseEnter: (e) => { handleEnter(e); },
-            onMouseDown: () => { handleLeave(); }
+            onMouseLeave: () => { handleLeave(); }
         });
     };
 
     return (
-        <div {...props} style={{ position: 'relative', ...props.style }} onMouseLeave={handleLeave}>
+        <div
+            {...props}
+            style={{ position: 'relative', ...props.style }}
+            onMouseLeave={handleLeave}
+        >
             {renderChildren()}
             <span id={id} className={className} style={{
                 ...coordinate,
-                maxWidth: width,
+                width,
                 display: open ? 'block' : 'none',
             }}>
                 {label}

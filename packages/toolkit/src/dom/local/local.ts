@@ -5,7 +5,7 @@ class Local<T extends string> {
         return key in window.localStorage;
     }
 
-    public get<K>(key: T, parse = false): K {
+    public get<K>(key: T, { parse = false }): K {
         const data = isBrowser() ? localStorage.getItem(key) : '';
 
         if (!data) { return null as K; }

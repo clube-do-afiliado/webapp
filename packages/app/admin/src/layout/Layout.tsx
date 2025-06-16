@@ -107,7 +107,7 @@ export default function Layout({ children }: React.PropsWithChildren<LayoutProps
                                     onClick={() => navigate('/site')}
                                 />
                                 <AccessControl
-                                    permissions={['catagory:*']}
+                                    permissions={['category:*']}
                                     component={(allowed) => (
                                         allowed && <SidebarButton
                                             path="tags"

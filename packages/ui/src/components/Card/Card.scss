@@ -9,7 +9,7 @@
         cursor: pointer;
 
         &:hover {
-            box-shadow: $boxShadowRegular;
+            box-shadow: $box-shadow-regular;
             border-color: var(--primary-light);
         }
     }

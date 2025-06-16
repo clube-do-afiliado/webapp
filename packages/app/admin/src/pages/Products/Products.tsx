@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Box from '@cda/ui/components/Box';
 import { debounce } from '@cda/ui/utils';
@@ -20,6 +21,7 @@ import type { Product } from '@cda/services/products';
 import { useSites } from '@cda/common/Sites';
 import { useProducts } from '@cda/common/Products';
 import { EmptyContent } from '@cda/common/EmptyContent';
+import { useSignatures } from '@cda/common/Signatures';
 
 import AdminPage from '@/components/AdminPage';
 import { release } from '@/services/core';
@@ -33,10 +35,13 @@ interface FilterForm {
 }
 
 export default function Products() {
+    const navigate = useNavigate();
+
     const [openDrawer, toggleDrawer] = useDrawer();
     const [openFindModal, toggleFindModal] = useModal();
 
     const { userSites } = useSites();
+    const { isActive } = useSignatures();
     const { getStoreProducts, products, loading } = useProducts();
 
     const { filter, filtered, reset } = useFilter(products, []);
@@ -78,6 +83,12 @@ export default function Products() {
 
     const getProducts = () => { getStoreProducts(userSites[0].id); };
 
+    const handleCreateProduct = () => {
+        if (!isActive) { navigate('/plans'); }
+
+        handleToggleEmptyDrawer();
+    };
+
     const handleToggleEmptyDrawer = () => {
         setSelectProduct(undefined);
         toggleDrawer();
@@ -104,16 +115,20 @@ export default function Products() {
             action={
                 <Box>
                     <Stack orientation="row" spacing="small">
-                        <Button
-                            variant="outlined"
-                            onClick={getProducts}
-                            startIcon={<Icon name="sync" />}
-                        >
-                            Recarregar
-                        </Button>
+                        {
+                            isActive && (
+                                <Button
+                                    variant="outlined"
+                                    onClick={getProducts}
+                                    startIcon={<Icon name="sync" />}
+                                >
+                                    Recarregar
+                                </Button>
+                            )
+                        }
                         <Button
                             startIcon={<Icon name="search" />}
-                            onClick={handleToggleEmptyDrawer}
+                            onClick={handleCreateProduct}
                         >
                             Adicionar produto
                         </Button>
@@ -160,7 +175,7 @@ export default function Products() {
             {
                 !loading && !products.length && (
                     <EmptyContent
-                        icon="box"
+                        image="box"
                         message="Nenhum produto foi encontrado"
                     />
                 )

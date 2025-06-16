@@ -10,6 +10,7 @@ import { useTheme } from '@cda/ui/theme';
 import { Card } from '@cda/ui/components/Card';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
 import { Tab, Tabs, useTabs } from '@cda/ui/components/Tabs';
+import Slide from '@cda/ui/animations/Slide';
 
 import { maskCurrency } from '@cda/toolkit/mask';
 
@@ -30,6 +31,7 @@ export default function Plans() {
 
     const [period, setPeriod] = useState<Period>('monthly');
 
+    const DELAY = 200;
     const DISCOUNT_PERCENTAGE = 0.7;
 
     const { beta, standard } = useMemo(() => ({
@@ -84,106 +86,115 @@ export default function Plans() {
                         {
                             beta && standard && (
                                 <GridItem>
-                                    <PlanCard
-                                        highlight
-                                        name="Beta"
-                                        description={`
+                                    <Slide enter direction="bottom" delay={DELAY} style={{ height: '100%' }}>
+                                        <PlanCard
+                                            highlight
+                                            name="Beta"
+                                            description={`
                                             Aproveite para testar tudo e, se quiser garantir ainda mais vantagens,
                                             futuramente você pode fazer upgrade para planos superiores.
                                         `}
-                                        value={
-                                            <Stack nogap>
-                                                {
-                                                    period === 'annually' && (
-                                                        <Typography color="primary.contrastText">
-                                                            {maskCurrency(beta.price * DISCOUNT_PERCENTAGE)}/mês
-                                                        </Typography>
-                                                    )
-                                                }
-                                                <Typography variant="h4" color="primary.contrastText">
-                                                    {maskCurrency(getPrice(beta.price))}
-                                                </Typography>
-                                            </Stack>
-                                        }
-                                        chip={
-                                            <Chip
-                                                size="small"
-                                                label={`${((1 - (beta.price / standard.price)) * 100).toFixed(0)}% off`}
-                                                icon={<span>🔥</span>}
-                                                sx={{ background: ({ primary }) => primary.contrastText }}
-                                                style={{ fontWeight: 600 }}
-                                            />
-                                        }
-                                        permissions={
-                                            beta.permissions.map(permission => (
-                                                <PlanPermissionItem
-                                                    highlight
-                                                    key={permission}
-                                                    message={MAP_PERMISSION[permission]}
+                                            value={
+                                                <Stack nogap>
+                                                    {
+                                                        period === 'annually' && (
+                                                            <Typography color="primary.contrastText">
+                                                                {maskCurrency(beta.price * DISCOUNT_PERCENTAGE)}/mês
+                                                            </Typography>
+                                                        )
+                                                    }
+                                                    <Typography variant="h4" color="primary.contrastText">
+                                                        {maskCurrency(getPrice(beta.price))}
+                                                    </Typography>
+                                                </Stack>
+                                            }
+                                            chip={
+                                                <Chip
+                                                    size="small"
+                                                    label={
+                                                        `${((1 - (beta.price / standard.price)) * 100).toFixed(0)}% off`
+                                                    }
+                                                    icon={<span>🔥</span>}
+                                                    sx={{ background: ({ primary }) => primary.contrastText }}
+                                                    style={{ fontWeight: 600 }}
                                                 />
-                                            ))
-                                        }
-                                        button={
-                                            <Button
-                                                fullWidth
-                                                startIcon={
-                                                    <Icon name="rocket" sx={{ color: ({ primary }) => primary.main }} />
-                                                }
-                                                sx={{
-                                                    color: ({ primary }) => primary.main,
-                                                    background: ({ primary }) => primary.contrastText,
-                                                }}
-                                            >
-                                                Começar
-                                            </Button>
-                                        }
-                                    />
+                                            }
+                                            permissions={
+                                                beta.permissions.map(permission => (
+                                                    <PlanPermissionItem
+                                                        highlight
+                                                        key={permission}
+                                                        message={MAP_PERMISSION[permission]}
+                                                    />
+                                                ))
+                                            }
+                                            button={
+                                                <Button
+                                                    fullWidth
+                                                    startIcon={
+                                                        <Icon
+                                                            name="rocket"
+                                                            sx={{ color: ({ primary }) => primary.main }}
+                                                        />
+                                                    }
+                                                    sx={{
+                                                        color: ({ primary }) => primary.main,
+                                                        background: ({ primary }) => primary.contrastText,
+                                                    }}
+                                                >
+                                                    Começar
+                                                </Button>
+                                            }
+                                        />
+                                    </Slide>
                                 </GridItem>
                             )
                         }
                         {
                             standard && (
                                 <GridItem>
-                                    <PlanCard
-                                        name="Básico"
-                                        description="Lançamento em 01/11/2025"
-                                        value={
-                                            <Stack nogap>
-                                                {
-                                                    period === 'annually' && (
-                                                        <Typography color="text.secondary">
-                                                            {maskCurrency(standard.price * DISCOUNT_PERCENTAGE)}/mês
-                                                        </Typography>
-                                                    )
-                                                }
-                                                <Typography variant="h4" color="text.secondary">
-                                                    {maskCurrency(getPrice(standard.price))}
-                                                </Typography>
-                                            </Stack>
-                                        }
-                                        chip={
-                                            <Chip
-                                                size="small"
-                                                label="Em breve"
-                                                icon={<Icon name="calendar-alt" />}
-                                                sx={{ background: ({ primary }) => primary.contrastText }}
-                                                style={{ fontWeight: 600 }}
-                                            />
-                                        }
-                                        permissions={
-                                            standard.permissions.map(permission => (
-                                                <PlanPermissionItem
-                                                    key={permission}
-                                                    message={MAP_PERMISSION[permission]}
+                                    <Slide enter direction="top" delay={DELAY * 2} style={{ height: '100%' }}>
+                                        <PlanCard
+                                            name="Básico"
+                                            description="Lançamento em 01/11/2025"
+                                            value={
+                                                <Stack nogap>
+                                                    {
+                                                        period === 'annually' && (
+                                                            <Typography color="text.secondary">
+                                                                {maskCurrency(standard.price * DISCOUNT_PERCENTAGE)}/mês
+                                                            </Typography>
+                                                        )
+                                                    }
+                                                    <Typography variant="h4" color="text.secondary">
+                                                        {maskCurrency(getPrice(standard.price))}
+                                                    </Typography>
+                                                </Stack>
+                                            }
+                                            chip={
+                                                <Chip
+                                                    size="small"
+                                                    label="Em breve"
+                                                    icon={<Icon name="calendar-alt" />}
+                                                    sx={{ background: ({ primary }) => primary.contrastText }}
+                                                    style={{ fontWeight: 600 }}
                                                 />
-                                            ))
-                                        }
-                                        button={
-                                            <Button fullWidth disabled>
-                                                Em breve
-                                            </Button>
-                                        }
-                                    />
+                                            }
+                                            permissions={
+                                                standard.permissions.map(permission => (
+                                                    <PlanPermissionItem
+                                                        key={permission}
+                                                        message={MAP_PERMISSION[permission]}
+                                                    />
+                                                ))
+                                            }
+                                            button={
+                                                <Button fullWidth disabled>
+                                                    Em breve
+                                                </Button>
+                                            }
+                                        />
+                                    </Slide>
                                 </GridItem>
                             )
                         }

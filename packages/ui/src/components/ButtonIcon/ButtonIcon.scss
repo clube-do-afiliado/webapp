@@ -2,7 +2,7 @@
 
 .ui-button-icon {
     position: relative;
-    border-radius: 50%;
+    border-radius: var(--radius);
     border: none;
     background-color: transparent;
     cursor: pointer;

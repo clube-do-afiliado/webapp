@@ -68,7 +68,7 @@ export const plansServices = new PlansServices(db);
 export const sitesServices = new SitesServices(db);
 export const eventsServices = new EventsServices(db);
 export const productsServices = new ProductsServices(db);
-export const signatureServices = new SignatureServices(db);
+export const signaturesServices = new SignatureServices(db);
 export const integrationsServices = new IntegrationsServices(db);
 
 export const serverFunctions = new ServerFunctions({

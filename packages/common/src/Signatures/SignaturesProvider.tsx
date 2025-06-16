@@ -9,6 +9,7 @@ export interface SignaturesContextConfig {
     loading: boolean;
 
     signature?: Signature;
+    isActive: boolean;
 
     getSignature: (userId: string) => Promise<void>;
 
@@ -18,6 +19,7 @@ export interface SignaturesContextConfig {
 export const SignaturesContext = createContext<SignaturesContextConfig>({
     loading: false,
 
+    isActive: false,
     signature: undefined,
 
     getSignature: () => Promise.resolve(),
@@ -37,6 +39,7 @@ export default function SignaturesProvider({ children, signaturesServices }: Pro
         loading,
 
         signature,
+        isActive: signature?.status === 'active',
 
         getSignature: (userId) => getSignature(userId),
 

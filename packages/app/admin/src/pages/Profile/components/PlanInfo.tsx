@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import type { Colors } from '@cda/ui/theme';
 import Chip from '@cda/ui/components/Chip';
@@ -9,6 +10,7 @@ import Button from '@cda/ui/components/Button';
 import Typography from '@cda/ui/components/Typography';
 import { Grid, GridItem } from '@cda/ui/components/Grid';
 import { Card, CardContent } from '@cda/ui/components/Card';
+import Alert from '@cda/ui/components/Alert';
 
 import { formatDate } from '@cda/toolkit/date';
 
@@ -18,10 +20,10 @@ import type { Signature, SignatureStatus } from '@cda/services/signatures';
 
 import { usePlans } from '@cda/common/Plans';
 
-const MAP_SIGNATURE_STATUS: { [x in SignatureStatus]: { label: string; color: Colors; } } = {
-    active: { label: 'Ativo', color: 'success' },
-    expired: { label: 'Expirado', color: 'warning' },
-    inactive: { label: 'Inativo', color: 'error' },
+const MAP_SIGNATURE_STATUS: { [x in SignatureStatus]: { label: string; color: Colors; icon: string; } } = {
+    active: { label: 'Ativo', color: 'success', icon: 'star' },
+    expired: { label: 'Expirado', color: 'warning', icon: 'exclamation-triangle' },
+    inactive: { label: 'Inativo', color: 'error', icon: 'exclamation-octagon' },
 };
 
 interface PlanInfoProps {
@@ -29,11 +31,15 @@ interface PlanInfoProps {
     signature: Signature;
 }
 export default function PlanInfo({ user, signature }: PlanInfoProps) {
+    const navigate = useNavigate();
+
     const { plans } = usePlans();
 
     const plan = useMemo(() => {
         return plans.find((plan) => user.plans.includes(plan.id));
     }, []);
+
+    const goToPlans = () => { navigate('/plans'); };
 
     return (
         <Card>
@@ -49,6 +55,30 @@ export default function PlanInfo({ user, signature }: PlanInfoProps) {
                             Plano de assinatura
                         </Typography>
                     </Stack>
+                    {
+                        signature.status === 'expired' && (
+                            <Alert
+                                fullWidth
+                                variant="opacity"
+                                color="warning"
+                                icon={<Icon name="exclamation-triangle" />}
+                            >
+                                Seu plano expirou. Renove para continuar usando todos os recursos da plataforma.
+                            </Alert>
+                        )
+                    }
+                    {
+                        signature.status === 'inactive' && (
+                            <Alert
+                                fullWidth
+                                variant="opacity"
+                                color="error"
+                                icon={<Icon name="exclamation-octagon" />}
+                            >
+                                Seu plano está inativo. Ative-o para liberar todas as funcionalidades da plataforma.
+                            </Alert>
+                        )
+                    }
                     <Card
                         sx={{
                             background: ({ background }) => background.paper,
@@ -72,6 +102,7 @@ export default function PlanInfo({ user, signature }: PlanInfoProps) {
                                 <Chip
                                     label={MAP_SIGNATURE_STATUS[signature.status].label}
                                     color={MAP_SIGNATURE_STATUS[signature.status].color}
+                                    icon={<Icon name={MAP_SIGNATURE_STATUS[signature.status].icon} />}
                                 />
                             </Stack>
                         </CardContent>
@@ -105,8 +136,11 @@ export default function PlanInfo({ user, signature }: PlanInfoProps) {
                             <Button
                                 fullWidth
                                 startIcon={<Icon name="sync" />}
+                                onClick={goToPlans}
                             >
-                                Alterar plano
+                                {signature.status === 'active' && 'Alterar plano'}
+                                {signature.status === 'expired' && 'Renovar agora'}
+                                {signature.status === 'inactive' && 'Ativar plano'}
                             </Button>
                         </Stack>
                     </Stack>

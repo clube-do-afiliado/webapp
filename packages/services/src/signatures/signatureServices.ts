@@ -7,7 +7,7 @@ import type DB from '../db';
 import type { Signature } from './interface';
 
 export default class SignatureServices {
-    private static PATH = 'signature';
+    private static PATH = 'signatures';
 
     constructor(private db: DB) { }
 
@@ -27,7 +27,7 @@ export default class SignatureServices {
         const newSignature: Signature = {
             id,
             ownerId: userId,
-            status: 'active',
+            status: 'inactive',
             updatedAt: Timestamp.fromDate(new Date()),
             expiresIn: Timestamp.fromDate(addDays(new Date(), 15)),
         };

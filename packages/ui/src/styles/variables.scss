@@ -106,9 +106,10 @@ $spacing-small: 8px;
 $spacing-xlarge: 32px;
 
 /* PROPORTION */
-$proportion: 12px 16px;
+$proportion: 10.8px 14.4px;
+$proportion-small: 10.8px 14.4px;
 
 /* BOX SHADOW */
-$boxShadowSmall: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-$boxShadowRegular: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-$boxShadowLarge: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+$box-shadow-small: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+$box-shadow-regular: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+$box-shadow-large: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);

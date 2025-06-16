@@ -14,7 +14,7 @@ export interface BaseProps extends PropsWithChildren {
     release?: string;
     loading?: boolean;
     subtitle?: string;
-    action?: React.JSX.Element;
+    action?: React.JSX.Element | boolean;
     backAction?: React.JSX.Element;
 };
 export default function BasePage({
